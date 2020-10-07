@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     name = models.CharField(max_length=25)
     # , default=user.username
-    city = models.CharField(max_length=25)
+    current_city = models.CharField(max_length=25)
     image = models.CharField(max_length=500)
     join_date = models.DateTimeField(auto_now_add=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
