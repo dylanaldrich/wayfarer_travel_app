@@ -1,4 +1,3 @@
-# Wafarer
 <h1 align="center">Wayfarer</h1>
 <p align="center">
 <p>A travel community for users to share tips about their favorite locations around the world.</p>
@@ -13,7 +12,7 @@
 <img src="https://i.ibb.co/p31DNwb/005.png" alt="005" border="0" width=100%>
 
 ## 🖍 Color Theme
-1 - ![#FF9C20](https://via.placeholder.com/15/FF9C20/000000?text=+) `#FF9C20` 2 - ![#F72AEE](https://via.placeholder.com/15/F72AEE/000000?text=+) `#F72AEE` 3 - ![#973DFC](https://via.placeholder.com/15/973DFC/000000?text=+) `#973DFC`  4 Font- ![#01C9FF](https://via.placeholder.com/15/01C9FF/000000?text=+) `#01C9FF`  5 Font- ![#14ADFF](https://via.placeholder.com/15/14ADFF/000000?text=+) `#14ADFF`  6 Font- ![#0071FF](https://via.placeholder.com/15/0071FF/000000?text=+) `#0071FF`
+1 - ![#FF9C20](https://via.placeholder.com/15/FF9C20/000000?text=+) `#FF9C20` 2 - ![#F72AEE](https://via.placeholder.com/15/F72AEE/000000?text=+) `#F72AEE` 3 - ![#973DFC](https://via.placeholder.com/15/973DFC/000000?text=+) `#973DFC`  4 ![#01C9FF](https://via.placeholder.com/15/01C9FF/000000?text=+) `#01C9FF`  5 ![#14ADFF](https://via.placeholder.com/15/14ADFF/000000?text=+) `#14ADFF`  6 ![#0071FF](https://via.placeholder.com/15/0071FF/000000?text=+) `#0071FF`
 
 
 ## 💡 Features / User Stories
