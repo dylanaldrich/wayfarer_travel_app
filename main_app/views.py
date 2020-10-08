@@ -47,7 +47,7 @@ def profile_detail(request, user_id):
     return render(request, 'profiles/detail.html', context)
 
 
-#Profile Edit
+#Profile Edit & Update
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
     if request.method == 'POST':
