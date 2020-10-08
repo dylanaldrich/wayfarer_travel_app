@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Profile, Post
-from .forms import Post_Form, Profile_Form, SignUpForm
-from django.contrib.auth import login, authenticate
+from .models import Profile, Post, User
+from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
@@ -77,7 +77,31 @@ def signup(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('/')
+        return redirect('profile_detail', user_id=user.id)
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+# Login
+def login_user(request):
+    if request.method == 'POST':
+        username_form = request.POST['username']
+        password_form = request.POST['password']
+        # authenticate user
+        user = authenticate(username=username_form, password=password_form)
+        if user is not None:
+            # login
+            print("user: ", user)
+            login(request, user)
+            #redirect
+            return redirect('profile_detail', user_id=request.user.id)
+        else:
+            context = {'error':'Invalid Credentials'}
+        return render(request, 'registration/login.html', context)
+    else:
+        return render(request, 'registration/login.html')
+
+# Logout
+def logout_user(request):
+    logout(request)
+    return redirect('home')
