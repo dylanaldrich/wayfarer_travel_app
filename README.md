@@ -12,7 +12,7 @@
 <img src="https://i.ibb.co/p31DNwb/005.png" alt="005" border="0" width=100%>
 
 ## 🖍 Color Theme
-1 - ![#FF9C20](https://via.placeholder.com/15/FF9C20/000000?text=+) `#FF9C20` 2 - ![#F72AEE](https://via.placeholder.com/15/F72AEE/000000?text=+) `#F72AEE` 3 - ![#973DFC](https://via.placeholder.com/15/973DFC/000000?text=+) `#973DFC`  4 ![#01C9FF](https://via.placeholder.com/15/01C9FF/000000?text=+) `#01C9FF`  5 ![#14ADFF](https://via.placeholder.com/15/14ADFF/000000?text=+) `#14ADFF`  6 ![#0071FF](https://via.placeholder.com/15/0071FF/000000?text=+) `#0071FF`
+1 - ![#FF9C20](https://via.placeholder.com/15/FF9C20/000000?text=+) `#FF9C20` 2 - ![#F72AEE](https://via.placeholder.com/15/F72AEE/000000?text=+) `#F72AEE` 3 - ![#973DFC](https://via.placeholder.com/15/973DFC/000000?text=+) `#973DFC`  4 - ![#01C9FF](https://via.placeholder.com/15/01C9FF/000000?text=+) `#01C9FF`  5 - ![#14ADFF](https://via.placeholder.com/15/14ADFF/000000?text=+) `#14ADFF`  6 - ![#0071FF](https://via.placeholder.com/15/0071FF/000000?text=+) `#0071FF`
 
 
 ## 💡 Features / User Stories
@@ -28,10 +28,11 @@
 
 ## 🔊 MVP
 Registered users are:
-1. authorized to create posts / comments on threads (stretch goal)
-1. allowed to edit their profile
-1. allowed to delete post they created
-1. allowed delete their account
+1. authorize to create posts / comments on threads (stretch goal)
+1. allow to edit their profile
+1. allow to edit and delete posts they created
+1. allow to browse other users's posts
+1. allow to browse other users' profiles
 
 ## 🏃 Milestones
 - Working Server with Routes
