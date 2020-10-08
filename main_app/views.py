@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Profile, Post
+from .models import Profile, Post, User
 from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -46,8 +46,12 @@ def api(request):
 # ----- Profile views -----
 
 # Profile detail
+def profiles_index(request):
+    return HttpResponse('Hello, these are profiles')
+
+
 def profile_detail(request, user_id):
-    profile = Profile.objects.filter(user_id=user_id)
+    profile = Profile.objects.get(user_id=user_id)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
 
