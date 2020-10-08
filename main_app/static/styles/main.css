@@ -63,3 +63,7 @@ rounded-circle:hover {
     background: #973DFC;
 }
 
+/* SIGNUP FORM */
+.signup-container {
+    margin: 100px auto;
+}
