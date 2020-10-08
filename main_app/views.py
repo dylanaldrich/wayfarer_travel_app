@@ -34,15 +34,25 @@ def about(request):
 def api(request):
     return JsonResponse({"status": 200})
 
-# Profile views
+# ----- Profile views -----
+
+# Profile detail
+def profiles_index(request):
+    return HttpResponse('Hello, these are profiles')
+
+
+def profile_detail(request, user_id):
+    profile = Profile.objects.get(user_id=user_id)
+    context = {'profile': profile}
+    return render(request, 'profiles/detail.html', context)
 
 # Post views
 
 # Posts index
-def post_index(request):
-    posts = Post.objects.all()
-    context = {'posts': posts}
-    return render(request, 'posts/index.html', context)
+# def post_index(request):
+#     posts = Post.objects.all()
+#     context = {'posts': posts}
+#     return render(request, 'posts/index.html', context)
 
 # City views
 
@@ -60,7 +70,7 @@ def signup(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('home')
+        return redirect('profile_detail')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
