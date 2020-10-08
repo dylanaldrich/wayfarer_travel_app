@@ -6,6 +6,11 @@ from django.dispatch import receiver
 # Create your models here.
 
 # Cities
+CITIES = (
+    ('SF', 'San Francisco'),
+    ('LD', 'London'),
+    ('GB', 'Gibraltar'),
+)
 
 # Profile
 class Profile(models.Model):
@@ -29,10 +34,15 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     post_date = models.DateTimeField(auto_now_add=True)
+    city = models.CharField(
+        max_length=2,
+        choices=CITIES,
+        default=CITIES[0][0]
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} posted {self.date}"
 
     class Meta:
         ordering = ['-post_date']
