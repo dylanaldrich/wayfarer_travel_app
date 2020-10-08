@@ -40,7 +40,7 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
-# Profile Show 
+# Profile Show
 def profile_detail(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     context = {'profile': profile}
@@ -50,15 +50,17 @@ def profile_detail(request, user_id):
 #Profile Edit
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
-    if request.method == 'POST':
-        profile_form = Profile_Form(request.POST, instance=profile)
-        if profile_form.is_valid():
-            profile_form.save()
-            return redirect('profiles/detail.html', user_id=user_id)
-    else:
-        profile_form = Profile_Form(instance=profile)
-    context = {'profile': profile, 'profile_form': profile_form}
-    return render(request, 'profiles/detail.html', context)
+    if request.user == profile.user:
+        if request.method == 'POST':
+            profile_form = Profile_Form(request.POST, instance=profile)
+            if profile_form.is_valid():
+                profile_form.save()
+                return redirect('profiles/detail.html', user_id=user_id)
+        else:
+            profile_form = Profile_Form(instance=profile)
+        context = {'profile': profile, 'profile_form': profile_form}
+        return render(request, 'profiles/detail.html', context)
+    return redirect('home')
 
 
 
@@ -81,7 +83,7 @@ def post_create(request):
     return render(request, 'posts/index.html', context)
 
 
-# Posts Index 
+# Posts Index
 def post_index(request):
     posts = Post.objects.all()
     context = {'posts': posts}
