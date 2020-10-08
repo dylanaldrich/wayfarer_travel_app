@@ -2,14 +2,9 @@
 
 {% block content %}
 
-<<<<<<< HEAD
 <div class="jumbotron">
     <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
 </div>
-=======
-    {{ profile.name }}
-    
->>>>>>> submaster
 
 <div class="parent-container d-flex">
     <div class="container col-3">
@@ -26,7 +21,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="#">
+                <a href="{% url 'profile_edit' profile.user_id %}">
                     <button class="btn btn-info btn-sm">Edit</button>
                 </a>
                 <a href="#">
@@ -38,7 +33,8 @@
 
     <div class="container col-8 posts-list">
         {% if profile.user.post_set.count == 0 %}
-            <h5>{{ profile.name.title }} hasn't made any posts yet.</h5>
+            <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
+            <p><a class="btn btn-primary" href="#" role="button">Add Post</a></p>
         {% else %}
             {% for post in profile.user.post_set.all %}
                 <div class="card mb-3" style="max-width: 700px;">

@@ -54,11 +54,11 @@ def profile_edit(request, user_id):
         profile_form = Profile_Form(request.POST, instance=profile)
         if profile_form.is_valid():
             profile_form.save()
-            return redirect('profiles/detail.html', user_id=user_id)
+            return redirect('profiles/edit.html', user_id=user_id)
     else:
         profile_form = Profile_Form(instance=profile)
     context = {'profile': profile, 'profile_form': profile_form}
-    return render(request, 'profiles/detail.html', context)
+    return render(request, 'profiles/edit.html', context)
 
 
 
