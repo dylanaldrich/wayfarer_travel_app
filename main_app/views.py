@@ -93,7 +93,6 @@ def login_user(request):
         user = authenticate(username=username_form, password=password_form)
         if user is not None:
             # login
-            print("user: ", user)
             login(request, user)
             #redirect
             return redirect('profile_detail', user_id=request.user.id)
