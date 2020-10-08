@@ -27,14 +27,14 @@
 }
 
 .brighten img {
-    opacity: 0.9
+    opacity: 0.9;
     -webkit-filter: brightness(100%);
     -webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     -ms-transition: all 1s ease;
     transition: all 1s ease;
-    }
+}
 
 .brighten img:hover {
     -webkit-filter: brightness(80%);

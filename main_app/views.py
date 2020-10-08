@@ -20,6 +20,11 @@ def api(request):
 # Profile views
 
 # Post views
+# Posts index
+def post_index(request):
+    posts = Post.objects.all()
+    context = {'posts': posts}
+    return render(request, 'posts/index.html', context)
 
 # City views
 
