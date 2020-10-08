@@ -1,9 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>This is a profile</h1>
 
+<<<<<<< HEAD
+<div class="jumbotron">
+    <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
+</div>
+=======
     {{ profile.name }}
     
+>>>>>>> submaster
 
+<div class="parent-container d-flex">
+    <div class="container col-3">
+        <div class="card card-inverse card-info">
+            <img class="card-img-top" src="https://picsum.photos/200/150/?random">
+            <div class="card-block">
+                <figure class="profile profile-inline">
+                    <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
+                </figure>
+                <h4 class="card-title">{{ profile.name.title }}</h4>
+                <div class="card-text">
+                    <p>Current city: {{ profile.current_city.title }}</p>
+                    <p>Joined: {{ profile.join_date }}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#">
+                    <button class="btn btn-info btn-sm">Edit</button>
+                </a>
+                <a href="#">
+                    <button class="btn btn-info btn-sm btn-danger">Delete</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container col-8 posts-list">
+        {% if profile.user.post_set.count == 0 %}
+            <h5>{{ profile.name.title }} hasn't made any posts yet.</h5>
+        {% else %}
+            {% for post in profile.user.post_set.all %}
+                <div class="card mb-3" style="max-width: 700px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="https://picsum.photos/200/150/?random" class="card-img" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.body }}</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">
+                                    <button class="btn btn-info btn-sm">Edit</button>
+                                </a>
+                                <a href="#">
+                                    <button class="btn btn-info btn-sm btn-danger">Delete</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
