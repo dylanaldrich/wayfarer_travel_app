@@ -14,6 +14,15 @@
     font-family: 'Montserrat'
 }
 
+.login-form{
+    margin-top: 10px;
+}
+
+.wayfarer-btn {
+    background-color: #973DFC;
+    color: white;
+}
+
 .brighten img {
     opacity: 0.9
     -webkit-filter: brightness(100%);
