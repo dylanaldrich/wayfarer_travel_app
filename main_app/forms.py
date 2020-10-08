@@ -16,7 +16,10 @@ class Profile_Form(ModelForm):
 
 
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(max_length=150, help_text='Email')
+    name = forms.CharField(max_length=25)
+    current_city = forms.CharField(max_length=25)
+    email = forms.EmailField(max_length=150)
+
     class Meta:
         model = User
-        fields = ('username','email', 'password1', 'password2',)
+        fields = ('username', 'name', 'current_city', 'email', 'password1', 'password2',)
