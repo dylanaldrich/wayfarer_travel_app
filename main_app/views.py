@@ -12,7 +12,6 @@ def home(request):
     signup_form = SignUpForm(request.POST)
     login_form = AuthenticationForm(request.POST)
     if signup_form.is_valid():
-        user = form.save()
         user.refresh_from_db()
         user.profile.name = signup_form.cleaned_data.get('name')
         user.profile.current_city = signup_form.cleaned_data.get('current_city')
@@ -22,9 +21,15 @@ def home(request):
         password = signup_form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('home')
+        return redirect('/profiles')
     else:
         signup_form = SignUpForm()
+    if login_form.is_valid():
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('/')
+    else:
+        login_form = AuthenticationForm()
     return render(request, 'home.html', {'signup_form': signup_form, 'login_form': login_form})
 
 
@@ -70,7 +75,7 @@ def signup(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('profile_detail')
+        return redirect('/')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})

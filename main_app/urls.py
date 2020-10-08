@@ -8,3 +8,4 @@ urlpatterns = [
     path('api/', views.api, name='api'),
     path('profiles/', views.profiles_index, name='profiles_index'),
     path('profiles/<int:user_id>/', views.profile_detail, name='profile_detail'),
+]

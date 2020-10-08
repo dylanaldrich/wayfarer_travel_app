@@ -14,7 +14,6 @@ class Profile_Form(ModelForm):
         model = Profile
         fields = ['name', 'current_city']
 
-
 class SignUpForm(UserCreationForm):
     name = forms.CharField(max_length=25)
     current_city = forms.CharField(max_length=25)
