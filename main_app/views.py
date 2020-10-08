@@ -40,10 +40,27 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
+# Profile Show 
 def profile_detail(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
+
+
+#Profile Edit
+def profile_edit(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+    if request.method == 'POST':
+        profile_form = Profile_Form(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profiles/detail.html', user_id=user_id)
+    else:
+        profile_form = Profile_Form(instance=profile)
+    context = {'profile': profile, 'profile_form': profile_form}
+    return render(request, 'profiles/detail.html', context)
+
+
 
 # ------ Post views ------
 
@@ -78,16 +95,22 @@ def post_detail(request, post_id):
     return render(request, 'posts/show.html', context)
 
 
-# Edit && Update
+# Post Edit && Update
 def post_edit(request, post_id):
     post = Post.objects.get(id=post_id)
-    if request.method == 'POST':
-        post_form = Post_Form(request.POST, instance=post)
-        if post_form.is_valid():
-            post_form.save()
-            return redirect('posts/show.html', context)
+    if request.user == post.user:
+        if request.method == 'POST':
+            post_form = Post_Form(request.POST, instance=post)
+            if post_form.is_valid():
+                post_form.save()
+                return redirect('posts/show.html', post_id=post_id)
+        else:
+            post_form = Post_Form(instance=post)
+        context = {'post': post, 'post_form': post_form}
+        return render(request, 'posts/show.html', context)
+    return redirect('posts/show.html')
 
-# Delete
+# Post Delete
 def post_delete(request, post_id):
   post = Post.objects.get(id=post_id)
   if post.user == request.user:
