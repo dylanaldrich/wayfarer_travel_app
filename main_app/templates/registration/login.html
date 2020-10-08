@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="signup-container container">
@@ -7,10 +6,20 @@
     <div class="col-8">
       <h1 class="mt-2">Login Here</h1>
       <hr class="mt-0 mb-4">
-      <form method="post" action="{% url 'login' %}">
+      {% if error %}
+        <p style="background-color:firebrick;">{{error}}</p>
+      {% endif %}
+      <form method="POST" action="{% url 'login' %}">
           {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" class="btn wayfarer-btn" value="login">
+          <p>
+            <label for="username">Username</label>
+            <input type="text" name="username" maxlength="25" minlength="2" required>
+          </p>
+          <p>
+            <label for="password">Password</label>
+            <input type="password" name="password" maxlength="25" minlength="4" required>
+          </p>
+          <input type="submit" class="btn wayfarer-btn" value="Login">
           <input type="hidden" name="next" value="{{ next }}">
       </form>
     </div>
