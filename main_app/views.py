@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Profile, Post
-from .forms import Post_Form, Profile_Form
+from .forms import Post_Form, Profile_Form, SignUpForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -29,13 +29,15 @@ def api(request):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('home')
-        else:
-            error_message = 'Invalid sign up - try again'
+        profile = profile_form.save()
+        login(request, user)
+        return redirect('home')
+    else:
+        error_message = 'Invalid sign up - try again'
     form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
+    profile_form = Profile_Form()
+    context = {'form': form, 'profile_form':profile_form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
