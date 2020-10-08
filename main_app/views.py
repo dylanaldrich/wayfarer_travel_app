@@ -96,7 +96,13 @@ def post_delete(request, post_id):
   return redirect("posts_index")
 
 
-# ------ City views -------
+# ------ City views ------- #
+
+
+
+
+
+# ------- User Auth -------#
 
 # Signup
 def signup(request):
