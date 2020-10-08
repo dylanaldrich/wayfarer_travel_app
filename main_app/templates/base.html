@@ -40,16 +40,16 @@
                     <a class="nav-link" href="#">Cities</a>
                 </li>
             </ul>
-            <form class="form-inline mt-2 mt-md-0">
+            <div class="form-inline mt-2 mt-md-0">
                 <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a href="/">Profile</a></li>
+                <li class="nav-item"><a href="{% url 'profile_detail' user.id%}">Profile</a></li>
                 <li class="nav-item"> | </li>
                 <li class="nav-item"><a href="{% url 'logout' %}">Log Out</a></li>
                 {% else %}
                 <li class="nav-item">
                     <button type="button" class="btn btn-link signup-btn" data-toggle="modal" data-target="#loginModal">Login</button>
-
+                    <!------ LOG IN MODAL-------->
                     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -60,18 +60,26 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                <img src="https://www.flaticon.com/svg/static/icons/svg/3125/3125914.svg" width='150px' style="float: right;">
+                                    <img src="https://www.flaticon.com/svg/static/icons/svg/3125/3125914.svg" width='150px' style="float: right;">
                                     <form method="POST" action="{% url 'login' %}">
                                         <div class="form-group login-form">
                                             {% csrf_token %}
-                                            {{ login_form|crispy }}
+                                            <p>
+                                                <label for="username">Username</label>
+                                                <input type="text" name="username" maxlength="25" minlength="2" required>
+                                            </p>
+                                            <p>
+                                                <label for="password">Password</label>
+                                                <input type="password" name="password" maxlength="25" minlength="4" required>
+                                            </p>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn wayfarer-btn" value="Login">
+                                            <input type="hidden" name="next" value="{{ next }}">
+                                        </div>
+                                    </form>
                                 </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn wayfarer-btn">Login</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -85,7 +93,7 @@
                 </li>
                 <li class="nav-item">
                     <button type="button" class="btn btn-link signup-btn" data-toggle="modal" data-target="#exampleModal">Sign Up</button>
-
+                    <!------ SIGN UP MODAL-------->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -118,7 +126,7 @@
                 </li>
                 {% endif %}
                 </ul>
-            </form>
+            </div>
         </div>
     </nav>
 </header>

@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 # Base views
 def home(request):
     signup_form = SignUpForm(request.POST)
-    login_form = LoginForm(request.POST)
     if signup_form.is_valid():
         user = form.save()
         user.refresh_from_db()
@@ -25,16 +24,7 @@ def home(request):
         return redirect('home')
     else:
         signup_form = SignUpForm()
-    if login_form.is_valid():
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        account = authenticate(username=username, password=password)
-        if account is not None:
-            login(request, account)
-            return HttpResponseRedirect('/')
-    else:
-        login_form = LoginForm()
-    return render(request, 'home.html', {'signup_form': signup_form, 'login_form': login_form})
+    return render(request, 'home.html', {'signup_form': signup_form})
 
 
 def about(request):
@@ -50,20 +40,92 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
+# Profile Show 
 def profile_detail(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
 
-# Post views
 
-# Posts index
-# def post_index(request):
-#     posts = Post.objects.all()
-#     context = {'posts': posts}
-#     return render(request, 'posts/index.html', context)
+#Profile Edit
+def profile_edit(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+    if request.method == 'POST':
+        profile_form = Profile_Form(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profiles/detail.html', user_id=user_id)
+    else:
+        profile_form = Profile_Form(instance=profile)
+    context = {'profile': profile, 'profile_form': profile_form}
+    return render(request, 'profiles/detail.html', context)
 
-# City views
+
+
+# ------ Post views ------
+
+# Posts Create
+def post_create(request):
+    if request.method == 'POST':
+        post_form = Post_Form(request.POST)
+        if post_form.is_valid():
+            # save(commit=False) will just make a copy/instance of the model
+            new_post = post_form.save(commit=False)
+            new_post.user = request.user
+            # save() to the db
+            new_post.save()
+            return redirect('posts/index.html')
+    posts = Post.objects.filter(user=request.user)
+    post_form = Post_Form()
+    context = {'posts': posts, 'post_form': post_form}
+    return render(request, 'posts/index.html', context)
+
+
+# Posts Index 
+def post_index(request):
+    posts = Post.objects.all()
+    context = {'posts': posts}
+    return render(request, 'posts/index.html', context)
+
+
+# Post Show
+def post_detail(request, post_id):
+    post = Post.object.get(id=post_id)
+    context = {'post': post}
+    return render(request, 'posts/show.html', context)
+
+
+# Post Edit && Update
+def post_edit(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.user == post.user:
+        if request.method == 'POST':
+            post_form = Post_Form(request.POST, instance=post)
+            if post_form.is_valid():
+                post_form.save()
+                return redirect('posts/show.html', post_id=post_id)
+        else:
+            post_form = Post_Form(instance=post)
+        context = {'post': post, 'post_form': post_form}
+        return render(request, 'posts/show.html', context)
+    return redirect('posts/show.html')
+
+# Post Delete
+def post_delete(request, post_id):
+  post = Post.objects.get(id=post_id)
+  if post.user == request.user:
+    Post.objects.get(id=post_id).delete()
+    return redirect("posts_index")
+  return redirect("posts_index")
+
+
+# ------ City views ------- #
+
+
+
+
+
+# ------- User Auth -------#
 
 # Signup
 def signup(request):
@@ -106,3 +168,5 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
