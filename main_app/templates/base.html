@@ -66,11 +66,11 @@
                                             {% csrf_token %}
                                             {{ login_form|crispy }}
                                         </div>
-                                        <input type="hidden" name="next" value="{{ next }}">
                                 </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn wayfarer-btn">Login</button>
+                                        <input type="submit" class="btn wayfarer-btn" value="Login">
+                                        <input type="hidden" name="next" value="{{ next }}">
                                     </div>
                                 </form>
                             </div>

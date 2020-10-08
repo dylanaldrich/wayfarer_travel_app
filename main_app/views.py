@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 # Base views
 def home(request):
     signup_form = SignUpForm(request.POST)
-    login_form = AuthenticationForm(request.POST)
+    login_form = AuthenticationForm(data=request.POST)
     if signup_form.is_valid():
         user.refresh_from_db()
         user.profile.name = signup_form.cleaned_data.get('name')
@@ -25,12 +25,14 @@ def home(request):
     else:
         signup_form = SignUpForm()
     if login_form.is_valid():
+        username = login_form.cleaned_data.get('username')
+        password = login_form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('/')
+        return redirect('/profiles')
     else:
         login_form = AuthenticationForm()
-    return render(request, 'home.html', {'signup_form': signup_form, 'login_form': login_form})
+        return render(request, 'home.html', {'signup_form': signup_form, 'login_form': login_form})
 
 
 def about(request):
