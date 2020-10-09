@@ -164,6 +164,7 @@ def login_user(request):
     else:
         return render(request, 'registration/login.html')
 
+
 # Logout
 def logout_user(request):
     logout(request)

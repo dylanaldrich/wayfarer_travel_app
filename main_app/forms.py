@@ -7,7 +7,7 @@ from django import forms
 class Post_Form(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'body']
+        fields = ['title', 'body', 'city']
 
 class Profile_Form(ModelForm):
     class Meta:
