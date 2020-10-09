@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 fs=FileSystemStorage(location='media/profile_image')
 
@@ -23,6 +25,14 @@ class Profile(models.Model):
     current_city = models.CharField(max_length=25)
     image = models.ImageField(upload_to='profile_image', default='profile_image/default_profile_photo.svg')
     join_date = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(max_length=25, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = self.slug or slugify(self.name)
+        return super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('profile_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.user.username
