@@ -49,16 +49,16 @@ def profile_detail(request, user_id):
 
 #Profile Edit & Update
 def profile_edit(request, user_id):
-    profile = Profile.objects.get(id=user_id)
+    profile = Profile.objects.get(user_id=user_id)
     if request.method == 'POST':
         profile_form = Profile_Form(request.POST, instance=profile)
         if profile_form.is_valid():
             profile_form.save()
-            return redirect('profiles/detail.html', user_id=user_id)
+            return redirect('profile_detail', user_id=user_id)
     else:
         profile_form = Profile_Form(instance=profile)
     context = {'profile': profile, 'profile_form': profile_form}
-    return render(request, 'profiles/detail.html', context)
+    return render(request, 'profiles/edit.html', context)
 
 
 
@@ -69,16 +69,14 @@ def post_create(request):
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
         if post_form.is_valid():
-            # save(commit=False) will just make a copy/instance of the model
             new_post = post_form.save(commit=False)
             new_post.user = request.user
-            # save() to the db
             new_post.save()
-            return redirect('posts/index.html')
+            return redirect('profile_detail', user_id=request.user.id)
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form}
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/create.html', context)
 
 
 # Posts Index 

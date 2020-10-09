@@ -10,9 +10,18 @@
     font-family: 'Filson Soft', sans-serif;
 }
 
+.navbar-brand {
+    font-size: 27px;
+}
+
+.nav-link {
+    font-size: 17px;
+}
+
 .marketing{
     margin-top: 150px;
 }
+
 .splash-headings>p{
     font-family: 'Montserrat'
 }
@@ -57,6 +66,11 @@
 
 footer {
     bottom: 0;
+}
+
+.display-4 {
+    margin-bottom: 0;
+    font-size: 35px;
 }
 
 rounded-circle:hover {
