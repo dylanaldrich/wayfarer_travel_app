@@ -3,14 +3,16 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
+# Create your models here
 
-# Cities
-CITIES = (
-    ('SF', 'San Francisco'),
-    ('LD', 'London'),
-    ('GB', 'Gibraltar'),
-)
+# City
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=50)
+    image = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"{self.get_city_display()} on {self.country}"
 
 # Profile
 class Profile(models.Model):
@@ -34,11 +36,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     post_date = models.DateTimeField(auto_now_add=True)
-    city = models.CharField(
-        max_length=2,
-        choices=CITIES,
-        default=CITIES[0][0]
-    )
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -47,17 +45,4 @@ class Post(models.Model):
     class Meta:
         ordering = ['-post_date']
 
-# # City
-# class City(models.Model):
-#     country = models.CharField(max_length=50)
-#     image = models.CharField(max_length=250)
-#     name = models.CharField(
-#         max_length=2,
-#         choices=CITIES,
-#         default=CITIES[0][0]
-#     )
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f"{self.get_city_display()} on {self.country}"
 

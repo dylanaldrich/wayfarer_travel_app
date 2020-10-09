@@ -127,7 +127,12 @@ def cities_index(request):
     context = {'posts': posts, 'cities': cities}
     return render(request, 'cities/index.html', context)
 
-
+# Cities Show
+def cities_show(request):
+    cities = Post.objects.all()
+    post = Post.objects.get(id=post_id)
+    context = {'posts': posts, 'post': post}
+    return render(request, 'posts/show.html', context)
 
 # ------- User Auth -------#
 
