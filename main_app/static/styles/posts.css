@@ -39,7 +39,6 @@
 }
 
 /* ALL-POSTS INDEX */
-
 .all-posts-right{
     margin: 50px 20px;
     flex: 8 auto;
@@ -62,6 +61,10 @@ ul {
 .add-post-btn:hover {
     background-color: #FF9C20;
     border: 0;
+}
+
+.create-form-modal{
+    padding: 10px 20px;
 }
 
 .post-page-user{

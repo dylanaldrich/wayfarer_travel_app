@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Profile, Post, User
-from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm
+from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     signup_form = SignUpForm(request.POST)
     if signup_form.is_valid():
-        user = form.save()
+        user = signup_form.save()
         user.refresh_from_db()
         user.profile.name = signup_form.cleaned_data.get('name')
         user.profile.current_city = signup_form.cleaned_data.get('current_city')
@@ -81,7 +81,8 @@ def post_create(request):
 # Posts Index
 def post_index(request):
     posts = Post.objects.all()
-    context = {'posts': posts}
+    form = Post_Form(request.POST)
+    context = {'posts': posts, 'form': form}
     return render(request, 'posts/index.html', context)
 
 

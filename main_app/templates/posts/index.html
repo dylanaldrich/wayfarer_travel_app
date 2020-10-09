@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
     <div class='all-posts-container'>
@@ -23,7 +23,38 @@
 
 
         <div class='all-posts-right'>
-            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn">+</button>
+            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal">+</button>
+            <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createPostModalLabel">Login</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="card" method="POST" action="{% url 'post_create' %}">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn wayfarer-btn" value="Share!">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $('#createPostModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget) // Button that triggered the modal
+                            var modal = $(this)
+                            modal.find('.modal-title').text('Create a Post')
+                        })
+                    </script>
+
+
             <h1 class="posts-header">Most Recent Posts</h1>
             <ul>
                 {% for post in posts %}

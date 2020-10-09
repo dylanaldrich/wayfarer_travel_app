@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 
@@ -12,9 +12,9 @@
             {% if error %}
                 <p style="background-color:firebrick;">{{error}}</p>
             {% endif %}
-            <form class="card align-items-center p-4" method="POST" action="{% url 'post_create' %}">
+            <form class="card align-items-center" method="POST" action="{% url 'post_create' %}">
                 {% csrf_token %}
-                {{ post_form.as_p }}
+                {{ post_form|crispy }}
                 <button type="submit" class="btn wayfarer-btn">Share!</button>
             </form>
             </div>
