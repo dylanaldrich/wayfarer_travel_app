@@ -21,7 +21,7 @@ urlpatterns = [
     # POSTS
     path('posts/', views.post_index, name='post_index'), # WAIT SPRINT 2
     path('post/<int:post_id>/', views.post_detail, name='post_detail'), # BEATRIX TODO -- OPENS TO A NEW PAGE
-    path('post/create', views.post_create, name='post_create'), # LIA TODO -- WILL BE MODAL in the futurreeeeee
+    path('posts/create', views.post_create, name='post_create'), # LIA TODO -- WILL BE MODAL in the futurreeeeee
     path('post/<int:post_id>/edit/', views.post_edit, name='post_edit'), # WAIT SPRINT 2
     path('post/<int:post_id>/delete/', views.post_delete, name='post_delete'), # WAIT SPRINT 2
 

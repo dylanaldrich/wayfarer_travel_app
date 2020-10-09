@@ -47,21 +47,18 @@ def profile_detail(request, user_id):
     return render(request, 'profiles/detail.html', context)
 
 
-#Profile Edit
+#Profile Edit & Update
 def profile_edit(request, user_id):
-    profile = Profile.objects.get(id=user_id)
-    if request.user == profile.user:
-        if request.method == 'POST':
-            profile_form = Profile_Form(request.POST, instance=profile)
-            if profile_form.is_valid():
-                profile_form.save()
-                return redirect('profiles/detail.html', user_id=user_id)
-        else:
-            profile_form = Profile_Form(instance=profile)
-        context = {'profile': profile, 'profile_form': profile_form}
-        return render(request, 'profiles/detail.html', context)
-    return redirect('home')
-
+    profile = Profile.objects.get(user_id=user_id)
+    if request.method == 'POST':
+        profile_form = Profile_Form(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile_detail', user_id=user_id)
+    else:
+        profile_form = Profile_Form(instance=profile)
+    context = {'profile': profile, 'profile_form': profile_form}
+    return render(request, 'profiles/edit.html', context)
 
 
 # ------ Post views ------
@@ -71,16 +68,14 @@ def post_create(request):
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
         if post_form.is_valid():
-            # save(commit=False) will just make a copy/instance of the model
             new_post = post_form.save(commit=False)
             new_post.user = request.user
-            # save() to the db
             new_post.save()
-            return redirect('posts/index.html')
+            return redirect('profile_detail', user_id=request.user.id)
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form}
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/create.html', context)
 
 
 # Posts Index
@@ -171,6 +166,7 @@ def login_user(request):
         return render(request, 'registration/login.html', context)
     else:
         return render(request, 'registration/login.html')
+
 
 # Logout
 def logout_user(request):

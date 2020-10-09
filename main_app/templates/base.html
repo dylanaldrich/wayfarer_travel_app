@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -44,13 +45,12 @@
             <div class="form-inline mt-2 mt-md-0">
                 <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'profile_detail' user.id%}">Profile</a></li>
-                <li class="nav-item"> | </li>
-                <li class="nav-item"><a href="{% url 'logout' %}">Log Out</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' user.id%}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
                 {% else %}
                 <li class="nav-item">
                     <button type="button" class="btn btn-link signup-btn" data-toggle="modal" data-target="#loginModal">Login</button>
-                    <!------ LOG IN MODAL-------->
+                    <!------ LOG IN MODAL -------->
                     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -204,7 +204,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-sm-7">
-                            <p class="mb-0 f_400">© Wayfarer Inc.. 2020 All rights reserved.</p>
+                            <p class="mb-0 f_400">© Wayfarer Inc. 2020 All rights reserved.</p>
                         </div>
                         <div class="col-lg-6 col-sm-5 text-right">
                             <p>Made with <i class="icon_heart"></i><a href="#">💜</a></p>
@@ -219,6 +219,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
 
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">500x500</text></svg>
