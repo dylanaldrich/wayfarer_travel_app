@@ -27,7 +27,7 @@
                         <form class="card" method="POST" action="{% url 'post_edit' post.id%}">
                             {% csrf_token %}
                             {{ post_form|crispy }}
-                            <button type="submit" class="btn wayfarer-btn">Edit</button>
+                            <button type="submit" class="btn wayfarer-btn">Submit Changes</button>
                             <input type="hidden" name="next" value="{{ next }}">
                         </form>
                         </div>
