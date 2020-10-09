@@ -12,7 +12,7 @@ class City(models.Model):
     image = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"{self.get_city_display()} on {self.country}"
+        return self.name
 
 # Profile
 class Profile(models.Model):

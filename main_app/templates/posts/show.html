@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
   <a id="top"></a>
     <div class="all-posts-container">
@@ -9,22 +8,18 @@
                 <h1 class='sidebar-name'>Cities</h1>
             </div>
             <ul class="list-unstyled components sidebar">
+            {% for city in cities %}
                 <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/gFYN5Kx/image.png">San Francisco</a></div>
+                    <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
                 </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/L6sDrKf/image.png">London</a></div>
-                </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gabraltar</a></div>
-                </li>
+            {% endfor %}
             </ul>
         </div>
 
 
     <div class='post-detail-right'>
         <div class="post-show-container">
-            <div class="post-detail-image"><h1>{{ post.get_city_display }}</h1><h2>USA</h2></div>
+            <div class="post-detail-image"><h1>{{ post.city.name }}</h1><h2>{{ post.city.country }}</h2></div>
             <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
             <div class="post-detail-info"><p> Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago </p></div>
             <div class="post-detail-body"><h5>{{ post.body }} </h5></div>

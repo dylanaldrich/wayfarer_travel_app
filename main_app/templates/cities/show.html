@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class='all-posts-container'>
+
+        <div class='sidebar-left'>
+            <div class="sidebar-header">
+                <h1 class='sidebar-name'>Cities</h1>
+            </div>
+            <ul class="list-unstyled components sidebar">
+            {% for city in cities %}
+                <li class="sidebar-item">
+                    <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+
+
+        <div class='all-posts-right'>
+            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal">+</button>
+            <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createPostModalLabel">Login</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="card" method="POST" action="{% url 'post_create' %}">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn wayfarer-btn" value="Share!">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $('#createPostModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget) // Button that triggered the modal
+                            var modal = $(this)
+                            modal.find('.modal-title').text('Create a Post')
+                        })
+                    </script>
+
+
+            <h1 class="posts-header">Most Recent Posts in {{ city.name }}</h1>
+            <ul>
+                {% for post in posts %}
+                <li>
+                <div class="list-each-post-index">
+                    <div class="list-each-post-profile">
+                        <img  class="post-page-user" src="{{ post.user.profile.image }}">
+                    </div>
+                    <div class="all-post-show-container">
+                        <div class="posts-title">
+                            <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
+                            <p>{{ post.body }}</p>
+                            <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
+                            <a href="{% url "cities_show" post.city.id %}">{{ post.city.name }}</a></small>
+                        </div>
+                    </div>
+                </div>
+                <li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -9,18 +9,13 @@
                 <h1 class='sidebar-name'>Cities</h1>
             </div>
             <ul class="list-unstyled components sidebar">
+            {% for city in cities %}
                 <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/gFYN5Kx/image.png">San Francisco</a></div>
+                    <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
                 </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/L6sDrKf/image.png">London</a></div>
-                </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gabraltar</a></div>
-                </li>
+            {% endfor %}
             </ul>
         </div>
-
 
         <div class='all-posts-right'>
             <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal">+</button>
@@ -68,7 +63,7 @@
                             <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
                             <p>{{ post.body }}</p>
                             <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
-                            <a href="{% url "post_detail" post.id %}">{{ post.get_city_display }}</a></small>
+                            <a href="{% url "cities_show" post.city.id %}">{{ post.city.name }}</a></small>
                         </div>
                     </div>
                 </div>
