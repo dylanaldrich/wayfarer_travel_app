@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Profile, Post, User
+from .models import Profile, Post, User, City
 from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -123,16 +123,18 @@ def post_delete(request, post_id):
 # Cities Index
 def cities_index(request):
     posts = Post.objects.all()
-    cities = Post.objects.values_list('city', flat=True)
+    cities = City.objects.all()
     context = {'posts': posts, 'cities': cities}
     return render(request, 'cities/index.html', context)
 
 # Cities Show
-def cities_show(request):
-    cities = Post.objects.all()
-    post = Post.objects.get(id=post_id)
-    context = {'posts': posts, 'post': post}
-    return render(request, 'posts/show.html', context)
+def cities_show(request, city_id):
+    from django.conf import settings = Post.objects.all()
+    post = Post.objects.get(id=city_id)
+    cities = City.objects.all()
+    city = City.objects.get(id=city_id)
+    context = {'posts': posts, 'cities': cities, 'city': city}
+    return render(request, 'cities/show.html', context)
 
 # ------- User Auth -------#
 
