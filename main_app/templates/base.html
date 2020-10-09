@@ -1,4 +1,8 @@
 {% load static %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> submaster
 
 <!DOCTYPE html>
 <html lang='en'>
@@ -14,6 +18,7 @@
     <!-- Bootstrap carousel CSS -->
     <link href="https://getbootstrap.com/docs/4.5/examples/carousel/carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles/profile.css' %}" >
+    <link rel="stylesheet" href="{% static 'styles/posts.css' %}" >
     <link rel="stylesheet" href="{% static 'styles/footer.css' %}" >
     <link rel="stylesheet" href="{% static 'styles/main.css' %}" >
 
@@ -37,7 +42,7 @@
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cities</a>
+                    <a class="nav-link" href="{% url 'post_index' %}">Cities</a>
                 </li>
             </ul>
             <div class="form-inline mt-2 mt-md-0">

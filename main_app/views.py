@@ -40,14 +40,14 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
-# Profile Show 
+# Profile Show
 def profile_detail(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
 
 
-#Profile Edit
+#Profile Edit & Update
 def profile_edit(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     if request.method == 'POST':
@@ -61,7 +61,6 @@ def profile_edit(request, user_id):
     return render(request, 'profiles/edit.html', context)
 
 
-
 # ------ Post views ------
 
 # Posts Create
@@ -69,19 +68,17 @@ def post_create(request):
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
         if post_form.is_valid():
-            # save(commit=False) will just make a copy/instance of the model
             new_post = post_form.save(commit=False)
             new_post.user = request.user
-            # save() to the db
             new_post.save()
-            return redirect('posts/index.html')
+            return redirect('profile_detail', user_id=request.user.id)
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form}
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/create.html', context)
 
 
-# Posts Index 
+# Posts Index
 def post_index(request):
     posts = Post.objects.all()
     context = {'posts': posts}
@@ -90,8 +87,9 @@ def post_index(request):
 
 # Post Show
 def post_detail(request, post_id):
-    post = Post.object.get(id=post_id)
-    context = {'post': post}
+    posts = Post.objects.all()
+    post = Post.objects.get(id=post_id)
+    context = {'posts': posts, 'post': post}
     return render(request, 'posts/show.html', context)
 
 
@@ -121,7 +119,12 @@ def post_delete(request, post_id):
 
 # ------ City views ------- #
 
-
+# Cities Index
+def cities_index(request):
+    posts = Post.objects.all()
+    cities = Post.objects.values_list('city', flat=True)
+    context = {'posts': posts, 'cities': cities}
+    return render(request, 'cities/index.html', context)
 
 
 
@@ -163,6 +166,7 @@ def login_user(request):
         return render(request, 'registration/login.html', context)
     else:
         return render(request, 'registration/login.html')
+
 
 # Logout
 def logout_user(request):

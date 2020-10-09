@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<div class="big-container">
     <div class='posts-container'>
 
         <div class='sidebar-left'>
@@ -22,13 +22,15 @@
         </div>
 
 
-        <div class='post-detail-right'>
-            <div class="post-detail"><img src="https://i.ibb.co/gFYN5Kx/image.png"></div>
-            <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
-            <div class="post-detail-info"><p> Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago </p></div>
-            <div class="post-detail-title"><h5>{{ post.body }} </h5></div>
+        <div class='postspage-right'>
+            <h1 class="posts-header">Most Recent Posts</h1>
+            <ol>
+            {% for city in cities %}
+                <li> {{ city }} </li>
+            {% endfor %}
+            </ol>
         </div>
     </div>
-
+</div>
 {% endblock %}
 
