@@ -92,8 +92,9 @@ def post_index(request):
 
 # Post Show
 def post_detail(request, post_id):
-    post = Post.object.get(id=post_id)
-    context = {'post': post}
+    posts = Post.objects.all()
+    post = Post.objects.get(id=post_id)
+    context = {'posts': posts, 'post': post}
     return render(request, 'posts/show.html', context)
 
 

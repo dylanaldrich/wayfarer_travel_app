@@ -51,7 +51,7 @@ class Post(models.Model):
 # class City(models.Model):
 #     country = models.CharField(max_length=50)
 #     image = models.CharField(max_length=250)
-#     city = models.CharField(
+#     name = models.CharField(
 #         max_length=2,
 #         choices=CITIES,
 #         default=CITIES[0][0]
@@ -60,3 +60,4 @@ class Post(models.Model):
 
 #     def __str__(self):
 #         return f"{self.get_city_display()} on {self.country}"
+

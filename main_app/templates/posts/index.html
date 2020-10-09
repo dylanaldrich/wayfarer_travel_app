@@ -1,32 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="big-container">
+    <div class='posts-container'>
 
-<div class='page-container'>
-
-    <div class='page-left'>
-        <div class="sidebar-header">
-            <h3 class='profile-name'>Cities</h3>
+        <div class='sidebar-left'>
+            <div class="sidebar-header">
+                <h1 class='sidebar-name'>Cities</h1>
+            </div>
+            <ul class="list-unstyled components sidebar">
+                <li class="sidebar-item">
+                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/gFYN5Kx/image.png">San Francisco</a></div>
+                </li>
+                <li class="sidebar-item">
+                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/L6sDrKf/image.png">London</a></div>
+                </li>
+                <li class="sidebar-item">
+                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gabraltar</a></div>
+                </li>
+            </ul>
         </div>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="/">San Francisco</a>
-            </li>
-            <li>
-                <a href="#">London</a>
-            </li>
-            <li>
-                <a href="#">Seattle</a>
-            </li>
-        </ul>
-    </div>
 
 
-    <div class='page-right'>
-        <h1>List of Articles</h1>
-
+        <div class='postspage-right'>
+            <h1 class="posts-header">Most Recent Posts</h1>
+            <ol>
+            {% for post in posts %}
+                <li> <div class="posts-item"><a href="{% url 'post_detail' post.id %}"><img class="post-page-user" src="{{ post.user.profile.image }}">{{ post.title }} by {{ post.user }}</a></div></li>
+            {% endfor %}
+            </ol>
+        </div>
     </div>
 </div>
-
 {% endblock %}
 
