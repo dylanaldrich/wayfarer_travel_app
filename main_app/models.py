@@ -28,7 +28,7 @@ class Profile(models.Model):
         return self.user.username
 
 @receiver(post_save, sender=User)
-def update_profile_signal(sender, instance, created, **kwargs):
+def update_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
@@ -38,8 +38,8 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     post_date = models.DateTimeField(auto_now_add=True)
-    city = models.OneToOneField(City, on_delete=models.CASCADE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="city")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title} posted {self.post_date}"

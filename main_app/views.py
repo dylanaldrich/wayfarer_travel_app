@@ -93,7 +93,7 @@ def profile_edit(request, user_id):
         except:
             profile_form = Profile_Form()
             context = {'profile_form': profile_form}
-            return render(request, 'profiles/edit.html', context)  
+            return render(request, 'profiles/edit.html', context)
 
 
 # ------ Post views ------
@@ -102,12 +102,14 @@ def profile_edit(request, user_id):
 def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
-        post_form = Post_Form(request.POST)
+        post_form = Post_Form(data=request.POST)
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
             new_post.save()
-            return redirect('profile_detail', user_id=request.user.id)
+            return redirect('cities_index')
+        else:
+            return redirect('cities_index')
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form, 'cities': cities}
@@ -142,12 +144,12 @@ def post_edit(request, post_id):
             post_form = Post_Form(request.POST, instance=post)
             if post_form.is_valid():
                 post_form.save()
-                return redirect('posts/show.html', post_id=post_id)
+                return redirect('post_detail', post_id=post_id)
         else:
             post_form = Post_Form(instance=post)
         context = {'post': post, 'post_form': post_form, 'cities': cities}
-        return render(request, 'posts/show.html', context)
-    return redirect('posts/show.html')
+        return render(request, 'posts/edit.html', context)
+    return redirect('posts_index')
 
 # Post Delete
 def post_delete(request, post_id):
@@ -164,14 +166,17 @@ def post_delete(request, post_id):
 def cities_index(request):
     posts = Post.objects.all()
     cities = City.objects.all()
-    context = {'posts': posts, 'cities': cities}
+    form = Post_Form(request.POST)
+    context = {'posts': posts, 'cities': cities, 'form': form}
     return render(request, 'cities/index.html', context)
 
 # Cities Show
 def cities_show(request, city_id):
     cities = City.objects.all()
     city = City.objects.get(id=city_id)
-    context = {'cities': cities, 'city': city}
+    posts = Post.objects.filter(city=city.id)
+    form = Post_Form(request.POST)
+    context = {'cities': cities, 'city': city, 'form': form, 'posts': posts}
     return render(request, 'cities/show.html', context)
 
 # ------- User Auth -------#

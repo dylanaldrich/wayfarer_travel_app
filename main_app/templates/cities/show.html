@@ -53,18 +53,18 @@
 
             <h1 class="posts-header">Most Recent Posts in {{ city.name }}</h1>
             <ul>
-                {% for city in cities %}
+                {% for post in posts %}
                 <li>
                 <div class="list-each-post-index">
                     <div class="list-each-post-profile">
-                        <img  class="post-page-user" src="{{ city.image }}">
+                        <img  class="post-page-user" src="{{ post.user.profile.image.url }}">
                     </div>
                     <div class="all-post-show-container">
                         <div class="posts-title">
-                            <a href="{% url "cities_show" city.id %}"> <h5 class="posts-index-title">{{ city.post.title }}</h5> </a>
-                            <p>{{ city.post.body }}</p>
-                            <div class="posts-Info"><small>Submitted {{ city.post.post_date|timesince }} ago by <a href="#">{{ city.post.user }}</a> in
-                            <a href="{% url "cities_show" city.id %}">{{ city.name }}</a></small>
+                            <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
+                            <p>{{ post.body }}</p>
+                            <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
+                            <a href="{% url "cities_show" post.city.id %}">{{ post.city.name }}</a></small>
                         </div>
                     </div>
                 </div>
