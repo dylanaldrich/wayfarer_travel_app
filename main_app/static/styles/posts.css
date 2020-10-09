@@ -6,7 +6,7 @@
     display: flex;
     min-height: 70vh;
     margin: auto;
-    width: 80%;
+    width: 90%;
 }
 
 
@@ -24,6 +24,7 @@
     max-height: 80vh;
     background-color:whitesmoke;
     border-radius: 15px;
+    min-width: 300px;
 }
 
 .sidebar-item{
@@ -133,7 +134,7 @@ ul {
 }
 
 .post-detail-image{
-    background-image: url("https://i.ibb.co/gFYN5Kx/image.png");
+
     min-width: 100%;
     min-height: 300px;
     max-height: 300px;
