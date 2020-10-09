@@ -46,3 +46,18 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-post_date']
+
+# # City
+# class City(models.Model):
+#     country = models.CharField(max_length=50)
+#     image = models.CharField(max_length=250)
+#     name = models.CharField(
+#         max_length=2,
+#         choices=CITIES,
+#         default=CITIES[0][0]
+#     )
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f"{self.get_city_display()} on {self.country}"
+
