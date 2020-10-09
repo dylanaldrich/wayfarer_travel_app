@@ -10,31 +10,13 @@
             <ul class="list-unstyled components sidebar">
             {% for city in cities %}
                 <li class="sidebar-item">
-<<<<<<< HEAD
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/gFYN5Kx/image.png">San Francisco</a></div>
-                </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/L6sDrKf/image.png">London</a></div>
-                </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gibraltar</a></div>
-=======
                     <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
->>>>>>> submaster
                 </li>
             {% endfor %}
             </ul>
         </div>
 
 
-<<<<<<< HEAD
-        <div class='post-detail-right'>
-            <!-- Add name of the city for this post here -->
-            <div class="post-detail"><img src="https://i.ibb.co/gFYN5Kx/image.png"></div>
-            <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
-            <div class="post-detail-info"><p>Published by <a href="{% url 'profile_detail' post.user.id %}">{{ profile.name.title }}</a>, {{ post.post_date|timesince }} ago </p></div>
-            <div class="post-detail-title"><h5>{{ post.body }} </h5></div>
-=======
     <div class='post-detail-right'>
         <div class="post-show-container">
             <div class="post-detail-image"><h1>{{ post.city.name }}</h1><h2>{{ post.city.country }}</h2></div>
@@ -66,7 +48,6 @@
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
 
->>>>>>> submaster
         </div>
     </div>
 </div>
