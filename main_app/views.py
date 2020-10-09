@@ -48,18 +48,49 @@ def profile_detail(request, user_id):
 
 
 #Profile Edit & Update
+# def profile_edit(request, user_id):
+#     profile = Profile.objects.get(user_id=user_id)
+#     if request.method == 'POST':
+#         profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
+#         if profile_form.is_valid():
+#             profile_form.image = request.FILES['image']
+#             profile_form.save()
+#             return redirect('profile_detail', user_id=user_id)
+#     else:
+#         profile_form = Profile_Form(instance=profile)
+#     context = {'profile': profile, 'profile_form': profile_form}
+#     return render(request, 'profiles/edit.html', context)
+
+
 def profile_edit(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     if request.method == 'POST':
-        profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
-        if profile_form.is_valid():
-            profile_form.image = request.FILES['image']
-            profile_form.save()
-            return redirect('profile_detail', user_id=user_id)
+        try:
+            profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
+            # profile_form = Profile_Form(request.POST, request.FILES, instance=user.profile)
+            if profile_form.is_valid():
+                new_profile = profile_form.save(commit=False)
+                new_profile.user = request.user
+                profile.image = request.FILES['image']
+                new_profile.save()
+        except:
+            profile_form = Profile_Form(request.POST, request.FILES)
+            if profile_form.is_valid():
+                new_profile = profile_form.save(commit=False)
+                new_profile.user = request.user
+                profile.image = request.FILES['image']
+                new_profile.save()
+        return redirect('profile_detail', user_id=user_id)
     else:
-        profile_form = Profile_Form(instance=profile)
-    context = {'profile': profile, 'profile_form': profile_form}
-    return render(request, 'profiles/edit.html', context)
+        try:
+            profile_form = Profile_Form(instance=profile)
+            # profile_form = Profile_Form(instance=user.profile)
+            context = {'profile_form': profile_form}
+            return render(request, 'profiles/edit.html', context)
+        except:
+            profile_form = Profile_Form()
+            context = {'profile_form': profile_form}
+            return render(request, 'profiles/edit.html', context)  
 
 
 # ------ Post views ------
