@@ -61,7 +61,7 @@
                     <div class="all-post-show-container">
                         <div class="posts-title">
                             <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
-                            <p>{{ post.body }}</p>
+                            <p>{{ post.body|truncatewords:1000 }}</p>
                             <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
                             <a href="{% url "cities_show" post.city.id %}">{{ post.city.name }}</a></small>
                         </div>

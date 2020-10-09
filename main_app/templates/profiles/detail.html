@@ -65,9 +65,9 @@
                     </div>
                 </div>
             {% endfor %}
+            <script>$('.delete-post-btn').click(function(){return confirm(`Are you sure you want to delete this?`);})</script>
         {% endif %}
     </div>
     <!-- END POSTS LIST -->
 </div>
-<script>$('.delete-post-btn').click(function(){return confirm('Are you sure you want to delete this?');})</script>
 {% endblock %}
