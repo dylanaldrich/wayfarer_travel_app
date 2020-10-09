@@ -56,6 +56,13 @@
 .slide{
     opacity: 0.9;
 }
+
+.carousel-item > img {
+    bottom: 0;
+    max-width: 100%;
+    height: auto;
+}
+
 .splash-headings{
     margin: 20px;
 }
