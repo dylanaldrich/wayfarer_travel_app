@@ -40,7 +40,7 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
-# Profile Show 
+# Profile Show
 def profile_detail(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     context = {'profile': profile}
@@ -61,7 +61,6 @@ def profile_edit(request, user_id):
     return render(request, 'profiles/edit.html', context)
 
 
-
 # ------ Post views ------
 
 # Posts Create
@@ -79,7 +78,7 @@ def post_create(request):
     return render(request, 'posts/create.html', context)
 
 
-# Posts Index 
+# Posts Index
 def post_index(request):
     posts = Post.objects.all()
     context = {'posts': posts}
@@ -88,8 +87,9 @@ def post_index(request):
 
 # Post Show
 def post_detail(request, post_id):
-    post = Post.object.get(id=post_id)
-    context = {'post': post}
+    posts = Post.objects.all()
+    post = Post.objects.get(id=post_id)
+    context = {'posts': posts, 'post': post}
     return render(request, 'posts/show.html', context)
 
 
@@ -119,7 +119,12 @@ def post_delete(request, post_id):
 
 # ------ City views ------- #
 
-
+# Cities Index
+def cities_index(request):
+    posts = Post.objects.all()
+    cities = Post.objects.values_list('city', flat=True)
+    context = {'posts': posts, 'cities': cities}
+    return render(request, 'cities/index.html', context)
 
 
 
