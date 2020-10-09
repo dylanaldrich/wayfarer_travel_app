@@ -51,8 +51,9 @@ def profile_detail(request, user_id):
 def profile_edit(request, user_id):
     profile = Profile.objects.get(user_id=user_id)
     if request.method == 'POST':
-        profile_form = Profile_Form(request.POST, instance=profile)
+        profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
         if profile_form.is_valid():
+            profile_form.image = request.FILES['image']
             profile_form.save()
             return redirect('profile_detail', user_id=user_id)
     else:
@@ -89,7 +90,8 @@ def post_index(request):
 def post_detail(request, post_id):
     posts = Post.objects.all()
     post = Post.objects.get(id=post_id)
-    context = {'posts': posts, 'post': post}
+    profile = Profile.objects.get(user_id=post.user_id)
+    context = {'posts': posts, 'post': post, 'profile': profile}
     return render(request, 'posts/show.html', context)
 
 
@@ -110,11 +112,11 @@ def post_edit(request, post_id):
 
 # Post Delete
 def post_delete(request, post_id):
-  post = Post.objects.get(id=post_id)
-  if post.user == request.user:
-    Post.objects.get(id=post_id).delete()
+    post = Post.objects.get(id=post_id)
+    if post.user == request.user:
+        Post.objects.get(id=post_id).delete()
+        return redirect("posts_index")
     return redirect("posts_index")
-  return redirect("posts_index")
 
 
 # ------ City views ------- #

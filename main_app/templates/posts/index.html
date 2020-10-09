@@ -17,7 +17,7 @@
                     <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/L6sDrKf/image.png">London</a></div>
                 </li>
                 <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gabraltar</a></div>
+                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gibraltar</a></div>
                 </li>
             </ul>
         </div>
@@ -27,7 +27,7 @@
             <h1 class="posts-header">Most Recent Posts</h1>
             <ol>
             {% for post in posts %}
-                <li> <div class="posts-item"><a href="{% url 'post_detail' post.id %}"><img class="post-page-user" src="{{ post.user.profile.image }}">{{ post.title }} by {{ post.user }}</a></div></li>
+                <li><div class="posts-item"><a href="{% url 'post_detail' post.id %}">{{ post.title }} by {{ post.user }}</a></div></li>
             {% endfor %}
             </ol>
         </div>
