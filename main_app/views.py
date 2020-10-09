@@ -64,7 +64,7 @@ def profile_detail(request, user_id):
 
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
-    print("REQUEST METHOD", request.method)
+    print("REQUEST.FILES", request.FILES)
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
@@ -72,9 +72,8 @@ def profile_edit(request, user_id):
             if profile_form.is_valid():
                 new_profile = profile_form.save(commit=False)
                 new_profile.user = request.user
-                print('Made it to 75')
-                new_profile.image = request.FILES['image']
-                print('Made it to 77')
+                if request.FILES.get('image'):
+                    new_profile.image = request.FILES['image']
                 new_profile.save()
         except:
             profile_form = Profile_Form(request.POST, request.FILES)
