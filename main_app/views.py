@@ -106,12 +106,12 @@ def post_edit(request, post_id):
             post_form = Post_Form(request.POST, instance=post)
             if post_form.is_valid():
                 post_form.save()
-                return redirect('posts/show.html', post_id=post_id)
+                return redirect('post_detail', post_id=post_id)
         else:
             post_form = Post_Form(instance=post)
         context = {'post': post, 'post_form': post_form, 'cities': cities}
-        return render(request, 'posts/show.html', context)
-    return redirect('posts/show.html')
+        return render(request, 'posts/edit.html', context)
+    return redirect('posts_index')
 
 # Post Delete
 def post_delete(request, post_id):
@@ -128,14 +128,17 @@ def post_delete(request, post_id):
 def cities_index(request):
     posts = Post.objects.all()
     cities = City.objects.all()
-    context = {'posts': posts, 'cities': cities}
+    form = Post_Form(request.POST)
+    context = {'posts': posts, 'cities': cities, 'form': form}
     return render(request, 'cities/index.html', context)
 
 # Cities Show
 def cities_show(request, city_id):
     cities = City.objects.all()
     city = City.objects.get(id=city_id)
-    context = {'cities': cities, 'city': city}
+    posts = Post.objects.filter(city=city.id)
+    form = Post_Form(request.POST)
+    context = {'cities': cities, 'city': city, 'form': form, 'posts': posts}
     return render(request, 'cities/show.html', context)
 
 # ------- User Auth -------#
