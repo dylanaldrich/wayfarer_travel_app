@@ -27,4 +27,5 @@ urlpatterns = [
 
     # CITIES
     path('cities/', views.cities_index, name='cities_index'),
+    path('cities/<int:city_id>', views.cities_show, name='cities_show'),
 ]
