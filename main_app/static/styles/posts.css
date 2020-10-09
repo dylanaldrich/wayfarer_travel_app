@@ -54,6 +54,16 @@ ul {
     list-style-type: none;
 }
 
+.add-post-btn {
+    background-color: #F72AEE;
+    border: 0;
+}
+
+.add-post-btn:hover {
+    background-color: #FF9C20;
+    border: 0;
+}
+
 .post-page-user{
     width: 50px;
     height: 50px;

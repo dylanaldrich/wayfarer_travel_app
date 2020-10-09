@@ -23,6 +23,7 @@
 
 
         <div class='all-posts-right'>
+            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn">+</button>
             <h1 class="posts-header">Most Recent Posts</h1>
             <ul>
                 {% for post in posts %}
@@ -36,7 +37,7 @@
                             <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
                             <p>{{ post.body }}</p>
                             <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
-                            <a href="{% url "post_detail" post.id %}">{{ post.city }}</a></small>
+                            <a href="{% url "post_detail" post.id %}">{{ post.get_city_display }}</a></small>
                         </div>
                     </div>
                 </div>
