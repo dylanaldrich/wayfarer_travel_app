@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 # Base views
 def home(request):
@@ -41,8 +42,10 @@ def profiles_index(request):
 
 
 # Profile Show
-def profile_detail(request, user_id):
-    profile = Profile.objects.get(user_id=user_id)
+def profile_detail(request, slug):
+    print('slug', slug)
+    # profile = Profile.objects.get(user_id=user_id)
+    profile = Profile.objects.get(slug=slug)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
 
@@ -195,7 +198,7 @@ def signup(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('profile_detail', user_id=user.id)
+        return redirect('profile_detail', slug=user.profile.slug)
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -211,7 +214,7 @@ def login_user(request):
             # login
             login(request, user)
             #redirect
-            return redirect('profile_detail', user_id=request.user.id)
+            return redirect('profile_detail', slug=user.profile.slug)
         else:
             context = {'error':'Invalid Credentials'}
         return render(request, 'registration/login.html', context)
