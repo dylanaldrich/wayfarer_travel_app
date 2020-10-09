@@ -48,17 +48,52 @@ def profile_detail(request, user_id):
 
 
 #Profile Edit & Update
+# def profile_edit(request, user_id):
+#     profile = Profile.objects.get(user_id=user_id)
+#     if request.method == 'POST':
+#         profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
+#         if profile_form.is_valid():
+#             profile_form.image = request.FILES['image']
+#             profile_form.save()
+#             return redirect('profile_detail', user_id=user_id)
+#     else:
+#         profile_form = Profile_Form(instance=profile)
+#     context = {'profile': profile, 'profile_form': profile_form}
+#     return render(request, 'profiles/edit.html', context)
+
+
 def profile_edit(request, user_id):
-    profile = Profile.objects.get(user_id=user_id)
+    profile = Profile.objects.get(id=user_id)
+    print("REQUEST METHOD", request.method)
     if request.method == 'POST':
-        profile_form = Profile_Form(request.POST, instance=profile)
-        if profile_form.is_valid():
-            profile_form.save()
-            return redirect('profile_detail', user_id=user_id)
+        try:
+            profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
+            # profile_form = Profile_Form(request.POST, request.FILES, instance=user.profile)
+            if profile_form.is_valid():
+                new_profile = profile_form.save(commit=False)
+                new_profile.user = request.user
+                print('Made it to 75')
+                new_profile.image = request.FILES['image']
+                print('Made it to 77')
+                new_profile.save()
+        except:
+            profile_form = Profile_Form(request.POST, request.FILES)
+            if profile_form.is_valid():
+                new_profile = profile_form.save(commit=False)
+                new_profile.user = request.user
+                new_profile.image = request.FILES['image']
+                new_profile.save()
+        return redirect('profile_detail', user_id=user_id)
     else:
-        profile_form = Profile_Form(instance=profile)
-    context = {'profile': profile, 'profile_form': profile_form}
-    return render(request, 'profiles/edit.html', context)
+        try:
+            profile_form = Profile_Form(instance=profile)
+            # profile_form = Profile_Form(instance=user.profile)
+            context = {'profile_form': profile_form, 'profile': profile}
+            return render(request, 'profiles/edit.html', context)
+        except:
+            profile_form = Profile_Form()
+            context = {'profile_form': profile_form}
+            return render(request, 'profiles/edit.html', context)  
 
 
 # ------ Post views ------
@@ -93,7 +128,8 @@ def post_detail(request, post_id):
     posts = Post.objects.all()
     post = Post.objects.get(id=post_id)
     cities = City.objects.all()
-    context = {'posts': posts, 'post': post, 'cities': cities}
+    profile = Profile.objects.get(user_id=post.user_id)
+    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile}
     return render(request, 'posts/show.html', context)
 
 
@@ -115,11 +151,11 @@ def post_edit(request, post_id):
 
 # Post Delete
 def post_delete(request, post_id):
-  post = Post.objects.get(id=post_id)
-  if post.user == request.user:
-    Post.objects.get(id=post_id).delete()
+    post = Post.objects.get(id=post_id)
+    if post.user == request.user:
+        Post.objects.get(id=post_id).delete()
+        return redirect("posts_index")
     return redirect("posts_index")
-  return redirect("posts_index")
 
 
 # ------ City views ------- #
