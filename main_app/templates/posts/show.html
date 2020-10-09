@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-  <a id="top"></a>
-    <div class="all-posts-container">
-
-        <div class='sidebar-left'>
-            <div class="sidebar-header">
-                <h1 class='sidebar-name'>Cities</h1>
-            </div>
-            <ul class="list-unstyled components sidebar">
-            {% for city in cities %}
-                <li class="sidebar-item">
-                    <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
-                </li>
-            {% endfor %}
-            </ul>
+<a id="top"></a>
+<div class="all-posts-container">
+    <!-- Cities Menu -->
+    <div class='sidebar-left col-4'>
+        <div class="sidebar-header">
+            <h1 class='sidebar-name'>Cities</h1>
         </div>
-
+        <ul class="list-unstyled components sidebar">
+        {% for city in cities %}
+            <li class="sidebar-item">
+                <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <!-- End Cities Menu -->
 
     <div class='post-detail-right'>
         <div class="post-show-container">
@@ -49,7 +49,6 @@
                 </a>
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
-
         </div>
     </div>
 </div>

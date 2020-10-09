@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 # Base views
 def home(request):
@@ -41,8 +42,10 @@ def profiles_index(request):
 
 
 # Profile Show
-def profile_detail(request, user_id):
-    profile = Profile.objects.get(user_id=user_id)
+def profile_detail(request, slug):
+    print('slug', slug)
+    # profile = Profile.objects.get(user_id=user_id)
+    profile = Profile.objects.get(slug=slug)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
 
@@ -64,7 +67,7 @@ def profile_detail(request, user_id):
 
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
-    print("REQUEST METHOD", request.method)
+    print("REQUEST.FILES", request.FILES)
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
@@ -72,9 +75,8 @@ def profile_edit(request, user_id):
             if profile_form.is_valid():
                 new_profile = profile_form.save(commit=False)
                 new_profile.user = request.user
-                print('Made it to 75')
-                new_profile.image = request.FILES['image']
-                print('Made it to 77')
+                if request.FILES.get('image'):
+                    new_profile.image = request.FILES['image']
                 new_profile.save()
         except:
             profile_form = Profile_Form(request.POST, request.FILES)
@@ -149,11 +151,12 @@ def post_edit(request, post_id):
             post_form = Post_Form(instance=post)
         context = {'post': post, 'post_form': post_form, 'cities': cities}
         return render(request, 'posts/edit.html', context)
-    return redirect('posts_index')
+    return redirect('post_index')
 
 # Post Delete
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
+    print('request.user.id', request.user.id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
         return redirect('cities_index')
@@ -195,7 +198,7 @@ def signup(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect('profile_detail', user_id=user.id)
+        return redirect('profile_detail', slug=user.profile.slug)
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -211,7 +214,7 @@ def login_user(request):
             # login
             login(request, user)
             #redirect
-            return redirect('profile_detail', user_id=request.user.id)
+            return redirect('profile_detail', slug=user.profile.slug)
         else:
             context = {'error':'Invalid Credentials'}
         return render(request, 'registration/login.html', context)
