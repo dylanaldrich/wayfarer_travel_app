@@ -34,7 +34,7 @@
     <div class="container col-8 posts-list">
         {% if profile.user.post_set.count == 0 %}
             <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
-            <p><a class="btn btn-primary" href="#" role="button">Add Post</a></p>
+            <p><a class="btn btn-primary" href="{% url 'post_create' %}" role="button">Add Post</a></p>
         {% else %}
             {% for post in profile.user.post_set.all %}
                 <div class="card mb-3" style="max-width: 700px;">
