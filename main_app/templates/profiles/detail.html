@@ -58,7 +58,7 @@
                                     <button class="btn btn-info btn-sm">Edit</button>
                                 </a>
                                 <a href="#">
-                                    <button class="btn btn-info btn-sm btn-danger">Delete</button>
+                                    <button class="btn btn-info btn-sm btn-danger delete-post-btn">Delete</button>
                                 </a>
                             </div>
                         </div>
@@ -69,4 +69,5 @@
     </div>
     <!-- END POSTS LIST -->
 </div>
+<script>$('.delete-post-btn').click(function(){return confirm('Are you sure you want to delete this?');})</script>
 {% endblock %}
