@@ -93,7 +93,7 @@ def profile_edit(request, user_id):
         except:
             profile_form = Profile_Form()
             context = {'profile_form': profile_form}
-            return render(request, 'profiles/edit.html', context)  
+            return render(request, 'profiles/edit.html', context)
 
 
 # ------ Post views ------
@@ -102,12 +102,14 @@ def profile_edit(request, user_id):
 def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
-        post_form = Post_Form(request.POST)
+        post_form = Post_Form(data=request.POST)
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
             new_post.save()
-            return redirect('profile_detail', user_id=request.user.id)
+            return redirect('cities_index')
+        else:
+            return redirect('cities_index')
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form, 'cities': cities}

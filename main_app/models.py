@@ -38,7 +38,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     post_date = models.DateTimeField(auto_now_add=True)
-    city = models.OneToOneField(City, on_delete=models.CASCADE, related_name="city")
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="city")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
