@@ -12,7 +12,7 @@ class Post_Form(ModelForm):
 class Profile_Form(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'current_city']
+        fields = ['name', 'current_city', 'image']
 
 class SignUpForm(UserCreationForm):
     name = forms.CharField(max_length=25)

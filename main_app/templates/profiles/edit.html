@@ -6,17 +6,20 @@
     <h1 class="display-4">Edit {{ profile.name.title }}'s Profile</h1>
 </div>
 
-<div class="form-group container">
-    <div class="row justify-content-center">
-        <div class="col-sm-4">
-        {% if error %}
-            <p style="background-color:firebrick;">{{error}}</p>
-        {% endif %}
-        <form class="card align-items-center p-4" method="POST" action="{% url 'profile_edit' profile.user_id %}">
-            {% csrf_token %}
-            {{ profile_form.as_p }}
-            <button type="submit" class="btn wayfarer-btn">Update Profile</button>
-        </form>
+<!-- Edit profile form -->
+<div class="parent-container d-flex">
+    <div class="form-group container">
+        <div class="row justify-content-center">
+            <div class="col-sm-4">
+                {% if error %}
+                    <p style="background-color:firebrick;">{{error}}</p>
+                {% endif %}
+                <form class="card align-items-center p-4" enctype='multipart/form-data' method="POST" action="{% url 'profile_edit' profile.id %}">
+                    {% csrf_token %}
+                    {{ profile_form.as_p }}
+                    <button type="submit" class="btn wayfarer-btn">Update Profile</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

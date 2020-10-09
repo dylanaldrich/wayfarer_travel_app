@@ -120,3 +120,7 @@ h5 {
     padding: 1rem 2rem;
     margin-top: 21px;
 }
+
+.post-title:hover {
+    color: #0071FF;
+}

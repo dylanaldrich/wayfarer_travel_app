@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.files.storage import FileSystemStorage
+fs=FileSystemStorage(location='media/profile_image')
 
 # Create your models here
 
@@ -19,7 +21,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     current_city = models.CharField(max_length=25)
-    image = models.CharField(max_length=500, default="https://www.flaticon.com/svg/static/icons/svg/3288/3288532.svg")
+    image = models.ImageField(upload_to='profile_image', default='profile_image/default_profile_photo.svg')
     join_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
