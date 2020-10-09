@@ -156,8 +156,8 @@ def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect("posts_index")
-    return redirect("posts_index")
+        return redirect('cities_index')
+    return redirect('cities_index')
 
 
 # ------ City views ------- #
