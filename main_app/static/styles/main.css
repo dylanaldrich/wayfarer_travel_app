@@ -10,6 +10,10 @@
     font-family: 'Filson Soft', sans-serif;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .navbar-brand {
     font-size: 27px;
 }
