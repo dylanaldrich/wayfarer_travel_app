@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.core.files.storage import FileSystemStorage
+fs=FileSystemStorage(location='media/profile_image')
 
 # Create your models here
 
@@ -21,7 +23,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     current_city = models.CharField(max_length=25)
-    image = models.CharField(max_length=500, default="https://www.flaticon.com/svg/static/icons/svg/3288/3288532.svg")
+    image = models.ImageField(upload_to='profile_image', default='profile_image/default_profile_photo.svg')
     join_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=25, null=True, blank=True)
 
@@ -36,7 +38,7 @@ class Profile(models.Model):
         return self.user.username
 
 @receiver(post_save, sender=User)
-def update_profile_signal(sender, instance, created, **kwargs):
+def update_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
@@ -46,8 +48,8 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     post_date = models.DateTimeField(auto_now_add=True)
-    city = models.OneToOneField(City, on_delete=models.CASCADE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="city")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title} posted {self.post_date}"

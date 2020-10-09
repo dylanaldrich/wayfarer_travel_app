@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -45,7 +44,7 @@
             <div class="form-inline mt-2 mt-md-0">
                 <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' user.id %}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' user.profile.slug %}">Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
                 {% else %}
                 <li class="nav-item">

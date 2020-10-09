@@ -88,6 +88,10 @@ rounded-circle:hover {
     background: #973DFC;
 }
 
+.post-title:hover {
+    color: #0071FF;
+}
+
 /* SIGNUP FORM */
 .signup-container {
     margin: 100px auto;
