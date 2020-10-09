@@ -67,7 +67,7 @@ def profile_detail(request, slug):
 
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
-    print("REQUEST METHOD", request.method)
+    print("REQUEST.FILES", request.FILES)
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
@@ -75,9 +75,8 @@ def profile_edit(request, user_id):
             if profile_form.is_valid():
                 new_profile = profile_form.save(commit=False)
                 new_profile.user = request.user
-                print('Made it to 75')
-                new_profile.image = request.FILES['image']
-                print('Made it to 77')
+                if request.FILES.get('image'):
+                    new_profile.image = request.FILES['image']
                 new_profile.save()
         except:
             profile_form = Profile_Form(request.POST, request.FILES)
@@ -152,15 +151,15 @@ def post_edit(request, post_id):
             post_form = Post_Form(instance=post)
         context = {'post': post, 'post_form': post_form, 'cities': cities}
         return render(request, 'posts/edit.html', context)
-    return redirect('posts_index')
+    return redirect('post_index')
 
 # Post Delete
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
+    print('request.user.id', request.user.id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect("posts_index")
-    return redirect("posts_index")
+        return redirect('profile_detail', user_id=request.user.id)
 
 
 # ------ City views ------- #
