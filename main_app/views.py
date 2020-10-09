@@ -159,8 +159,7 @@ def post_delete(request, post_id):
     print('request.user.id', request.user.id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect('cities_index')
-    return redirect('cities_index')
+        return redirect('profile_detail', user_id=request.user.id)
 
 
 # ------ City views ------- #
@@ -226,5 +225,3 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
-
-
