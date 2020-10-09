@@ -14,7 +14,7 @@ urlpatterns = [
 
     # PROFILES
     path('profiles/', views.profiles_index, name='profiles_index'), # WAIT SPRINT 2
-    path('profile/<int:user_id>/', views.profile_detail, name='profile_detail'), # COMPLETE
+    path('profile/<slug:slug>/', views.profile_detail, name='profile_detail'), # COMPLETE
     path('profile/<int:user_id>/edit/', views.profile_edit, name='profile_edit'), # DYLAN TODO -- OPENS TO A NEW PAGE
     # path('profile/<int:user_id>/delete/', views.profile_delete, name='profile_delete'),
 

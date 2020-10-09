@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 # Base views
 def home(request):
@@ -41,8 +42,10 @@ def profiles_index(request):
 
 
 # Profile Show
-def profile_detail(request, user_id):
-    profile = Profile.objects.get(user_id=user_id)
+def profile_detail(request, slug):
+    print('slug', slug)
+    # profile = Profile.objects.get(user_id=user_id)
+    profile = Profile.objects.get(slug=slug)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
 
