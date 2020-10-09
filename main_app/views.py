@@ -124,7 +124,12 @@ def post_delete(request, post_id):
 
 # ------ City views ------- #
 
-
+# Cities Index
+def cities_index(request):
+    posts = Post.objects.all()
+    cities = Post.objects.values_list('city', flat=True)
+    context = {'posts': posts, 'cities': cities}
+    return render(request, 'cities/index.html', context)
 
 
 
