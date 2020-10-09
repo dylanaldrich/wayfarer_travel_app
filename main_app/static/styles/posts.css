@@ -150,7 +150,8 @@ ul {
 .post-detail-body{
     background-color:white;
     border-radius: 15px;
-    min-height: 500px;
+    min-height: 300px;
+    max-height: 300px;
     display: flex;
     justify-content: center;
     text-align: center;
