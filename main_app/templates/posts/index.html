@@ -52,7 +52,7 @@
 
             <h1 class="posts-header">Most Recent Posts</h1>
             <ul>
-                {% for post in posts %}
+                {% for post in posts|slice:":10" %}
                 <li>
                 <div class="list-each-post-index">
                     <div class="list-each-post-profile">
