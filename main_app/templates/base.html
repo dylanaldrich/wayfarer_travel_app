@@ -43,9 +43,8 @@
             <div class="form-inline mt-2 mt-md-0">
                 <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'profile_detail' user.id%}">Profile</a></li>
-                <li class="nav-item"> | </li>
-                <li class="nav-item"><a href="{% url 'logout' %}">Log Out</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' user.id%}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
                 {% else %}
                 <li class="nav-item">
                     <button type="button" class="btn btn-link signup-btn" data-toggle="modal" data-target="#loginModal">Login</button>

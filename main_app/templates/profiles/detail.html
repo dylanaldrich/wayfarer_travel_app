@@ -9,15 +9,15 @@
 <div class="parent-container d-flex">
     <div class="container col-3">
         <div class="card card-inverse card-info">
-            <img class="card-img-top" src="https://picsum.photos/200/150/?random">
+            <img class="card-img-top" src="{{ profile.image }}">
             <div class="card-block">
                 <figure class="profile profile-inline">
-                    <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
+                    <img src="{{ profile.image }}" class="profile-avatar" alt="">
                 </figure>
                 <h4 class="card-title">{{ profile.name.title }}</h4>
                 <div class="card-text">
                     <p>Current city: {{ profile.current_city.title }}</p>
-                    <p>Joined: {{ profile.join_date }}</p>
+                    <p>Joined: {{ profile.join_date|date:"F j, Y" }}</p>
                 </div>
             </div>
             <div class="card-footer">

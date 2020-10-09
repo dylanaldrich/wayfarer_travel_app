@@ -49,12 +49,12 @@ def profile_detail(request, user_id):
 
 #Profile Edit
 def profile_edit(request, user_id):
-    profile = Profile.objects.get(id=user_id)
+    profile = Profile.objects.get(user_id=user_id)
     if request.method == 'POST':
         profile_form = Profile_Form(request.POST, instance=profile)
         if profile_form.is_valid():
             profile_form.save()
-            return redirect('profiles/edit.html', user_id=user_id)
+            return redirect('profile_detail', user_id=user_id)
     else:
         profile_form = Profile_Form(instance=profile)
     context = {'profile': profile, 'profile_form': profile_form}
