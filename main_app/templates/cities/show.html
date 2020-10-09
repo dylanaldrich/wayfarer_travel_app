@@ -11,21 +11,12 @@
             <ul class="list-unstyled components sidebar">
             {% for city in cities %}
                 <li class="sidebar-item">
-<<<<<<< HEAD
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/gFYN5Kx/image.png">San Francisco</a></div>
-                </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/L6sDrKf/image.png">London</a></div>
-                </li>
-                <li class="sidebar-item">
-                    <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gibraltar</a></div>
-=======
                     <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
->>>>>>> submaster
                 </li>
             {% endfor %}
             </ul>
         </div>
+
 
         <div class='all-posts-right'>
             <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal">+</button>
@@ -60,12 +51,7 @@
                     </script>
 
 
-            <h1 class="posts-header">Most Recent Posts</h1>
-<<<<<<< HEAD
-            <ol>
-            {% for post in posts %}
-                <li><div class="posts-item"><a href="{% url 'post_detail' post.id %}">{{ post.title }} by {{ post.user }}</a></div></li>
-=======
+            <h1 class="posts-header">Most Recent Posts in {{ city.name }}</h1>
             <ul>
                 {% for post in posts %}
                 <li>
@@ -83,7 +69,6 @@
                     </div>
                 </div>
                 <li>
->>>>>>> submaster
             {% endfor %}
             </ul>
         </div>

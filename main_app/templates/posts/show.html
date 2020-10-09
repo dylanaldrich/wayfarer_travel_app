@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-    <div class='posts-container'>
+  <a id="top"></a>
+    <div class="all-posts-container">
 
         <div class='sidebar-left'>
             <div class="sidebar-header">
                 <h1 class='sidebar-name'>Cities</h1>
             </div>
             <ul class="list-unstyled components sidebar">
+            {% for city in cities %}
                 <li class="sidebar-item">
+<<<<<<< HEAD
                     <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/gFYN5Kx/image.png">San Francisco</a></div>
                 </li>
                 <li class="sidebar-item">
@@ -17,19 +18,58 @@
                 </li>
                 <li class="sidebar-item">
                     <div><a href="#"><img class="sidebar-btn" src="https://i.ibb.co/ZKzYfsP/image.png">Gibraltar</a></div>
+=======
+                    <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+>>>>>>> submaster
                 </li>
+            {% endfor %}
             </ul>
         </div>
 
 
+<<<<<<< HEAD
         <div class='post-detail-right'>
             <!-- Add name of the city for this post here -->
             <div class="post-detail"><img src="https://i.ibb.co/gFYN5Kx/image.png"></div>
             <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
             <div class="post-detail-info"><p>Published by <a href="{% url 'profile_detail' post.user.id %}">{{ profile.name.title }}</a>, {{ post.post_date|timesince }} ago </p></div>
             <div class="post-detail-title"><h5>{{ post.body }} </h5></div>
+=======
+    <div class='post-detail-right'>
+        <div class="post-show-container">
+            <div class="post-detail-image"><h1>{{ post.city.name }}</h1><h2>{{ post.city.country }}</h2></div>
+            <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
+            <div class="post-detail-info"><p> Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago </p></div>
+            <div class="post-detail-body"><h5>{{ post.body }} </h5></div>
+
+            <!-- ----------- SHARE BUTTONS ----------- -->
+            <div id="post-share-buttons">
+                <!-- Email -->
+                <a href="mailto:?Subject=A Post from assembIt&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20https://wayfarerGA.herokuapp.com/">
+                    <i class="fas fa-envelope"></i>
+                </a>
+
+                <!-- Facebook -->
+                <a href="http://www.facebook.com/sharer.php?u=https://wayfarerGA.herokuapp.com/post/{{post.id}}" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+
+                <!-- Reddit -->
+                <a href="http://reddit.com/submit?url=https://wayfarerGA.herokuapp.com/post/{{post.id}}&amp;title=I%20found%20this" target="_blank">
+                    <i class="fab fa-reddit"></i>
+                </a>
+
+                <!-- Twitter -->
+                <a href="https://twitter.com/share?url=https://wayfarerGA.herokuapp.com/post/{{post.id}}&amp;text=I%20found%20this&amp;hashtags=wayfarerGA" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <!-- ----------- SHARE BUTTONS ENDS ----------- -->
+
+>>>>>>> submaster
         </div>
     </div>
+</div>
 
 {% endblock %}
 
