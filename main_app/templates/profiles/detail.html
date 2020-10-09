@@ -54,17 +54,31 @@
                                 <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
                             </div>
                             <div class="card-footer">
+<<<<<<< HEAD
+                                <a href="{% url 'post_edit' post.id %}"><button class="btn btn-info btn-sm">Edit</button></a>
+                                <a href="{% url 'post_delete' post.id %}"><button class="btn btn-info btn-sm btn-danger delete-post-btn">Delete</button></a>
+
+||||||| 34ea7d2
+                                <a href="#">
+                                    <button class="btn btn-info btn-sm">Edit</button>
+                                </a>
+                                <a href="#">
+                                    <button class="btn btn-info btn-sm btn-danger">Delete</button>
+                                </a>
+=======
                                 <a href="{% url 'post_edit' post.id %}">
                                     <button class="btn btn-info btn-sm">Edit</button>
                                 </a>
                                 <a href="{% url 'post_delete' post.id %}">
                                     <button class="btn btn-info btn-sm btn-danger">Delete</button>
                                 </a>
+>>>>>>> submaster
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+            <script>$('.delete-post-btn').click(function(){return confirm(`Are you sure you want to delete this?`);})</script>
         {% endif %}
     </div>
     <!-- END POSTS LIST -->
