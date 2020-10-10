@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -117,7 +118,15 @@ def post_create(request):
 
 # Posts Index
 def post_index(request):
-    posts = Post.objects.all()
+    posts_list = Post.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts_list, 10)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
     context = {'posts': posts, 'form': form, 'cities': cities}
@@ -163,10 +172,18 @@ def post_delete(request, post_id):
 
 # Cities Index
 def cities_index(request):
-    posts = Post.objects.all()
+    posts_list = Post.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts_list, 10)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
-    context = {'posts': posts, 'cities': cities, 'form': form}
+    context = {'posts': posts, 'form': form, 'cities': cities}
     return render(request, 'cities/index.html', context)
 
 # Cities Show
@@ -203,6 +220,7 @@ def signup(request):
         return redirect('profile_detail', slug=user.profile.slug)
     else:
         context={
+            'errors': form.errors,
             'form': SignUpForm(),
         }
     return render(request, 'registration/signup.html', context)

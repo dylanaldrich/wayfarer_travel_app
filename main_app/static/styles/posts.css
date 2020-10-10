@@ -111,6 +111,10 @@ ul {
     color: #0071FF;
 }
 
+.pagination-pages{
+    margin: 20px;
+}
+
 /* POST DETAIL PAGE */
 
 .post-detail-right{
