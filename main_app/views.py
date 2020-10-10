@@ -145,7 +145,7 @@ def post_delete(request, post_id):
     print('request.user.id', request.user.id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect('profile_detail', user_id=request.user.id)
+        return redirect('profile_detail', slug=request.user.profile.slug)
 
 
 # ------ City views ------- #
