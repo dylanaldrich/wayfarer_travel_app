@@ -16,13 +16,6 @@
             {% endfor %}
             </ul>
         </div>
-        <ul class="list-unstyled components sidebar">
-        {% for city in cities %}
-            <li class="sidebar-item">
-                <div><a href="{% url "cities_show" city.id %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
-            </li>
-        {% endfor %}
-        </ul>
         <!-- End cities sidebar menu -->
 
     <div class='all-posts-right'>
