@@ -69,6 +69,16 @@
 
 <div><marquee>#1  “Once a year, go someplace you’ve never been before.” #2 “Never let your memories be greater than your dreams.” #3  “It is better to travel well than to arrive.” #4  “Do not dare not to dare.” #6  “A mind that is stretched by a new experience can never go back to its old dimensions.”</marquee></div>
 
+<div id='map' width="100%" style='height:400px'></div>
+   <script>
+    mapboxgl.accessToken = "pk.eyJ1IjoiZ2F3YXlmYXJlciIsImEiOiJja2czZXhxenYwOTdhMnFsd2hqNGdteGpiIn0.7kaVmm00I3FI1CXdKzZ4pQ";
+    var map = new mapboxgl.Map({
+     container: 'map',
+     style: 'mapbox://styles/mapbox/streets-v10'
+    });
+   </script>
+
+
 <script>
 const quotes = [
     "Once a year, go someplace you’ve never been before.",

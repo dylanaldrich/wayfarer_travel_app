@@ -36,6 +36,7 @@ def home(request):
         context={
             'errors': signup_form.errors,
             'signup_form': SignUpForm(),
+            'mapbox_access_token': 'pk.my_mapbox_access_token'
         }
     return render(request, 'home.html', context)
 
@@ -257,3 +258,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+# ------- MAP -------#
+
