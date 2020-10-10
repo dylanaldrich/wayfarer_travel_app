@@ -74,6 +74,23 @@
                 <li>
             {% endfor %}
             </ul>
+            {% if posts.has_other_pages %}
+                <div class="pagination-container">
+                    {% if posts.has_previous %}
+                        <div class="pagination-pages"><a href="?page={{ posts.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></div>
+                    {% endif %}
+                    {% for i in posts.paginator.page_range %}
+                    {% if posts.number == i %}
+                        <div class="pagination-pages">{{ i }} </div>
+                    {% else %}
+                        <div class="pagination-pages"><a href="?page={{ i }}">{{ i }}</a></div>
+                    {% endif %}
+                    {% endfor %}
+                    {% if posts.has_next %}
+                       <div class="pagination-pages"><a href="?page={{ posts.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></div>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

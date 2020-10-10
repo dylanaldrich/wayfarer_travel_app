@@ -111,8 +111,11 @@ ul {
     color: #0071FF;
 }
 
+.pagination-container{
+    display: flex;
+}
 .pagination-pages{
-    margin: 20px;
+    margin: auto 20px;
 }
 
 /* POST DETAIL PAGE */

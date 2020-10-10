@@ -75,21 +75,21 @@
             {% endfor %}
             </ul>
             {% if posts.has_other_pages %}
-                <ul class="pagination pagination-pages"">
+                <div class="pagination-container">
                     {% if posts.has_previous %}
-                    <li><a href="?page={{ posts.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></li>
+                        <div class="pagination-pages"><a href="?page={{ posts.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></div>
                     {% endif %}
                     {% for i in posts.paginator.page_range %}
                     {% if posts.number == i %}
-                        <li class="pagination-pages"><span class="pagination-pages">{{ i }} </span></li>
+                        <div class="pagination-pages">{{ i }} </div>
                     {% else %}
-                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        <div class="pagination-pages"><a href="?page={{ i }}">{{ i }}</a></div>
                     {% endif %}
                     {% endfor %}
                     {% if posts.has_next %}
-                    <li><a href="?page={{ posts.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></li>
+                       <div class="pagination-pages"><a href="?page={{ posts.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></div>
                     {% endif %}
-                </ul>
+                </div>
             {% endif %}
         </div>
     </div>
