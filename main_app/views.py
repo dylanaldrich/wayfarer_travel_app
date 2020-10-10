@@ -5,6 +5,8 @@ from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 
 # Create your views here.
@@ -21,8 +23,14 @@ def home(request):
         username = signup_form.cleaned_data.get('username')
         password = signup_form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
+        mail_subject = 'Welcome to Wayfarer'
+        message = render_to_string('registration/welcome_email.html', {
+                'user': user,})
+        to_email = form.cleaned_data.get('email')
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
         login(request, user)
-        return redirect('home')
+        return redirect('profile_detail', slug=user.profile.slug)
     else:
         signup_form = SignUpForm()
     return render(request, 'home.html', {'signup_form': signup_form})
@@ -50,21 +58,6 @@ def profile_detail(request, slug):
     return render(request, 'profiles/detail.html', context)
 
 
-#Profile Edit & Update
-# def profile_edit(request, user_id):
-#     profile = Profile.objects.get(user_id=user_id)
-#     if request.method == 'POST':
-#         profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
-#         if profile_form.is_valid():
-#             profile_form.image = request.FILES['image']
-#             profile_form.save()
-#             return redirect('profile_detail', user_id=user_id)
-#     else:
-#         profile_form = Profile_Form(instance=profile)
-#     context = {'profile': profile, 'profile_form': profile_form}
-#     return render(request, 'profiles/edit.html', context)
-
-
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
     print("REQUEST.FILES", request.FILES)
@@ -85,7 +78,7 @@ def profile_edit(request, user_id):
                 new_profile.user = request.user
                 new_profile.image = request.FILES['image']
                 new_profile.save()
-        return redirect('profile_detail', user_id=user_id)
+        return redirect('profile_detail', slug=request.user.profile.slug)
     else:
         try:
             profile_form = Profile_Form(instance=profile)
@@ -196,6 +189,12 @@ def signup(request):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
+        mail_subject = 'Welcome to Wayfarer'
+        message = render_to_string('registration/welcome_email.html', {
+                'user': user,})
+        to_email = form.cleaned_data.get('email')
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
