@@ -48,16 +48,16 @@ def api(request):
 
 # ----- Profile views -----
 
-# Profile detail
+# Profiles index
 def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
-# Profile Show
+# Profile detail
 def profile_detail(request, slug):
-    print('slug', slug)
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
+    print("profile.user.post_set.all: ", profile.user.post_set.all)
     context = {'profile': profile, 'form': form}
     return render(request, 'profiles/detail.html', context)
 
