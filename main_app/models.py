@@ -59,7 +59,7 @@ class Post(models.Model):
 
 # # Comments
 # class Comment(models.Model):
-#     talk = models.TextField(max_length=500)
+#     comment = models.TextField(max_length=500)
 #     comment_date = models.DateTimeField(auto_now_add=True)
 #     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)

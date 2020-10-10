@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 # Create your views here.
 # Base views
 def home(request):
-    signup_form = SignUpForm(request.POST)
+    signup_form = SignUpForm(data=request.POST)
     if signup_form.is_valid():
         user = signup_form.save()
         user.refresh_from_db()
@@ -26,14 +26,17 @@ def home(request):
         mail_subject = 'Welcome to Wayfarer'
         message = render_to_string('registration/welcome_email.html', {
                 'user': user,})
-        to_email = form.cleaned_data.get('email')
+        to_email = signup_form.cleaned_data.get('email')
         email = EmailMessage(mail_subject, message, to=[to_email])
         email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
-        signup_form = SignUpForm()
-    return render(request, 'home.html', {'signup_form': signup_form})
+        context={
+            'errors': signup_form.errors,
+            'signup_form': SignUpForm(),
+        }
+    return render(request, 'home.html', context)
 
 
 def about(request):
@@ -199,8 +202,10 @@ def signup(request):
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        context={
+            'form': SignUpForm(),
+        }
+    return render(request, 'registration/signup.html', context)
 
 # Login
 def login_user(request):
@@ -215,7 +220,7 @@ def login_user(request):
             #redirect
             return redirect('profile_detail', slug=user.profile.slug)
         else:
-            context = {'error':'Invalid Credentials'}
+            context = {'error':'Invalid Credentials - a true wanderer?'}
         return render(request, 'registration/login.html', context)
     else:
         return render(request, 'registration/login.html')
