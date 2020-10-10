@@ -58,7 +58,8 @@ def profile_detail(request, slug):
     print('slug', slug)
     # profile = Profile.objects.get(user_id=user_id)
     profile = Profile.objects.get(slug=slug)
-    context = {'profile': profile}
+    form = Post_Form(request.POST)
+    context = {'profile': profile, 'form': form}
     return render(request, 'profiles/detail.html', context)
 
 
@@ -226,7 +227,7 @@ def signup(request):
                 'user': user,})
         to_email = form.cleaned_data.get('email')
         email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
+        # email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
