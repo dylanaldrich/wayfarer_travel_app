@@ -225,7 +225,7 @@ def signup(request):
                 'user': user,})
         to_email = form.cleaned_data.get('email')
         email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
+        # email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
