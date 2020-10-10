@@ -17,14 +17,46 @@
     </div>
     <!-- End Cities Menu -->
 
+    <!-- Post -->
     <div class='post-detail-right'>
         <div class="post-show-container">
-            <div class="post-detail-image"><h1>{{ post.city.name }}</h1><h2>{{ post.city.country }}</h2></div>
-            <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center;}</style>
+            <div class="post-detail-image"><h1>{{ post.city.name }}</h1></div>
+            <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center top; background-size: cover;}</style>
             <div><img class="post-page-user" src="{{post.user.profile.image.url}}"> </div>
             <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
-            <div class="post-detail-info"><p> Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago </p></div>
-            <div class="post-detail-body"><h5>{{ post.body }} </h5></div>
+            <div class="post-detail-info">
+                <p>Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago</p>
+            </div>
+            {% if request.user.id == post.user.id %}
+                <div class='d-flex mb-4 justify-content-center'>
+                    <a href="{% url 'post_edit' post.id %}">
+                        <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                    </a>
+                    <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                        <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                    </a>
+                </div>
+            {% endif %}
+            <div class="post-detail-body"><h5>{{ post.body }}</h5></div>
+            
+            <!-- Delete Button Alert -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>$('.delete-post-btn').click(function(e){
+                    e.preventDefault();
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this post!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $('.delet-me-now').submit()
+                        }
+                    });
+                })</script>
 
             <!-- ----------- SHARE BUTTONS ----------- -->
             <div id="post-share-buttons">
