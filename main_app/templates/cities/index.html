@@ -69,7 +69,7 @@
                                 <a href="{% url 'post_detail' post.id %}">Read more...</a>
                                 {%endif%}</p>
                                 <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> in
-                                <a href="{% url "cities_show" post.city.id %}">{{ post.city.name }}</a></small>
+                                <a href="{% url "cities_show" post.city.slug %}">{{ post.city.name }}</a></small>
                                 {% if request.user.id == post.user.id %}
                                     <div class='d-flex mt-2'>
                                         <a href="{% url 'post_edit' post.id %}">
