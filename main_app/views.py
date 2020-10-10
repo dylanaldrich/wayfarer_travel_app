@@ -56,7 +56,6 @@ def profiles_index(request):
 # Profile Show
 def profile_detail(request, slug):
     print('slug', slug)
-    # profile = Profile.objects.get(user_id=user_id)
     profile = Profile.objects.get(slug=slug)
     context = {'profile': profile}
     return render(request, 'profiles/detail.html', context)
