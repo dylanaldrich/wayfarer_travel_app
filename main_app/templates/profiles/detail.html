@@ -65,7 +65,23 @@
                     </div>
                 </div>
             {% endfor %}
-            <script>$('.delete-post-btn').click(function(){return confirm(`Are you sure you want to delete this?`);})</script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script>$('.delete-post-btn').click(function(e){ e.preventDefault();swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this memory from your trip!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your memory file has been deleted!", {
+                    icon: "success",
+                    });
+                } else {
+                    swal("Your memory is safe!");
+                }
+            });})</script>
         {% endif %}
     </div>
     <!-- END POSTS LIST -->
