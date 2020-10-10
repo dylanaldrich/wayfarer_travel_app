@@ -50,21 +50,7 @@ def profile_detail(request, slug):
     return render(request, 'profiles/detail.html', context)
 
 
-#Profile Edit & Update
-# def profile_edit(request, user_id):
-#     profile = Profile.objects.get(user_id=user_id)
-#     if request.method == 'POST':
-#         profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
-#         if profile_form.is_valid():
-#             profile_form.image = request.FILES['image']
-#             profile_form.save()
-#             return redirect('profile_detail', user_id=user_id)
-#     else:
-#         profile_form = Profile_Form(instance=profile)
-#     context = {'profile': profile, 'profile_form': profile_form}
-#     return render(request, 'profiles/edit.html', context)
-
-
+# Profile Edit & Update
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
     print("REQUEST.FILES", request.FILES)
@@ -85,7 +71,7 @@ def profile_edit(request, user_id):
                 new_profile.user = request.user
                 new_profile.image = request.FILES['image']
                 new_profile.save()
-        return redirect('profile_detail', user_id=user_id)
+        return redirect('profile_detail', slug=request.user.profile.slug)
     else:
         try:
             profile_form = Profile_Form(instance=profile)
@@ -159,7 +145,7 @@ def post_delete(request, post_id):
     print('request.user.id', request.user.id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect('profile_detail', user_id=request.user.id)
+        return redirect('profile_detail', slug=request.user.profile.slug)
 
 
 # ------ City views ------- #
