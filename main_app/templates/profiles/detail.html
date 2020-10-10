@@ -37,8 +37,6 @@
 
     <!-- POSTS LIST -->
     <div class="container col-8 posts-list">
-        <h3>My Posts:
-            <span>
                 <!-- Add post modal -->
                 <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
                 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
@@ -71,14 +69,17 @@
                     })
                 </script>
                 <!-- End add post modal -->
-            </span>
-        </h3>
+        
         
 
         {% if profile.user.post_set.count == 0 %}
-            <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
-            <p><a class="btn btn-primary" href="{% url 'post_create' %}" role="button">Add Post</a></p>
+            {% if request.user == profile.user %}
+                <h4>You haven't made any posts yet.</h4>
+            {% else %}
+                <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
+            {% endif %}
         {% else %}
+            <h3>My Posts:</h3>
             {% for post in profile.user.post_set.all %}
                 <div class="card mb-3" style="max-width: 700px;">
                     <div class="row no-gutters">
@@ -119,12 +120,11 @@
                     dangerMode: true,
                 })
                 .then((willDelete) => {
-                if (willDelete) {
-                    $('.delet-me-now').submit()
-                }
+                    if (willDelete) {
+                        $('.delet-me-now').submit()
+                    }
                 });
-                })
-            </script>
+            })</script>
         {% endif %}
     </div>
     <!-- END POSTS LIST -->
