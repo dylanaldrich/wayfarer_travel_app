@@ -25,19 +25,17 @@
                     <div class="row justify-content-center">
                         <div class="col-sm-9">
                         {% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
+                            {% for field in form %}
+                                {% if form.errors %}
+                                    <div class="alert alert-warning" role="alert">Something's not right</div>
+                                {% endif %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                         <form class="card align-items-center" method="POST" action="{% url 'post_create' %}">
                             {% csrf_token %}
                             {{ post_form|crispy }}

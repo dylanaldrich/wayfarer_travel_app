@@ -38,7 +38,7 @@
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'post_index' %}">Cities</a>
+                    <a class="nav-link" href="{% url 'cities_index' %}">Cities</a>
                 </li>
             </ul>
             <div class="form-inline mt-2 mt-md-0">
@@ -54,13 +54,16 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                                    <h5 class="modal-title" id="loginModalLabel">Login Here</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <img src="https://www.flaticon.com/svg/static/icons/svg/3125/3125914.svg" width='150px' style="float: right;">
+                                    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+      {% endif %}
                                     <form method="POST" action="{% url 'login' %}">
                                         <div class="form-group login-form">
                                             {% csrf_token %}
@@ -86,8 +89,6 @@
                     <script>
                         $('#loginModal').on('show.bs.modal', function (event) {
                             var button = $(event.relatedTarget) // Button that triggered the modal
-                            var modal = $(this)
-                            modal.find('.modal-title').text('Login Here')
                         })
                     </script>
                 </li>
@@ -98,15 +99,18 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Sign Up Here</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Create an Account</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    {% if sign_up_form.errors %}
+                                        <div class="alert alert-danger" role="alert">{{ sign_up_form.errors }}</div>
+                                    {% endif %}
                                     <form method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
-                                    {{ signup_form|crispy }}
+                                    {{ sign_up_form|crispy }}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -119,8 +123,6 @@
                     <script>
                         $('#exampleModal').on('show.bs.modal', function (event) {
                             var button = $(event.relatedTarget) // Button that triggered the modal
-                            var modal = $(this)
-                            modal.find('.modal-title').text('Create an Account')
                         })
                     </script>
                 </li>
@@ -148,8 +150,8 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6">
                             <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Get in Touch</h3>
-                                <p>Don’t miss any updates of our new templates and extensions.!</p>
+                                <h3 class="f-title f_600 t_color f_size_18">Stay in Touch</h3>
+                                <p>Don’t miss any updates on travel news and tips!</p>
                                 <form action="#" class="f_subscribe_two mailchimp" method="post" novalidate="true" _lpchecked="1">
                                     <input type="text" name="EMAIL" class="form-control memail" placeholder="Email">
                                     <button class="btn btn_get btn_get_two" type="submit">Subscribe</button>
@@ -203,7 +205,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-sm-7">
-                            <p class="mb-0 f_400">© Wayfarer Inc. 2020 All rights reserved.</p>
+                            <p class="mb-0 f_400">© Wayfarer Inc. {% now "Y" %} All rights reserved.</p>
                         </div>
                         <div class="col-lg-6 col-sm-5 text-right">
                             <p>Made with <i class="icon_heart"></i><a href="#">💜</a></p>

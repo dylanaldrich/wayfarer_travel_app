@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main_app.context_processors.SignUpFormGlobal',
             ],
         },
     },
@@ -125,3 +126,9 @@ LOGOUT_REDIRECT_URL = '/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'wayfarer_project/media')
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'wayfarergaga@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587

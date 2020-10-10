@@ -20,6 +20,8 @@
     <div class='post-detail-right'>
         <div class="post-show-container">
             <div class="post-detail-image"><h1>{{ post.city.name }}</h1><h2>{{ post.city.country }}</h2></div>
+            <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center;}</style>
+            <div><img class="post-page-user" src="{{post.user.profile.image.url}}"> </div>
             <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
             <div class="post-detail-info"><p> Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago </p></div>
             <div class="post-detail-body"><h5>{{ post.body }} </h5></div>

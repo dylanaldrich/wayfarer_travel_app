@@ -5,12 +5,15 @@ from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
 # Base views
 def home(request):
-    signup_form = SignUpForm(request.POST)
+    signup_form = SignUpForm(data=request.POST)
     if signup_form.is_valid():
         user = signup_form.save()
         user.refresh_from_db()
@@ -21,11 +24,20 @@ def home(request):
         username = signup_form.cleaned_data.get('username')
         password = signup_form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
+        mail_subject = 'Welcome to Wayfarer'
+        message = render_to_string('registration/welcome_email.html', {
+                'user': user,})
+        to_email = signup_form.cleaned_data.get('email')
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
         login(request, user)
-        return redirect('home')
+        return redirect('profile_detail', slug=user.profile.slug)
     else:
-        signup_form = SignUpForm()
-    return render(request, 'home.html', {'signup_form': signup_form})
+        context={
+            'errors': signup_form.errors,
+            'signup_form': SignUpForm(),
+        }
+    return render(request, 'home.html', context)
 
 
 def about(request):
@@ -50,21 +62,7 @@ def profile_detail(request, slug):
     return render(request, 'profiles/detail.html', context)
 
 
-#Profile Edit & Update
-# def profile_edit(request, user_id):
-#     profile = Profile.objects.get(user_id=user_id)
-#     if request.method == 'POST':
-#         profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
-#         if profile_form.is_valid():
-#             profile_form.image = request.FILES['image']
-#             profile_form.save()
-#             return redirect('profile_detail', user_id=user_id)
-#     else:
-#         profile_form = Profile_Form(instance=profile)
-#     context = {'profile': profile, 'profile_form': profile_form}
-#     return render(request, 'profiles/edit.html', context)
-
-
+# Profile Edit & Update
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
     print("REQUEST.FILES", request.FILES)
@@ -85,7 +83,7 @@ def profile_edit(request, user_id):
                 new_profile.user = request.user
                 new_profile.image = request.FILES['image']
                 new_profile.save()
-        return redirect('profile_detail', user_id=user_id)
+        return redirect('profile_detail', slug=request.user.profile.slug)
     else:
         try:
             profile_form = Profile_Form(instance=profile)
@@ -120,7 +118,15 @@ def post_create(request):
 
 # Posts Index
 def post_index(request):
-    posts = Post.objects.all()
+    posts_list = Post.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts_list, 10)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
     context = {'posts': posts, 'form': form, 'cities': cities}
@@ -159,24 +165,41 @@ def post_delete(request, post_id):
     print('request.user.id', request.user.id)
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect('profile_detail', user_id=request.user.id)
+        return redirect('profile_detail', slug=request.user.profile.slug)
 
 
 # ------ City views ------- #
 
 # Cities Index
 def cities_index(request):
-    posts = Post.objects.all()
+    posts_list = Post.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts_list, 10)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
-    context = {'posts': posts, 'cities': cities, 'form': form}
+    context = {'posts': posts, 'form': form, 'cities': cities}
     return render(request, 'cities/index.html', context)
 
 # Cities Show
 def cities_show(request, city_id):
     cities = City.objects.all()
     city = City.objects.get(id=city_id)
-    posts = Post.objects.filter(city=city.id)
+    posts_list = Post.objects.filter(city=city.id)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts_list, 10)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    cities = City.objects.all()
     form = Post_Form(request.POST)
     context = {'cities': cities, 'city': city, 'form': form, 'posts': posts}
     return render(request, 'cities/show.html', context)
@@ -196,11 +219,20 @@ def signup(request):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
+        mail_subject = 'Welcome to Wayfarer'
+        message = render_to_string('registration/welcome_email.html', {
+                'user': user,})
+        to_email = form.cleaned_data.get('email')
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        context={
+            'errors': form.errors,
+            'form': SignUpForm(),
+        }
+    return render(request, 'registration/signup.html', context)
 
 # Login
 def login_user(request):
@@ -215,7 +247,7 @@ def login_user(request):
             #redirect
             return redirect('profile_detail', slug=user.profile.slug)
         else:
-            context = {'error':'Invalid Credentials'}
+            context = {'error':'Invalid Credentials - a true wanderer?'}
         return render(request, 'registration/login.html', context)
     else:
         return render(request, 'registration/login.html')
@@ -225,5 +257,3 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
-
-

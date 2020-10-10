@@ -61,7 +61,10 @@
                     <div class="all-post-show-container">
                         <div class="posts-title">
                             <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
-                            <p>{{ post.body }}</p>
+                            <p>{{ post.body|truncatechars:100 }}
+                            {%if post.body|length >= 100 %}
+                            <a href="{% url 'post_detail' post.id %}">read more...</a>
+                            {%endif%}</p>
                             <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
                             <a href="{% url "cities_show" post.city.id %}">{{ post.city.name }}</a></small>
                         </div>
@@ -70,6 +73,23 @@
                 <li>
             {% endfor %}
             </ul>
+            {% if posts.has_other_pages %}
+                <div class="pagination-container">
+                    {% if posts.has_previous %}
+                        <div class="pagination-pages"><a href="?page={{ posts.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></div>
+                    {% endif %}
+                    {% for i in posts.paginator.page_range %}
+                    {% if posts.number == i %}
+                        <div class="pagination-pages">{{ i }} </div>
+                    {% else %}
+                        <div class="pagination-pages"><a href="?page={{ i }}">{{ i }}</a></div>
+                    {% endif %}
+                    {% endfor %}
+                    {% if posts.has_next %}
+                       <div class="pagination-pages"><a href="?page={{ posts.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></div>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
