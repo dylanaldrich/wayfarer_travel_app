@@ -57,6 +57,7 @@ ul {
 .add-post-btn {
     background-color: #F72AEE;
     border: 0;
+    border-radius: 50%;
 }
 
 .add-post-btn:hover {
@@ -118,6 +119,7 @@ ul {
     margin: auto 20px;
 }
 
+
 /* POST DETAIL PAGE */
 
 .post-detail-right{
@@ -174,4 +176,18 @@ ul {
 .fab, .fas{
     font-size: 20px;
     letter-spacing: 5px;
+}
+
+.btn-circle.btn-xl {
+    width: 55px;
+    height: 55px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.fa-plus {
+    letter-spacing: 0;
+    font-size: 25px;
 }

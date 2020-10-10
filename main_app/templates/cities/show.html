@@ -19,7 +19,7 @@
 
 
         <div class='all-posts-right'>
-            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal">+</button>
+            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
             <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -55,24 +55,51 @@
             <ul>
                 {% for post in posts %}
                 <li>
-                <div class="list-each-post-index">
-                    <div class="list-each-post-profile">
-                        <img  class="post-page-user" src="{{ post.user.profile.image.url }}">
-                    </div>
-                    <div class="all-post-show-container">
-                        <div class="posts-title">
-                            <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
-                            <p>{{ post.body|truncatechars:100 }}
-                            {%if post.body|length >= 100 %}
-                            <a href="{% url 'post_detail' post.id %}">read more...</a>
-                            {%endif%}</p>
-                            <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> in
-                            <a href="{% url "cities_show" post.city.slug %}">{{ post.city.name }}</a></small>
+                    <div class="list-each-post-index">
+                        <div class="list-each-post-profile">
+                            <img  class="post-page-user" src="{{ post.user.profile.image.url }}">
+                        </div>
+                        <div class="all-post-show-container">
+                            <div class="posts-title">
+                                <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
+                                <p>{{ post.body|truncatechars:100 }}
+                                {%if post.body|length >= 100 %}
+                                <a href="{% url 'post_detail' post.id %}">read more...</a>
+                                {%endif%}</p>
+                                <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> in
+                                <a href="{% url "cities_show" post.city.show %}">{{ post.city.name }}</a></small>
+                                {% if request.user.id == post.user.id %}
+                                    <div class='d-flex mt-2'>
+                                        <a href="{% url 'post_edit' post.id %}">
+                                            <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                        </a>
+                                        <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                                        {% csrf_token %}
+                                            <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
                 <li>
-            {% endfor %}
+                {% endfor %}
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>$('.delete-post-btn').click(function(e){
+                    e.preventDefault();
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this post!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $('.delet-me-now').submit()
+                        }
+                    });
+                })</script>
             </ul>
             {% if posts.has_other_pages %}
                 <div class="pagination-container">
