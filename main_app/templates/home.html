@@ -38,7 +38,7 @@
     </a>
     <!-- End Carousel buttons -->
 </div>
-
+<div style="text-align: center;"><h3 id="textslide" class="animate__animated animate__lightSpeedInRight"></h3></div>
 <!-- Topics -->
 <div class="container marketing">
     <!-- Three columns of text below the carousel -->
@@ -66,4 +66,27 @@
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 </div><!-- /.container .marketing -->
+
+<div><marquee>#1  “Once a year, go someplace you’ve never been before.” #2 “Never let your memories be greater than your dreams.” #3  “It is better to travel well than to arrive.” #4  “Do not dare not to dare.” #6  “A mind that is stretched by a new experience can never go back to its old dimensions.”</marquee></div>
+
+<script>
+const quotes = [
+    "Once a year, go someplace you’ve never been before.",
+    "Never let your memories be greater than your dreams.",
+    "It is better to travel well than to arrive.",
+    "Do not dare not to dare.",
+    "A mind that is stretched by a new experience can never go back to its old dimensions.",
+    "Wherever you go, go with all your heart.",
+    "Why, I’d like nothing better than to achieve some bold adventure, worthy of our trip.",
+
+    ];
+
+let i = 0;
+
+setInterval(function() {
+    $("#textslide").html(quotes[i]);
+    i++;
+    if(i>=quotes.length){i=0;}
+}, 10 * 1000);</script>
+
 {% endblock %}
