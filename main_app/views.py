@@ -58,7 +58,8 @@ def profile_detail(request, slug):
     print('slug', slug)
     # profile = Profile.objects.get(user_id=user_id)
     profile = Profile.objects.get(slug=slug)
-    context = {'profile': profile}
+    form = Post_Form(request.POST)
+    context = {'profile': profile, 'form': form}
     return render(request, 'profiles/detail.html', context)
 
 

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-
 <div class="jumbotron">
     <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
 </div>
@@ -35,6 +35,44 @@
 
     <!-- POSTS LIST -->
     <div class="container col-8 posts-list">
+        <h3>My Posts:
+            <span>
+                <!-- Add post modal -->
+                <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
+                <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createPostModalLabel">Login</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="card" method="POST" action="{% url 'post_create' %}">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn wayfarer-btn" value="Share!">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $('#createPostModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget) // Button that triggers the modal
+                        var modal = $(this)
+                        modal.find('.modal-title').text('Create a Post')
+                    })
+                </script>
+                <!-- End add post modal -->
+            </span>
+        </h3>
+        
+
         {% if profile.user.post_set.count == 0 %}
             <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             <p><a class="btn btn-primary" href="{% url 'post_create' %}" role="button">Add Post</a></p>
@@ -67,24 +105,26 @@
                 </div>
             {% endfor %}
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-           <script>$('.delete-post-btn').click(function(e){
-            e.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-                $('.delet-me-now').submit()
-            }
-            });
-            })</script>
-
+            <script>$('.delete-post-btn').click(function(e){
+                e.preventDefault();
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    $('.delet-me-now').submit()
+                }
+                });
+                })
+            </script>
         {% endif %}
     </div>
     <!-- END POSTS LIST -->
 </div>
+
+
 {% endblock %}
