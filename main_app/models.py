@@ -14,6 +14,14 @@ class City(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=50)
     image = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=25, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = self.slug or slugify(self.name)
+        return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('cities_show', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name

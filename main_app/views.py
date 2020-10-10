@@ -186,10 +186,12 @@ def cities_index(request):
     context = {'posts': posts, 'form': form, 'cities': cities}
     return render(request, 'cities/index.html', context)
 
+
+
 # Cities Show
-def cities_show(request, city_id):
+def cities_show(request, slug):
     cities = City.objects.all()
-    city = City.objects.get(id=city_id)
+    city = City.objects.get(slug=slug)
     posts_list = Post.objects.filter(city=city.id)
     page = request.GET.get('page', 1)
     paginator = Paginator(posts_list, 10)
