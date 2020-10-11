@@ -43,7 +43,7 @@
                     </tbody>
                 </table>
             </div>
-            {% if request.user.id == profile.id %}
+            {% if request.user.id == profile.user.id %}
                 <div class="card-footer" style="text-align:center;">
                     <a href="{% url 'profile_edit' profile.id %}">
                         <button class="btn btn-info btn-sm">Edit</button>
@@ -60,7 +60,7 @@
     <!-- POSTS LIST -->
     <div class="container col-8 posts-list">
                 <!-- Add post modal -->
-            {% if request.user == profile.user %}
+                {% if request.user.id == profile.user.id %}
                 <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
                 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -97,7 +97,7 @@
 
 
         {% if profile.user.post_set.count == 0 %}
-            {% if request.user == profile.user %}
+            {% if request.user.id == profile.user.id %}
                 <h3>My Posts:</h3>
                     <h4>You haven't made any posts yet.</h4>
             {% else %}
@@ -105,7 +105,7 @@
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
-            {% if request.user == profile.user %}
+        {% if request.user.id == profile.user.id %}
                 <h3>My Posts:</h3>
             {% else %}
                 <h3>{{ profile.name }}'s' Posts:</h3>
