@@ -90,12 +90,13 @@
 
         {% if profile.user.post_set.count == 0 %}
             {% if request.user == profile.user %}
-                <h4>You haven't made any posts yet.</h4>
+                <h3>My Posts:</h3>
+                    <h4>You haven't made any posts yet.</h4>
             {% else %}
+            <h3>{{ profile.name }}'s' Posts:</h3>
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
-            <h3>My Posts:</h3>
             {% for post in profile.user.post_set.all %}
                 <div class="card mb-3" style="max-width: 700px;">
                     <div class="row no-gutters">
