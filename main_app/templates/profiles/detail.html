@@ -25,16 +25,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in profile.user.post_set.all %}
+                        {% for post in posts %}
                             <tr>
-                                <td>{{ post.city }}</td>
-                                <td>###</td>
-                            </tr>
+                                <td>{{ post }}</td>
+                                <td>{{ post }}</td>
                         {% endfor %}
+                            </tr>
                     </tbody>
                 </table>
             </div>
-            {% if request.user.id == profile.id %} 
+            {% if request.user.id == profile.id %}
                 <div class="card-footer" style="text-align:center;">
                     <a href="{% url 'profile_edit' profile.id %}">
                         <button class="btn btn-info btn-sm">Edit</button>
@@ -82,8 +82,8 @@
                     })
                 </script>
                 <!-- End add post modal -->
-        
-        
+
+
 
         {% if profile.user.post_set.count == 0 %}
             {% if request.user == profile.user %}
@@ -107,7 +107,7 @@
                                 <p class="card-text">{{ post.body|truncatewords:30 }}</p>
                                 <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
                             </div>
-                            {% if request.user.id == profile.id %} 
+                            {% if request.user.id == profile.id %}
                                 <div class="card-footer" style="text-align: right;">
                                     <a href="{% url 'post_edit' post.id %}">
                                         <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
