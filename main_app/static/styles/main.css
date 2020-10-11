@@ -132,3 +132,21 @@ rounded-circle:hover {
     font-size: 1.50rem;
     text-align: center;
 }
+
+.btn-info {
+    background-color: #F72AEE;
+    border-color: orange;
+}
+
+.btn-info:hover {
+    background-color: orange;
+}
+
+/* #delete-button {
+    background-color: orange;
+    border-color: #F72AEE;
+}
+
+#delete-button:hover {
+    background-color: #F72AEE;
+} */
