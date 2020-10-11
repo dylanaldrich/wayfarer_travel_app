@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
 # Create your views here.
@@ -59,7 +60,9 @@ def profile_detail(request, slug):
     print('slug', slug)
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
-    context = {'profile': profile, 'form': form}
+    cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
+
+    context = {'profile': profile, 'form': form, 'cities': cities}
     return render(request, 'profiles/detail.html', context)
 
 
