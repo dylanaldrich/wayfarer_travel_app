@@ -124,7 +124,7 @@
                                 <p class="card-text">{{ post.body|truncatewords:30 }}</p>
                                 <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
                             </div>
-                            {% if request.user.id == profile.id %}
+                            {% if request.user.id == profile.user.id %}
                                 <div class="card-footer" style="text-align: right;">
                                     <a href="{% url 'post_edit' post.id %}">
                                         <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
