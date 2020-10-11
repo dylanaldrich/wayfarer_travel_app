@@ -3,20 +3,20 @@
 {% block content %}
 
 <div class='all-posts-container'>
-        <!-- End cities sidebar menu -->
-        <div class='sidebar-left'>
-            <div class="sidebar-header">
-                <h1 class='sidebar-name'>Cities</h1>
-            </div>
-            <ul class="list-unstyled components sidebar">
-            {% for city in cities %}
-                <li class="sidebar-item">
-                    <div><a href="{% url "cities_show" city.slug %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
-                </li>
-            {% endfor %}
-            </ul>
+    <!-- End cities sidebar menu -->
+    <div class='sidebar-left'>
+        <div class="sidebar-header">
+            <h1 class='sidebar-name'>Cities</h1>
         </div>
-        <!-- End cities sidebar menu -->
+        <ul class="list-unstyled components sidebar">
+        {% for city in cities %}
+            <li class="sidebar-item">
+                <div><a href="{% url "cities_show" city.slug %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <!-- End cities sidebar menu -->
 
     <div class='all-posts-right'>
         <!-- Add post modal -->
@@ -58,7 +58,7 @@
                 {% for post in posts %}
                     <li>
                     <div class="list-each-post-index">
-                        <div class="list-each-post-profile d-flex flex-column justify-content-center align-items-center">
+                        <div class="list-each-post-profile justify-content-center align-items-center">
                             <img  class="post-page-user" src="{{ post.user.profile.image.url }}">
                         </div>
                         <div class="all-post-show-container">
@@ -76,9 +76,9 @@
                                             <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
                                         </a>
                                         <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
-                                        {% csrf_token %}
+                                            {% csrf_token %}
                                             <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
-                                        </a>
+                                        </form>
                                     </div>
                                 {% endif %}
                             </div>
