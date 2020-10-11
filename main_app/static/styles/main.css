@@ -69,6 +69,11 @@ ul {
     height: auto;
 }
 
+#textslide {
+    font-style: italic;
+    font-family: 'Montserrat';
+}
+
 .splash-headings{
     margin: 20px;
 }
