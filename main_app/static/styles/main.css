@@ -98,3 +98,37 @@ rounded-circle:hover {
 .signup-container {
     margin: 100px auto;
 }
+
+/* CITIES SIDEBAR */
+
+.sidebar-name {
+    color: whitesmoke;
+}
+
+.sidebar-left {
+    background-color: #973DFC;
+    color: white;
+}
+
+.sidebar-btn {
+    border: 2px solid whitesmoke
+}
+
+.cities-name-link {
+    color: whitesmoke;
+}
+
+/* POSTS */
+
+#edit-post-jumbotron {
+    background-color: #973DFC;
+    max-width: 286px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#edit-post-header {
+    color: whitesmoke;
+    font-size: 1.50rem;
+    text-align: center;
+}
