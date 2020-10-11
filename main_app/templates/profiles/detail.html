@@ -25,16 +25,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in profile.user.post_set.all %}
                             <tr>
-                                <td>{{ post.city }}</td>
-                                <td>###</td>
+                                <td>Gibraltar</td>
+                                <td>{{gid|length}}</td>
                             </tr>
-                        {% endfor %}
+                            <tr>
+                                <td>London</td>
+                                <td>{{lnd|length}}</td>
+                            </tr>
+                            <tr>
+                                <td>San Francisco</td>
+                                <td>{{sf|length}}</td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
-            {% if request.user.id == profile.id %} 
+            {% if request.user.id == profile.id %}
                 <div class="card-footer" style="text-align:center;">
                     <a href="{% url 'profile_edit' profile.id %}">
                         <button class="btn btn-info btn-sm">Edit</button>
@@ -82,8 +88,8 @@
                     })
                 </script>
                 <!-- End add post modal -->
-        
-        
+
+
 
         {% if profile.user.post_set.count == 0 %}
             {% if request.user == profile.user %}
@@ -107,7 +113,7 @@
                                 <p class="card-text">{{ post.body|truncatewords:30 }}</p>
                                 <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
                             </div>
-                            {% if request.user.id == profile.id %} 
+                            {% if request.user.id == profile.id %}
                                 <div class="card-footer" style="text-align: right;">
                                     <a href="{% url 'post_edit' post.id %}">
                                         <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
