@@ -98,3 +98,22 @@ rounded-circle:hover {
 .signup-container {
     margin: 100px auto;
 }
+
+/* MAP */
+.marker {
+    background-image: url('https://www.flaticon.com/svg/static/icons/svg/3180/3180209.svg');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .mapboxgl-popup {
+    max-width: 200px;
+  }
+
+  .mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+  }

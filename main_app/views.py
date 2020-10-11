@@ -8,12 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-<<<<<<< HEAD
-from django.db.models import Q
-||||||| d138993
-=======
 from django.db.models import Count, Q
->>>>>>> beatrix
 
 
 # Create your views here.
