@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count, Q
 
 
 # Create your views here.
@@ -36,6 +37,7 @@ def home(request):
         context={
             'errors': signup_form.errors,
             'signup_form': SignUpForm(),
+            'mapbox_access_token': 'pk.my_mapbox_access_token'
         }
     return render(request, 'home.html', context)
 
@@ -53,43 +55,56 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
-# Profile detail
+# # Profile detail
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
-    posts = Post.objects.filter(user_id=profile.id)
-    post_cities = []
-    for post in posts:
-        post_cities.append(post.city.name)
-
-
-    def countFreq(arr, n): 
-        distinct_post_cities = []
-        city_posts_count = []
-        # Mark all array elements as not visited 
-        visited = [False for i in range(n)] 
-
-        # Traverse through array elements and count frequencies 
-        for i in range(n):
-            # Skip this element if already processed 
-            if (visited[i] == True): 
-                continue
-        
-            # Count frequency 
-            count = 1
-            for j in range(i + 1, n, 1): 
-                if (arr[i] == arr[j]): 
-                    visited[j] = True
-                    count += 1
-            
-            distinct_post_cities.append(arr[i])
-            city_posts_count.append(count)
-        print('Distinct cities: ', distinct_post_cities)
-        print('post count per city:', city_posts_count)
-    
-    countFreq(post_cities, len(post_cities))
-    context = {'profile': profile, 'form': form}
+    posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
+    cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
+    sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+    ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
+    gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
+    # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+    context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
     return render(request, 'profiles/detail.html', context)
+
+
+# def profile_detail(request, slug):
+#     profile = Profile.objects.get(slug=slug)
+#     form = Post_Form(request.POST)
+#     posts = Post.objects.filter(user_id=profile.id)
+#     post_cities = []
+#     for post in posts:
+#         post_cities.append(post.city.name)
+
+
+#     def countFreq(arr, n):
+#         distinct_post_cities = []
+#         city_posts_count = []
+#         # Mark all array elements as not visited
+#         visited = [False for i in range(n)]
+
+#         # Traverse through array elements and count frequencies
+#         for i in range(n):
+#             # Skip this element if already processed
+#             if (visited[i] == True):
+#                 continue
+
+#             # Count frequency
+#             count = 1
+#             for j in range(i + 1, n, 1):
+#                 if (arr[i] == arr[j]):
+#                     visited[j] = True
+#                     count += 1
+
+#             distinct_post_cities.append(arr[i])
+#             city_posts_count.append(count)
+#         print('Distinct cities: ', distinct_post_cities)
+#         print('post count per city:', city_posts_count)
+
+#     countFreq(post_cities, len(post_cities))
+#     context = {'profile': profile, 'form': form}
+#     return render(request, 'profiles/detail.html', context)
 
 
 # Profile Edit & Update
@@ -293,3 +308,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+# ------- MAP -------#
+

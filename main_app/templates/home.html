@@ -53,11 +53,17 @@
 
     let i = 0;
 
+
+    window.onload = function() {
+        $("#textslide").html(quotes[0]);
+    };
+
     setInterval(function() {
         $("#textslide").html(quotes[i]);
         i++;
         if(i>=quotes.length){i=0;}
-    }, 10 * 1000);
+    }, 4000);
+
 </script>
 
 <div style="text-align: center;">
@@ -93,7 +99,79 @@
     </div><!-- /.row -->
 </div><!-- /.container .marketing -->
 
-<div><marquee>#1  “Once a year, go someplace you’ve never been before.” #2 “Never let your memories be greater than your dreams.” #3  “It is better to travel well than to arrive.” #4  “Do not dare not to dare.” #6  “A mind that is stretched by a new experience can never go back to its old dimensions.”</marquee></div>
 
+<div><marquee><h4>Click On Markers in Map Below for Links to Posts</h4></marquee></div>
+
+
+<!-- -------------- MAP ---------------- -->
+<div id='map' width="100%" style='height:400px'></div>
+   <script>
+    mapboxgl.accessToken = "pk.eyJ1IjoiZ2F3YXlmYXJlciIsImEiOiJja2czZXhxenYwOTdhMnFsd2hqNGdteGpiIn0.7kaVmm00I3FI1CXdKzZ4pQ";
+    var map = new mapboxgl.Map({
+     container: 'map',
+     style: 'mapbox://styles/mapbox/streets-v10',
+     center: [-40, 40],
+    zoom: 2.0
+    });
+
+var geojson = {
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.127, 51.507]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'London, UK.',
+      html: 'cities/san-francisco'
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [-122.414, 37.776]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'San Francisco, USA',
+      html: 'cities/san-francisco',
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [5.353, 36.140]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'Gibraltar, BOT',
+      html: 'cities/san-francisco'
+    }
+  }]
+};
+
+
+// add markers to map
+geojson.features.forEach(function(marker) {
+
+// create a HTML element for each feature
+    var el = document.createElement('div');
+    el.className = 'marker';
+
+// make a marker for each feature and add to the map
+new mapboxgl.Marker(el)
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<a href="' + marker.properties.html + '"><h5>' + marker.properties.description + '</h5></a>'))
+    .addTo(map);
+
+});
+</script>
+
+<!-- -------------- END OF MAP ---------------- -->
 
 {% endblock %}
