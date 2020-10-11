@@ -12,6 +12,9 @@
     font-family: 'Filson Soft', sans-serif;
 }
 
+body {
+    padding-top: 6rem;
+}
 ul {
     list-style-type: none;
 }

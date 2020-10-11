@@ -65,7 +65,7 @@
                             <div class="posts-title">
                                 <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
                                 <p>{{ post.body|truncatechars:100 }}
-                                {%if post.body|length >= 100 %}
+                                {% if post.body|length >= 100 %}
                                 <a href="{% url 'post_detail' post.id %}">Read more...</a>
                                 {%endif%}</p>
                                 <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> in

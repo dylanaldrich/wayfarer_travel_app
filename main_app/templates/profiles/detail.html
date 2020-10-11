@@ -2,9 +2,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
-</div>
+
+{% if request.user == profile.user %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
+    </div>
+{% endif %}
 
 <div class="parent-container d-flex">
     <!-- PROFILE INFO CARD -->
