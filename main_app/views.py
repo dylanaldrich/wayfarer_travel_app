@@ -57,7 +57,37 @@ def profiles_index(request):
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
-    print("profile.user.post_set.all: ", profile.user.post_set.all)
+    posts = Post.objects.filter(user_id=profile.id)
+    post_cities = []
+    for post in posts:
+        post_cities.append(post.city.name)
+
+
+    def countFreq(arr, n): 
+        distinct_post_cities = []
+        city_posts_count = []
+        # Mark all array elements as not visited 
+        visited = [False for i in range(n)] 
+
+        # Traverse through array elements and count frequencies 
+        for i in range(n):
+            # Skip this element if already processed 
+            if (visited[i] == True): 
+                continue
+        
+            # Count frequency 
+            count = 1
+            for j in range(i + 1, n, 1): 
+                if (arr[i] == arr[j]): 
+                    visited[j] = True
+                    count += 1
+            
+            distinct_post_cities.append(arr[i])
+            city_posts_count.append(count)
+        print('Distinct cities: ', distinct_post_cities)
+        print('post count per city:', city_posts_count)
+    
+    countFreq(post_cities, len(post_cities))
     context = {'profile': profile, 'form': form}
     return render(request, 'profiles/detail.html', context)
 
