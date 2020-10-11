@@ -148,6 +148,7 @@ rounded-circle:hover {
 
 .btn-info:hover {
     background-color: orange;
+    border-color: #F72AEE;
 }
 
 /* #delete-button {
@@ -168,13 +169,13 @@ rounded-circle:hover {
     height: 30px;
     border-radius: 50%;
     cursor: pointer;
-  }
+}
 
-  .mapboxgl-popup {
+.mapboxgl-popup {
     max-width: 200px;
-  }
+}
 
-  .mapboxgl-popup-content {
+.mapboxgl-popup-content {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
-  }
+}
