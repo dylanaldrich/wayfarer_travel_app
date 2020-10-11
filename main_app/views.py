@@ -61,9 +61,11 @@ def profile_detail(request, slug):
     form = Post_Form(request.POST)
     posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
     cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
+    sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+    ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
+    gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
     # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-    # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco')
-    context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts}
+    context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
     return render(request, 'profiles/detail.html', context)
 
 

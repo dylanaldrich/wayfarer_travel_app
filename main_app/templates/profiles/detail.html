@@ -16,9 +16,6 @@
                 <div class="card-text">
                     <p>Current city: {{ profile.current_city.title }}</p>
                     <p>Joined: {{ profile.join_date|date:"F j, Y" }}</p>
-                    <p>
-                    {{ cities }}
-                    </p>
                 </div>
                 <table class="table">
                     <thead>
@@ -28,11 +25,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in posts %}
                             <tr>
-                                <td>{{ post }}</td>
-                                <td>{{ post }}</td>
-                        {% endfor %}
+                                <td>Gibraltar</td>
+                                <td>{{gid|length}}</td>
+                            </tr>
+                            <tr>
+                                <td>London</td>
+                                <td>{{lnd|length}}</td>
+                            </tr>
+                            <tr>
+                                <td>San Francisco</td>
+                                <td>{{sf|length}}</td>
                             </tr>
                     </tbody>
                 </table>
