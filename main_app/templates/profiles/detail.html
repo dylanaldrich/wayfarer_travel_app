@@ -12,14 +12,27 @@
         <div class="card card-inverse card-info">
             <img class="card-img-top" src="{{ profile.image.url }}" alt="profile photo">
             <div class="card-block">
-                <figure class="profile profile-inline">
-                    <img src="{{ profile.image.url }}" class="profile-avatar" alt="profile photo">
-                </figure>
                 <h4 class="card-title">{{ profile.name.title }}</h4>
                 <div class="card-text">
                     <p>Current city: {{ profile.current_city.title }}</p>
                     <p>Joined: {{ profile.join_date|date:"F j, Y" }}</p>
                 </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope='col'>Cities</th>
+                            <th scope='col'># of Posts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in profile.user.post_set.all %}
+                            <tr>
+                                <td>{{ post.city }}</td>
+                                <td>###</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             {% if request.user.id == profile.id %} 
                 <div class="card-footer" style="text-align:center;">
@@ -89,7 +102,7 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <a href="{% url 'post_detail' post.id %}">
-                                <h5 class="card-title post-title">{{ post.title }}</h5>
+                                <h5 class="card-title post-title">{{ post.title }} - <small>{{ post.city }}</small></h5>
                                 </a>
                                 <p class="card-text">{{ post.body|truncatewords:30 }}</p>
                                 <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
@@ -100,9 +113,9 @@
                                         <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
                                     </a>
                                     <form class="delet-me-now" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
-                                    {% csrf_token %}
+                                        {% csrf_token %}
                                         <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
-                                    </a>
+                                    </form>
                                 </div>
                             {% endif %}
                         </div>
