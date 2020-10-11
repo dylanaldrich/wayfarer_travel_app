@@ -108,6 +108,7 @@ def profile_detail(request, slug):
 
 
 # Profile Edit & Update
+@login_required
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
     print("REQUEST.FILES", request.FILES)
@@ -144,6 +145,7 @@ def profile_edit(request, user_id):
 # ------ Post views ------
 
 # Posts Create
+@login_required
 def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
@@ -189,6 +191,7 @@ def post_detail(request, post_id):
 
 
 # Post Edit && Update
+@login_required
 def post_edit(request, post_id):
     post = Post.objects.get(id=post_id)
     cities = City.objects.all()
@@ -205,6 +208,7 @@ def post_edit(request, post_id):
     return redirect('post_index')
 
 # Post Delete
+@login_required
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
     print('request.user.id', request.user.id)
