@@ -329,4 +329,4 @@ def add_comment(request, post_id):
         new_comment.save()
     else:
         comment_form = CommentForm()
-    return redirect('home')
+    return redirect('post_detail', post_id=post_id)
