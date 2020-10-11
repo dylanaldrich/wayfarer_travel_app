@@ -306,5 +306,5 @@ def logout_user(request):
     return redirect('home')
 
 
-# ------- MAP -------#
-
+# ------- COMMENTS -------#
+# Create Comments
