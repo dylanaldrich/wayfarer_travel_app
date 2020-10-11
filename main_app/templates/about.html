@@ -5,16 +5,103 @@
 <div class="jumbotron">
     <h1 class="display-4">About Us</h1>
 </div>
-<div class="all-posts-container">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit eget gravida cum sociis. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Gravida arcu ac tortor dignissim convallis aenean et tortor at. Nisl tincidunt eget nullam non nisi est sit amet facilisis. Integer vitae justo eget magna fermentum iaculis. Sodales ut etiam sit amet nisl purus in mollis nunc. Duis ut diam quam nulla porttitor massa id. Donec ac odio tempor orci dapibus ultrices in iaculis. Nisl vel pretium lectus quam id. Nulla porttitor massa id neque aliquam vestibulum morbi blandit. Tincidunt praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Faucibus purus in massa tempor nec feugiat. Dignissim cras tincidunt lobortis feugiat. Urna nunc id cursus metus aliquam. Ac turpis egestas integer eget. Risus viverra adipiscing at in. Scelerisque eleifend donec pretium vulputate sapien nec. Ipsum suspendisse ultrices gravida dictum fusce ut. Semper auctor neque vitae tempus quam.
 
-Vitae purus faucibus ornare suspendisse sed nisi. Eget gravida cum sociis natoque penatibus et magnis dis. Lectus magna fringilla urna porttitor rhoncus dolor purus non. Fermentum odio eu feugiat pretium. Hac habitasse platea dictumst quisque sagittis purus sit. Donec massa sapien faucibus et molestie ac feugiat sed. Neque volutpat ac tincidunt vitae semper quis lectus nulla. Interdum velit laoreet id donec ultrices tincidunt arcu. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Tortor at auctor urna nunc id cursus metus aliquam eleifend. A cras semper auctor neque vitae tempus. Urna cursus eget nunc scelerisque viverra. Cursus euismod quis viverra nibh. Donec et odio pellentesque diam volutpat commodo sed egestas egestas. Lobortis elementum nibh tellus molestie nunc.
-
-Turpis massa sed elementum tempus egestas sed sed. Aliquet enim tortor at auctor urna nunc. Viverra adipiscing at in tellus integer feugiat scelerisque. Facilisis magna etiam tempor orci eu. Morbi tristique senectus et netus et malesuada fames ac. Sagittis aliquam malesuada bibendum arcu. Vel pretium lectus quam id. Sed tempus urna et pharetra pharetra massa massa ultricies. Velit sed ullamcorper morbi tincidunt ornare massa eget. Faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget. Sit amet massa vitae tortor condimentum. Dignissim suspendisse in est ante in nibh mauris cursus. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar sapien. Venenatis cras sed felis eget velit.
-
-Suscipit tellus mauris a diam maecenas sed enim ut sem. Augue mauris augue neque gravida in fermentum et sollicitudin. Vitae sapien pellentesque habitant morbi tristique senectus et. Tellus in hac habitasse platea. Consequat ac felis donec et odio pellentesque diam. In fermentum et sollicitudin ac orci phasellus. Velit laoreet id donec ultrices tincidunt. Odio aenean sed adipiscing diam donec adipiscing tristique risus nec. Lectus arcu bibendum at varius. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet. Diam donec adipiscing tristique risus nec feugiat. Sed libero enim sed faucibus. Sit amet purus gravida quis blandit turpis cursus in. Orci sagittis eu volutpat odio facilisis mauris sit amet. Id venenatis a condimentum vitae. Duis tristique sollicitudin nibh sit amet commodo nulla. Id cursus metus aliquam eleifend mi in nulla posuere sollicitudin.
-
-Elit ullamcorper dignissim cras tincidunt lobortis. Purus non enim praesent elementum facilisis leo vel. Eu feugiat pretium nibh ipsum consequat nisl. Mattis rhoncus urna neque viverra justo. In arcu cursus euismod quis viverra nibh cras. Mattis nunc sed blandit libero volutpat. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget nullam non nisi est sit amet facilisis. Arcu ac tortor dignissim convallis aenean et tortor. Tortor at risus viverra adipiscing at in tellus. Diam sit amet nisl suscipit adipiscing bibendum est. Velit euismod in pellentesque massa placerat duis ultricies. Aliquet eget sit amet tellus cras adipiscing enim. Scelerisque eleifend donec pretium vulputate sapien nec sagittis.</p>
-
+<div style="display: block; min-height: 500px;background-color: #F72AEE; padding: 10%;" class=" text-center">
+<header>
+    <div style="display: block; min-height: 300px;">
+      <h1 class="mb-1">We Bring the World to You!</h1>
+      <h3 class="mb-5">
+        <em>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</em>
+      </h3>
+      <a class="btn btn-primary btn-xl js-scroll-trigger" href="#missions">Our Missions</a>
+    </div>
+    <div class="overlay"></div>
+  </header>
 </div>
+
+<!-- -------------- MAP ---------------- -->
+<div id='map' width="100%" style='height:400px'></div>
+   <script>
+    mapboxgl.accessToken = "pk.eyJ1IjoiZ2F3YXlmYXJlciIsImEiOiJja2czZXhxenYwOTdhMnFsd2hqNGdteGpiIn0.7kaVmm00I3FI1CXdKzZ4pQ";
+    var map = new mapboxgl.Map({
+     container: 'map',
+     style: 'mapbox://styles/mapbox/streets-v10',
+     center: [-40, 40],
+    zoom: 2.0
+    });
+
+var geojson = {
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.127, 51.507]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'London, UK.',
+      html: 'cities/san-francisco'
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [-122.414, 37.776]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'San Francisco, USA',
+      html: 'cities/san-francisco',
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [5.353, 36.140]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'Gibraltar, BOT',
+      html: 'cities/san-francisco'
+    }
+  }]
+};
+
+
+// add markers to map
+geojson.features.forEach(function(marker) {
+
+// create a HTML element for each feature
+    var el = document.createElement('div');
+    el.className = 'marker';
+
+// make a marker for each feature and add to the map
+new mapboxgl.Marker(el)
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<a href="' + marker.properties.html + '"><h5>' + marker.properties.description + '</h5></a>'))
+    .addTo(map);
+
+});
+</script>
+
+<!-- -------------- END OF MAP ---------------- -->
+
+
+<!-- About -->
+<div class=" text-center" style="display: block; min-height: 300px; background-color: #F72AEE; padding: 10%">
+    <div class="row">
+    <div class="col-lg-10 mx-auto">
+        <h2>Made with Love</h2>
+        <p class="lead mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>!</p>
+        <a class="btn btn-dark btn-xl js-scroll-trigger" href="#visions">Our Visions</a>
+    </div>
+    </div>
+</div>
+
+
+
 {% endblock %}
