@@ -142,13 +142,14 @@ rounded-circle:hover {
 }
 
 .btn-info {
-    background-color: #F72AEE;
-    border-color: orange;
+    background-color: #973DFC;
+    border-color: #973DFC;
 }
 
 .btn-info:hover {
-    background-color: orange;
-    border-color: #F72AEE;
+    background-color: #973DFC;
+    color: black;
+    border-color: #973DFC;
 }
 
 /* #delete-button {
