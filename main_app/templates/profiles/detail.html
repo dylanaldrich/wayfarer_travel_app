@@ -2,9 +2,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
-</div>
+
+{% if request.user == profile.user %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
+    </div>
+{% endif %}
 
 <div class="parent-container d-flex">
     <!-- PROFILE INFO CARD -->
@@ -40,7 +43,7 @@
                     </tbody>
                 </table>
             </div>
-            {% if request.user.id == profile.id %}
+            {% if request.user.id == profile.user.id %}
                 <div class="card-footer" style="text-align:center;">
                     <a href="{% url 'profile_edit' profile.id %}">
                         <button class="btn btn-info btn-sm">Edit</button>
@@ -57,6 +60,7 @@
     <!-- POSTS LIST -->
     <div class="container col-8 posts-list">
                 <!-- Add post modal -->
+                {% if request.user.id == profile.user.id %}
                 <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
                 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -87,18 +91,25 @@
                         modal.find('.modal-title').text('Create a Post')
                     })
                 </script>
+            {% endif %}
                 <!-- End add post modal -->
 
 
 
         {% if profile.user.post_set.count == 0 %}
-            {% if request.user == profile.user %}
-                <h4>You haven't made any posts yet.</h4>
+            {% if request.user.id == profile.user.id %}
+                <h3>My Posts:</h3>
+                    <h4>You haven't made any posts yet.</h4>
             {% else %}
+            <h3>{{ profile.name }}'s Posts:</h3>
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
-            <h3>My Posts:</h3>
+        {% if request.user.id == profile.user.id %}
+                <h3>My Posts:</h3>
+            {% else %}
+                <h3>{{ profile.name }}'s' Posts:</h3>
+            {% endif %}
             {% for post in profile.user.post_set.all %}
                 <div class="card mb-3" style="max-width: 700px;">
                     <div class="row no-gutters">
@@ -113,7 +124,7 @@
                                 <p class="card-text">{{ post.body|truncatewords:30 }}</p>
                                 <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
                             </div>
-                            {% if request.user.id == profile.id %}
+                            {% if request.user.id == profile.user.id %}
                                 <div class="card-footer" style="text-align: right;">
                                     <a href="{% url 'post_edit' post.id %}">
                                         <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
