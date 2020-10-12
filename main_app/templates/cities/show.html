@@ -2,20 +2,21 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <div class='all-posts-container'>
-
-        <div class='sidebar-left'>
-            <div class="sidebar-header">
-                <h1 class='sidebar-name'>Cities</h1>
-            </div>
-            <ul class="list-unstyled components sidebar">
-            {% for city in cities %}
-                <li class="sidebar-item">
-                    <div><a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
-                </li>
-            {% endfor %}
-            </ul>
+<div class='all-posts-container flex'>
+    <!-- Start cities sidebar menu -->
+    <div class='sidebar-left'>
+        <div class="sidebar-header">
+            <h1 class='sidebar-name'>Cities</h1>
         </div>
+        <ul class="list-unstyled components sidebar">
+        {% for city in cities %}
+            <li class="sidebar-item">
+                <div><a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <!-- End cities sidebar menu -->
 
 
         <div class='all-posts-right'>
