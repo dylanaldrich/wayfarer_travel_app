@@ -82,16 +82,16 @@
                 </a>
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
+            <div id="comments-show-container">
             <form class="card align-items-center" method="POST" action="{% url 'add_comment' post.id%}">
                 {% csrf_token %}
                 {{ comment_form|crispy }}
                 <button type="submit" class="btn wayfarer-btn">Add Comment</button>
             </form>
-            <div class="comments-container">
+            <h5>Total Comments: {{comments.count}}</h5>
             {% for comment in post.comments.all %}
-            <div class="post-show-container">
-                <h5>{{ comment.comment }}</h5>
-                <h6>{{ comment.user }} </h6>
+            <div id="comments-show">
+                <small>{{ comment.comment }} by {{ comment.user }} </small>
             </div>
             {% endfor %}
             </div>
