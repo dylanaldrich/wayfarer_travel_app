@@ -196,6 +196,9 @@ rounded-circle:hover {
     flex-wrap: wrap;
 }
 
+#profile_detail_card {
+    margin-bottom: 2rem;
+}
 
 /* @media (max-width: 560px)
 .d-flex{

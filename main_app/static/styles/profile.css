@@ -95,6 +95,7 @@ h5 {
 
 .posts-list {
     flex-direction: column;
+    margin-top: 2rem;
 }
 
 .text-bold {
@@ -119,4 +120,3 @@ h5 {
 .post-title:hover {
     color: #0071FF;
 }
-
