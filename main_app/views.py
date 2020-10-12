@@ -116,7 +116,6 @@ def profile_edit(request, user_id):
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
-            # profile_form = Profile_Form(request.POST, request.FILES, instance=user.profile)
             if profile_form.is_valid():
                 new_profile = profile_form.save(commit=False)
                 new_profile.user = request.user
@@ -134,13 +133,14 @@ def profile_edit(request, user_id):
     else:
         try:
             profile_form = Profile_Form(instance=profile)
-            # profile_form = Profile_Form(instance=user.profile)
             context = {'profile_form': profile_form, 'profile': profile}
             return render(request, 'profiles/edit.html', context)
         except:
             profile_form = Profile_Form()
             context = {'profile_form': profile_form}
             return render(request, 'profiles/edit.html', context)
+
+
 
 
 # ------ Post views ------
@@ -314,6 +314,16 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+# Delete User 
+@login_required
+def profile_delete(request, user_id):
+    user = User.objects.get(id=user_id)
+    if user.id == request.user.id:
+        user.delete()
+        print(request, "The user is deleted")
+        return redirect('profile_delete', user_id=user_id)
 
 
 # ------- COMMENTS -------#

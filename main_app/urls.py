@@ -19,7 +19,7 @@ urlpatterns = [
     path('profiles/', views.profiles_index, name='profiles_index'),
     path('profile/<slug:slug>/', views.profile_detail, name='profile_detail'),
     path('profile/<int:user_id>/edit/', views.profile_edit, name='profile_edit'),
-    # path('profile/<int:user_id>/delete/', views.profile_delete, name='profile_delete'),
+    path('profile/<int:user_id>/delete/', views.profile_delete, name='profile_delete'),
 
     # POSTS
     path('posts/', views.post_index, name='post_index'),
