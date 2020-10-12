@@ -29,18 +29,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for index in post_counter %}
                             <tr>
-                                <td>Gibraltar</td>
-                                <td>{{gid|length}}</td>
+                                <td>{{index.city}}</td>
+                                <td>{{index.count}}</td>
                             </tr>
-                            <tr>
-                                <td>London</td>
-                                <td>{{ldn|length}}</td>
-                            </tr>
-                            <tr>
-                                <td>San Francisco</td>
-                                <td>{{sf|length}}</td>
-                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

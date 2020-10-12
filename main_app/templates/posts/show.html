@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <a id="top"></a>
-<div class="all-posts-container">
-    <!-- Cities Menu -->
-    <div class='sidebar-left col-4'>
+<div class='all-posts-container flex'>
+    <!-- Start cities sidebar menu -->
+    <div class='sidebar-left'>
         <div class="sidebar-header">
             <h1 class='sidebar-name'>Cities</h1>
         </div>
@@ -16,10 +16,10 @@
         {% endfor %}
         </ul>
     </div>
-    <!-- End Cities Menu -->
+    <!-- End cities sidebar menu -->
 
     <!-- Post -->
-    <div class='post-detail-right'>
+    <div class='post-detail-right flex'>
         <div class="post-show-container">
             <div class="post-detail-image"><h1>{{ post.city.name }}</h1></div>
             <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center top; background-size: cover;}</style>
@@ -82,18 +82,23 @@
                 </a>
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
-            <div id="comments-show-container">
-            <form class="card align-items-center" method="POST" action="{% url 'add_comment' post.id%}">
-                {% csrf_token %}
-                {{ comment_form|crispy }}
-                <button type="submit" class="btn wayfarer-btn">Add Comment</button>
-            </form>
+            <div class="comment-container">
+            <div class="comment-form-container">
+                <form class="post-show-container" method="POST" action="{% url 'add_comment' post.id%}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user" value="{{ request.user.id }}">
+                    <textarea class="form-control" name="comment" rows="3"></textarea>
+                    <button type="submit" class="btn wayfarer-btn">Add Comment</button>
+                </form>
+            </div>
             <h5>Total Comments: {{comments.count}}</h5>
             {% for comment in post.comments.all %}
             <div id="comments-show">
-                <small>{{ comment.comment }} by {{ comment.user }} </small>
+                <small>{{ comment.comment }} by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
+                    {% if request.user.id == comment.user.id %}
                     <a href="{% url 'edit_comment' post.id comment.id %}" class="btn blue">Edit</a>
                     <a class="btn red" href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
+                    {% endif %}
             </div>
             {% endfor %}
             </div>

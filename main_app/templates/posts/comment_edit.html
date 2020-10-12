@@ -24,7 +24,7 @@
                 <div class="form-group container">
                     <div class="row justify-content-center">
                         <div class="col-sm-9">
-                        <form class="card" method="POST" action="{% url 'edit_comment' post.id comment.id %}">
+                        <form class="card" method="POST" action="{% url 'edit_comment' comment.post.id comment.id %}">
                             {% csrf_token %}
                             {{ comment_form|crispy }}
                             <button type="submit" class="btn wayfarer-btn">Submit Changes</button>

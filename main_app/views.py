@@ -55,57 +55,57 @@ def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
 
 
-# # Profile detail
-def profile_detail(request, slug):
-    profile = Profile.objects.get(slug=slug)
-    form = Post_Form(request.POST)
-    posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
-    cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
-    sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-    ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
-    gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
-    # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-    context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
-    return render(request, 'profiles/detail.html', context)
-
-
+# Profile detail
 # def profile_detail(request, slug):
 #     profile = Profile.objects.get(slug=slug)
 #     form = Post_Form(request.POST)
-#     posts = Post.objects.filter(user_id=profile.id)
-#     post_cities = []
-#     for post in posts:
-#         post_cities.append(post.city.name)
-
-
-#     def countFreq(arr, n):
-#         distinct_post_cities = []
-#         city_posts_count = []
-#         # Mark all array elements as not visited
-#         visited = [False for i in range(n)]
-
-#         # Traverse through array elements and count frequencies
-#         for i in range(n):
-#             # Skip this element if already processed
-#             if (visited[i] == True):
-#                 continue
-
-#             # Count frequency
-#             count = 1
-#             for j in range(i + 1, n, 1):
-#                 if (arr[i] == arr[j]):
-#                     visited[j] = True
-#                     count += 1
-
-#             distinct_post_cities.append(arr[i])
-#             city_posts_count.append(count)
-            
-#         print('Distinct cities: ', distinct_post_cities)
-#         print('post count per city:', city_posts_count)
-
-#     countFreq(post_cities, len(post_cities))
-#     context = {'profile': profile, 'form': form}
+#     posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
+#     cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
+#     sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+#     ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
+#     gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
+#     # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+#     context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
 #     return render(request, 'profiles/detail.html', context)
+
+
+def profile_detail(request, slug):
+    profile = Profile.objects.get(slug=slug)
+    form = Post_Form(request.POST)
+    posts = Post.objects.filter(user_id=profile.id)
+    post_cities = []
+    for post in posts:
+        post_cities.append(post.city.name)
+
+    def countFreq(arr, n):
+        frequency = []
+        # Mark all array elements as not visited
+        visited = [False for i in range(n)]
+
+        # Traverse through array elements and count frequencies
+        for i in range(n):
+            # Skip this element if already processed
+            if (visited[i] == True):
+                continue
+
+            # Count frequency
+            count = 1
+            for j in range(i + 1, n, 1):
+                if (arr[i] == arr[j]):
+                    visited[j] = True
+                    count += 1
+
+            frequency.append({
+                'city': arr[i],
+                'count': count
+                })
+
+        return frequency
+
+    post_counter = countFreq(post_cities, len(post_cities))
+    print('post_counter', post_counter)
+    context = {'profile': profile, 'form': form, 'post_counter': post_counter}
+    return render(request, 'profiles/detail.html', context)
 
 
 # Profile Edit & Update
@@ -281,7 +281,7 @@ def signup(request):
                 'user': user,})
         to_email = form.cleaned_data.get('email')
         email = EmailMessage(mail_subject, message, to=[to_email])
-        # email.send()
+        email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
@@ -316,16 +316,6 @@ def logout_user(request):
     return redirect('home')
 
 
-
-# def post_delete(request, post_id):
-#     post = Post.objects.get(id=post_id)
-#     print('request.user.id', request.user.id)
-#     if post.user == request.user:
-#         Post.objects.get(id=post_id).delete()
-#         return redirect('profile_detail', slug=request.user.profile.slug)
-
-
-
 # Delete User 
 @login_required
 def profile_delete(request, user_id):
@@ -344,7 +334,7 @@ def add_comment(request, post_id):
     post = Post.objects.get(id=post_id)
     if comment_form.is_valid():
         new_comment = comment_form.save(commit=False)
-        new_comment.user_id = post.user_id
+        new_comment.user = request.user
         new_comment.post_id = post_id
         new_comment.post = post
         new_comment.save()
@@ -365,14 +355,13 @@ def delete_comment(request, post_id, comment_id):
 # edit && update
 @login_required
 def edit_comment(request, post_id, comment_id):
-    comment_form = Comment_Form(request.POST)
     comment = Comment.objects.get(id=comment_id)
     if request.user == comment.user:
         if request.method == 'POST':
             comment_form = Comment_Form(request.POST, instance=comment)
-        if comment_form.is_valid():
-            comment_form.save()
-            return redirect('post_detail', post_id=post_id)
+            if comment_form.is_valid():
+                comment_form.save()
+                return redirect('post_detail', post_id=post_id)
         else:
             comment_form = Comment_Form(instance=comment)
         context = {'comment': comment, 'comment_form': comment_form}
