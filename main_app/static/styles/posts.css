@@ -5,7 +5,7 @@
 .all-posts-container {
     min-height: 70vh;
     margin: auto;
-    width: 90%;
+    padding: 5%;
 }
 
 .flex {
@@ -24,7 +24,7 @@
 .sidebar-left{
     margin-top: 50px;
     max-width: 350px;
-    flex: 1 auto;
+    flex: 3 auto;
     align-items: center;
     text-align: left;
     justify-content: center;
@@ -51,7 +51,6 @@
 /* ALL-POSTS INDEX */
 .all-posts-right{
     margin: 50px 20px;
-    flex: 8 auto;
     align-items: center;
     text-align: left;
     justify-content: center;
@@ -110,7 +109,6 @@ ul {
 }
 
 .posts-title {
-    flex: 7;
     min-width: 100%;
     max-width: 50%;
     padding: 20px;
@@ -133,7 +131,7 @@ ul {
 
 .post-detail-right{
     margin: 50px 20px;
-    flex: 8 auto;
+    flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
     min-height: 70vh;
