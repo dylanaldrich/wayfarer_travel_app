@@ -2,24 +2,23 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <a id="top"></a>
-<div class="all-posts-container">
+<div class="all-posts-container flex">
     <!-- Cities Menu -->
-    <div class='sidebar-left'>
+    <div class='sidebar-left flex'>
         <div class="sidebar-header">
             <h1 class='sidebar-name'>Cities</h1>
         </div>
-        <ul class="list-unstyled components sidebar">
         {% for city in cities %}
-            <li class="sidebar-item">
-                <div><a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
-            </li>
+                <div>
+                    <a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a>
+                </div>
         {% endfor %}
         </ul>
     </div>
     <!-- End Cities Menu -->
 
     <!-- Post -->
-    <div class='post-detail-right'>
+    <div class='post-detail-right flex'>
         <div class="post-show-container">
             <div class="post-detail-image"><h1>{{ post.city.name }}</h1></div>
             <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center top; background-size: cover;}</style>
@@ -82,7 +81,7 @@
                 </a>
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
-            <div id="post-share-buttons">
+            <div class="comment-container">
             <div class="comment-form-container">
                 <form class="post-show-container" method="POST" action="{% url 'add_comment' post.id%}">
                     {% csrf_token %}

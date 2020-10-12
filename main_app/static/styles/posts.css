@@ -3,10 +3,19 @@
 } */
 
 .all-posts-container {
-    display: flex;
     min-height: 70vh;
     margin: auto;
     width: 90%;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ .flex > * {
+    flex: 1 1 250px;
+    margin: 10px;
 }
 
 
@@ -14,7 +23,7 @@
 
 .sidebar-left{
     margin-top: 50px;
-    max-width: 300px;
+    max-width: 350px;
     flex: 1 auto;
     align-items: center;
     text-align: left;
@@ -143,11 +152,17 @@ ul {
 }
 
 
+/* COMMENT SECTION */
+
+.comment-container{
+    margin: 10px;
+}
+
 .comment-form-container{
     display: flex;
     width: 100%;
     text-align: center;
-    padding: 10%;
+    padding: 1%;
     border-radius: 15px;
 }
 
