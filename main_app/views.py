@@ -344,6 +344,7 @@ def delete_comment(request, post_id, comment_id):
 # edit && update
 @login_required
 def edit_comment(request, post_id, comment_id):
+    comment_form = Comment_Form(request.POST)
     comment = Comment.objects.get(id=comment_id)
     if request.user == comment.user:
         if request.method == 'POST':
