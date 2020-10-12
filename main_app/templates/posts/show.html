@@ -84,11 +84,13 @@
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
             <div class="comment-container">
             <div class="comment-form-container">
-                <form class="post-show-container" method="POST" action="{% url 'add_comment' post.id%}">
+            {{ comment_form.errors }}
+            {{ comment_form.non_field_errors }}
+                <form method="POST" action="{% url 'add_comment' post.id%}" class="post-show-container needs-validation" novalidate>
                     {% csrf_token %}
                     <input type="hidden" name="user" value="{{ request.user.id }}">
-                    <textarea class="form-control" name="comment" rows="3"></textarea>
-                    <button type="submit" class="btn wayfarer-btn">Add Comment</button>
+                    <textarea class="form-control" minlength="2" name="comment" rows="3" required></textarea>
+                    <input type="submit" class="btn wayfarer-btn" value="Add Comment">
                 </form>
             </div>
             <h5>Total Comments: {{comments.count}}</h5>

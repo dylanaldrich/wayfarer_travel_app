@@ -320,7 +320,7 @@ def logout_user(request):
 # Create Comments
 @login_required
 def add_comment(request, post_id):
-    comment_form = Comment_Form(request.POST)
+    comment_form = Comment_Form(data=request.POST)
     post = Post.objects.get(id=post_id)
     if comment_form.is_valid():
         new_comment = comment_form.save(commit=False)
@@ -328,9 +328,13 @@ def add_comment(request, post_id):
         new_comment.post_id = post_id
         new_comment.post = post
         new_comment.save()
+        return redirect('post_detail', post_id=post_id)
     else:
-        comment_form = CommentForm()
-    return redirect('post_detail', post_id=post_id)
+        context={
+            'post_id': post_id,
+            'errors': comment_form.errors,
+            'comment_form': Comment_Form()}
+        return render(request, 'error.html', context)
 
 # delete
 @login_required
@@ -357,3 +361,11 @@ def edit_comment(request, post_id, comment_id):
         context = {'comment': comment, 'comment_form': comment_form}
         return render(request, 'posts/comment_edit.html', context)
     return redirect('post_detail', post_id=post_id)
+
+
+# ERROR
+@login_required
+def error_detail(request):
+    cities = City.objects.all()
+    context = {'errors': 'There was an error', 'cities': cities }
+    return render(request, 'error.html', context)
