@@ -96,7 +96,7 @@ def profile_detail(request, slug):
                     count += 1
 
             frequency.append({
-                'city': arr[i], 
+                'city': arr[i],
                 'count': count
                 })
 
@@ -281,7 +281,7 @@ def signup(request):
                 'user': user,})
         to_email = form.cleaned_data.get('email')
         email = EmailMessage(mail_subject, message, to=[to_email])
-        # email.send()
+        email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
@@ -324,7 +324,7 @@ def add_comment(request, post_id):
     post = Post.objects.get(id=post_id)
     if comment_form.is_valid():
         new_comment = comment_form.save(commit=False)
-        new_comment.user_id = post.user_id
+        new_comment.user = request.user
         new_comment.post_id = post_id
         new_comment.post = post
         new_comment.save()
@@ -345,14 +345,13 @@ def delete_comment(request, post_id, comment_id):
 # edit && update
 @login_required
 def edit_comment(request, post_id, comment_id):
-    comment_form = Comment_Form(request.POST)
     comment = Comment.objects.get(id=comment_id)
     if request.user == comment.user:
         if request.method == 'POST':
             comment_form = Comment_Form(request.POST, instance=comment)
-        if comment_form.is_valid():
-            comment_form.save()
-            return redirect('post_detail', post_id=post_id)
+            if comment_form.is_valid():
+                comment_form.save()
+                return redirect('post_detail', post_id=post_id)
         else:
             comment_form = Comment_Form(instance=comment)
         context = {'comment': comment, 'comment_form': comment_form}
