@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Profile, Post, User, City
-from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form
+from .models import Profile, Post, User, City, Comment
+from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form, Comment_Form
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -184,9 +184,14 @@ def post_index(request):
 def post_detail(request, post_id):
     posts = Post.objects.all()
     post = Post.objects.get(id=post_id)
+    try:
+        comments = Comment.objects.filter(post_id=post_id)
+    except Comment.DoesNotExist:
+        comments = None
     cities = City.objects.all()
     profile = Profile.objects.get(user_id=post.user_id)
-    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile}
+    comment_form = Comment_Form()
+    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form}
     return render(request, 'posts/show.html', context)
 
 
@@ -312,3 +317,43 @@ def logout_user(request):
 
 # ------- COMMENTS -------#
 # Create Comments
+@login_required
+def add_comment(request, post_id):
+    comment_form = Comment_Form(request.POST)
+    post = Post.objects.get(id=post_id)
+    if comment_form.is_valid():
+        new_comment = comment_form.save(commit=False)
+        new_comment.user_id = post.user_id
+        new_comment.post_id = post_id
+        new_comment.post = post
+        new_comment.save()
+    else:
+        comment_form = CommentForm()
+    return redirect('post_detail', post_id=post_id)
+
+# delete
+@login_required
+def delete_comment(request, post_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    if comment.user == request.user:
+        Comment.objects.get(id=comment_id).delete()
+        return redirect('post_detail', post_id=post_id)
+    return redirect('post_detail', post_id=post_id)
+
+
+# edit && update
+@login_required
+def edit_comment(request, post_id, comment_id):
+    comment_form = Comment_Form(request.POST)
+    comment = Comment.objects.get(id=comment_id)
+    if request.user == comment.user:
+        if request.method == 'POST':
+            comment_form = Comment_Form(request.POST, instance=comment)
+        if comment_form.is_valid():
+            comment_form.save()
+            return redirect('post_detail', post_id=post_id)
+        else:
+            comment_form = Comment_Form(instance=comment)
+        context = {'comment': comment, 'comment_form': comment_form}
+        return render(request, 'posts/comment_edit.html', context)
+    return redirect('post_detail', post_id=post_id)

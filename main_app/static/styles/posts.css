@@ -142,6 +142,21 @@ ul {
     opacity: 80%;
 }
 
+#comments-show-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 900px;
+    opacity: 80%;
+    margin: 50px;
+}
+
+#comments-show{
+    justify-content: center;
+    text-align: left;
+    margin: 10px auto;
+}
+
+
 .post-detail-image{
     min-width: 100%;
     min-height: 300px;
