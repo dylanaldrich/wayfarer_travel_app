@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 from django import forms
+from captcha.fields import CaptchaField
 from crispy_forms.helper import FormHelper
 
 class Post_Form(ModelForm):
@@ -20,6 +21,7 @@ class SignUpForm(UserCreationForm):
     name = forms.CharField(max_length=25)
     current_city = forms.CharField(max_length=25)
     email = forms.EmailField(max_length=150)
+    captcha = CaptchaField()
 
     def clean_email(self):
         email = self.cleaned_data['email']
