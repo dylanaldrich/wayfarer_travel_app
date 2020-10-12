@@ -96,7 +96,7 @@ def profile_detail(request, slug):
                     count += 1
 
             frequency.append({
-                'city': arr[i], 
+                'city': arr[i],
                 'count': count
                 })
 
@@ -324,7 +324,7 @@ def add_comment(request, post_id):
     post = Post.objects.get(id=post_id)
     if comment_form.is_valid():
         new_comment = comment_form.save(commit=False)
-        new_comment.user_id = post.user_id
+        new_comment.user = request.user
         new_comment.post_id = post_id
         new_comment.post = post
         new_comment.save()
