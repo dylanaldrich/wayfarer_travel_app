@@ -109,6 +109,19 @@ rounded-circle:hover {
     color: #0071FF;
 }
 
+.col-3 {
+    max-width: fit-content;
+}
+
+.d-flex {
+    flex-wrap: wrap;
+}
+
+#profile_detail_card {
+    margin-bottom: 2rem;
+}
+
+
 /* SIGNUP FORM */
 .signup-container {
     margin: 100px auto;
@@ -188,17 +201,6 @@ rounded-circle:hover {
     font-family: 'Open Sans', sans-serif;
 }
 
-.col-3 {
-    max-width: fit-content;
-}
-
-.d-flex {
-    flex-wrap: wrap;
-}
-
-#profile_detail_card {
-    margin-bottom: 2rem;
-}
 
 /* @media (max-width: 560px)
 .d-flex{
