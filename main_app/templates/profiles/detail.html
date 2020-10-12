@@ -49,11 +49,32 @@
                     <a href="{% url 'profile_edit' profile.id %}">
                         <button class="btn btn-info btn-sm">Edit Profile</button>
                     </a>
-                    <a href="">
-                        <button class="btn btn-info btn-sm btn-danger">Deactivate</button>
+                    <form class="delete-prof-btn" action="{% url 'profile_delete' user.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button class="btn btn-info btn-sm btn-danger delete-profile-btn">Deactivate</button>
                     </a>
                 </div>
             {% endif %}
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script>$('.delete-profile-btn').click(function(e){
+                e.preventDefault();
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deactivated, you will not be able to recover this profile and it's contributions!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $('.delete-prof-btn').submit()
+                    }
+                });
+            })</script>
+
+
+
+
         </div>
     </div>
     <!-- END PROFILE INFO CARD -->
