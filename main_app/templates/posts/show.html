@@ -4,7 +4,7 @@
 <a id="top"></a>
 <div class="all-posts-container">
     <!-- Cities Menu -->
-    <div class='sidebar-left col-4'>
+    <div class='sidebar-left'>
         <div class="sidebar-header">
             <h1 class='sidebar-name'>Cities</h1>
         </div>
@@ -82,16 +82,18 @@
                 </a>
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
-            <div id="comments-show-container">
-            <form class="card align-items-center" method="POST" action="{% url 'add_comment' post.id%}">
-                {% csrf_token %}
-                {{ comment_form|crispy }}
-                <button type="submit" class="btn wayfarer-btn">Add Comment</button>
-            </form>
+            <div id="post-share-buttons">
+            <div class="comment-form-container">
+                <form class="post-show-container" method="POST" action="{% url 'add_comment' post.id%}">
+                    {% csrf_token %}
+                    <textarea class="form-control" name="comment" rows="3"></textarea>
+                    <button type="submit" class="btn wayfarer-btn">Add Comment</button>
+                </form>
+            </div>
             <h5>Total Comments: {{comments.count}}</h5>
             {% for comment in post.comments.all %}
             <div id="comments-show">
-                <small>{{ comment.comment }} by {{ comment.user }} </small>
+                <small>{{ comment.comment }} by {{ comment.user }} {{ comment.comment_date|timesince }} ago </small>
                     <a href="{% url 'edit_comment' post.id comment.id %}" class="btn blue">Edit</a>
                     <a class="btn red" href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
             </div>

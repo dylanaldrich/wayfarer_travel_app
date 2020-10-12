@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'main_app.context_processors.SignUpFormGlobal',
+                'main_app.context_processors.CommentFormGlobal',
             ],
         },
     },

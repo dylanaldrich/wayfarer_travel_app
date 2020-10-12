@@ -1,7 +1,12 @@
-from .forms import SignUpForm
+from .forms import SignUpForm, Comment_Form
 
 
 def SignUpFormGlobal(request):
     return {
         'sign_up_form': SignUpForm()
+    }
+
+def CommentFormGlobal(request):
+    return {
+        'comment_form': Comment_Form()
     }
