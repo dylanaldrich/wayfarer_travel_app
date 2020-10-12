@@ -46,7 +46,7 @@
                     <form class="delete-prof-btn" action="{% url 'profile_delete' user.id %}" method="POST" style="display: inline;">
                         {% csrf_token %}
                         <button class="btn btn-info btn-sm btn-danger delete-profile-btn">Deactivate</button>
-                    </a>
+                    </form>
                 </div>
             {% endif %}
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -88,7 +88,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="card" method="POST" action="{% url 'post_create' %}">
+                                    <form class="card" method="POST" action="{% url 'post_create' %}" novalidate>
                                         {% csrf_token %}
                                         {{ form|crispy }}
                                         <div class="modal-footer">

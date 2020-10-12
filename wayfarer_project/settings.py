@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'main_app',
     'bootstrap_modal_forms',
     'crispy_forms',
+    'captcha',
 ]
 
 

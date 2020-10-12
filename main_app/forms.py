@@ -3,6 +3,8 @@ from .models import Profile, Post, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
+from crispy_forms.helper import FormHelper
+from captcha.fields import CaptchaField
 
 class Post_Form(ModelForm):
     class Meta:
@@ -21,7 +23,8 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'name', 'current_city', 'email', 'password1', 'password2',)
+        fields = ('username', 'name', 'current_city', 'email', 'password1', 'password2')
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
