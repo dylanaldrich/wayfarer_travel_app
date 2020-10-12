@@ -116,11 +116,8 @@ h5 {
     color: rgba(0, 0, 0, .87);
 }
 
-.jumbotron {
-    padding: 1rem 2rem;
-    margin-top: 21px;
-}
 
 .post-title:hover {
     color: #0071FF;
 }
+

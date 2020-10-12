@@ -99,6 +99,7 @@ def profile_detail(request, slug):
 
 #             distinct_post_cities.append(arr[i])
 #             city_posts_count.append(count)
+            
 #         print('Distinct cities: ', distinct_post_cities)
 #         print('post count per city:', city_posts_count)
 

@@ -12,9 +12,16 @@
     font-family: 'Filson Soft', sans-serif;
 }
 
-body {
-    padding-top: 6rem;
+#page-container {
+    padding-top: 2rem;
 }
+
+.jumbotron {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    margin-top: 21px
+}
+
 ul {
     list-style-type: none;
 }
@@ -180,3 +187,21 @@ rounded-circle:hover {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
 }
+
+.col-3 {
+    max-width: fit-content;
+}
+
+.d-flex {
+    flex-wrap: wrap;
+}
+
+
+/* @media (max-width: 560px)
+.d-flex{
+    flex-wrap: wrap;
+} */
+
+/* .col-3 {
+    max-width: 90%;
+} */
