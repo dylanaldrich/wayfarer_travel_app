@@ -11,7 +11,7 @@
         <ul class="list-unstyled components sidebar">
         {% for city in cities %}
             <li class="sidebar-item">
-                <div><a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+                    <a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>{{ city.name }}</a>
             </li>
         {% endfor %}
         </ul>
@@ -32,7 +32,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form class="card" method="POST" action="{% url 'post_create' %}">
+                            <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}">
                                 {% csrf_token %}
                                 {{ form|crispy }}
                                 <div class="modal-footer">

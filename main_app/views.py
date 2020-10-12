@@ -136,14 +136,15 @@ def profile_edit(request, user_id):
 def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
-        post_form = Post_Form(data=request.POST)
+        post_form = Post_Form(request.POST)
+        redirect_next = request.GET.get('next')
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
             new_post.save()
-            return redirect('cities_index')
+            return redirect(redirect_next)
         else:
-            return redirect('cities_index')
+            return redirect(redirect_next)
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form, 'cities': cities}
@@ -178,7 +179,7 @@ def post_detail(request, post_id):
     cities = City.objects.all()
     profile = Profile.objects.get(user_id=post.user_id)
     comment_form = Comment_Form()
-    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form}
+    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form, 'next_url': "/cities"}
     return render(request, 'posts/show.html', context)
 
 
