@@ -11,7 +11,7 @@
         <ul class="list-unstyled components sidebar">
         {% for city in cities %}
             <li class="sidebar-item">
-                <div><a href="{% url "cities_show" city.slug %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+                <div><a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
             </li>
         {% endfor %}
         </ul>
@@ -20,36 +20,38 @@
 
     <div class='all-posts-right'>
         <!-- Add post modal -->
-        <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
-        <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createPostModalLabel">Login</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="card" method="POST" action="{% url 'post_create' %}">
-                            {% csrf_token %}
-                            {{ form|crispy }}
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn wayfarer-btn" value="Share!">
-                            </div>
-                        </form>
+        {% if request.user.is_authenticated %}
+            <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
+            <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createPostModalLabel">Login</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="card" method="POST" action="{% url 'post_create' %}">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" class="btn wayfarer-btn" value="Share!">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <script>
-            $('#createPostModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget) // Button that triggers the modal
-                var modal = $(this)
-                modal.find('.modal-title').text('Create a Post')
-            })
-        </script>
+            <script>
+                $('#createPostModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggers the modal
+                    var modal = $(this)
+                    modal.find('.modal-title').text('Create a Post')
+                })
+            </script>
+        {% endif %}
         <!-- End add post modal -->
 
         <!-- List of recent posts -->
@@ -65,7 +67,7 @@
                             <div class="posts-title">
                                 <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
                                 <p>{{ post.body|truncatechars:100 }}
-                                {%if post.body|length >= 100 %}
+                                {% if post.body|length >= 100 %}
                                 <a href="{% url 'post_detail' post.id %}">Read more...</a>
                                 {%endif%}</p>
                                 <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> in

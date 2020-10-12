@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <a id="top"></a>
 <div class="all-posts-container">
@@ -10,7 +11,7 @@
         <ul class="list-unstyled components sidebar">
         {% for city in cities %}
             <li class="sidebar-item">
-                <div><a href="{% url "cities_show" city.slug %}"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
+                <div><a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><img class="sidebar-btn" src="{{ city.image }}">{{ city.name }}</a></div>
             </li>
         {% endfor %}
         </ul>
@@ -25,7 +26,7 @@
             <div><img class="post-page-user" src="{{post.user.profile.image.url}}"> </div>
             <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
             <div class="post-detail-info">
-                <p>Published by <a href="{% url 'profile_detail' post.user.id %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago</p>
+                <p>Published by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago</p>
             </div>
             {% if request.user.id == post.user.id %}
                 <div class='d-flex mb-4 justify-content-center'>
@@ -39,7 +40,7 @@
                 </div>
             {% endif %}
             <div class="post-detail-body"><h5>{{ post.body }}</h5></div>
-            
+
             <!-- Delete Button Alert -->
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
                 <script>$('.delete-post-btn').click(function(e){
@@ -81,6 +82,21 @@
                 </a>
             </div>
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
+            <div id="comments-show-container">
+            <form class="card align-items-center" method="POST" action="{% url 'add_comment' post.id%}">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+                <button type="submit" class="btn wayfarer-btn">Add Comment</button>
+            </form>
+            <h5>Total Comments: {{comments.count}}</h5>
+            {% for comment in post.comments.all %}
+            <div id="comments-show">
+                <small>{{ comment.comment }} by {{ comment.user }} </small>
+                    <a href="{% url 'edit_comment' post.id comment.id %}" class="btn blue">Edit</a>
+                    <a class="btn red" href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
+            </div>
+            {% endfor %}
+            </div>
         </div>
     </div>
 </div>

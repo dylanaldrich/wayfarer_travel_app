@@ -4,7 +4,7 @@
 /* Font Awesome CSS */
 @import url('https://unpkg.com/sweetalert/dist/sweetalert.min.js');
 @import url('https://pro.fontawesome.com/releases/v5.10.0/css/all.css');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap');
 @import url('https://db.onlinewebfonts.com/c/c5fc2b05949b051c07482453e8e0c1e6?family=Filson+Soft');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
 
@@ -12,6 +12,9 @@
     font-family: 'Filson Soft', sans-serif;
 }
 
+body {
+    padding-top: 6rem;
+}
 ul {
     list-style-type: none;
 }
@@ -69,6 +72,11 @@ ul {
     height: auto;
 }
 
+#textslide {
+    font-style: italic;
+    font-family: 'Montserrat';
+}
+
 .splash-headings{
     margin: 20px;
 }
@@ -97,4 +105,77 @@ rounded-circle:hover {
 /* SIGNUP FORM */
 .signup-container {
     margin: 100px auto;
+}
+
+/* CITIES SIDEBAR */
+
+.sidebar-name {
+    color: whitesmoke;
+}
+
+.sidebar-left {
+    background-color: #973DFC;
+    color: white;
+}
+
+.sidebar-btn {
+    border: 2px solid whitesmoke
+}
+
+.cities-name-link {
+    color: whitesmoke;
+}
+
+/* POSTS */
+
+#edit-post-jumbotron {
+    background-color: #973DFC;
+    max-width: 286px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#edit-post-header {
+    color: whitesmoke;
+    font-size: 1.50rem;
+    text-align: center;
+}
+
+.btn-info {
+    background-color: #F72AEE;
+    border-color: orange;
+}
+
+.btn-info:hover {
+    background-color: orange;
+    border-color: #F72AEE;
+}
+
+/* #delete-button {
+    background-color: orange;
+    border-color: #F72AEE;
+}
+
+#delete-button:hover {
+    background-color: #F72AEE;
+} */
+
+
+/* MAP */
+.marker {
+    background-image: url('https://www.flaticon.com/svg/static/icons/svg/3180/3180209.svg');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
 }
