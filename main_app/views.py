@@ -77,6 +77,7 @@ def profile_detail(request, slug):
     for post in posts:
         post_cities.append(post.city.name)
 
+    """ Source: https://www.geeksforgeeks.org/counting-frequencies-of-array-elements/ """
     def countFreq(arr, n):
         frequency = []
         # Mark all array elements as not visited
