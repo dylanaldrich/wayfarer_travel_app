@@ -8,5 +8,5 @@ def SignUpFormGlobal(request):
 
 def CommentFormGlobal(request):
     return {
-        'comment_form': Comment_Form()
+        'comment_form_global': Comment_Form()
     }

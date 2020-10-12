@@ -86,16 +86,18 @@
             <div class="comment-form-container">
                 <form class="post-show-container" method="POST" action="{% url 'add_comment' post.id%}">
                     {% csrf_token %}
-                    <textarea class="form-control" name="comment" rows="3"></textarea>
+                    {{ comment_form }}
                     <button type="submit" class="btn wayfarer-btn">Add Comment</button>
                 </form>
             </div>
             <h5>Total Comments: {{comments.count}}</h5>
             {% for comment in post.comments.all %}
             <div id="comments-show">
-                <small>{{ comment.comment }} by {{ comment.user }} {{ comment.comment_date|timesince }} ago </small>
+                <small>{{ comment.comment }} by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
+                    {% if request.user.id == comment.user.id %}
                     <a href="{% url 'edit_comment' post.id comment.id %}" class="btn blue">Edit</a>
                     <a class="btn red" href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
+                    {% endif %}
             </div>
             {% endfor %}
             </div>
