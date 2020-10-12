@@ -92,13 +92,13 @@
                     <input type="submit" class="btn wayfarer-btn" value="Add Comment">
                 </form>
             </div>
-            <h5>Total Comments: {{comments.count}}</h5>
+            <h7>Total Comments: {{comments.count}}</h7>
             {% for comment in post.comments.all %}
             <div id="comments-show">
                 <small>{{ comment.comment }} by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
                     {% if request.user.id == comment.user.id %}
-                    <a href="{% url 'edit_comment' post.id comment.id %}" class="btn blue">Edit</a>
-                    <a class="btn red" href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
+                    <a href="{% url 'edit_comment' post.id comment.id %}">Edit </a>|
+                    <a href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
                     {% endif %}
             </div>
             {% endfor %}
