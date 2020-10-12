@@ -92,6 +92,8 @@
             {% for comment in post.comments.all %}
             <div id="comments-show">
                 <small>{{ comment.comment }} by {{ comment.user }} </small>
+                    <a href="{% url 'edit_comment' post.id comment.id %}" class="btn blue">Edit</a>
+                    <a class="btn red" href="{% url 'delete_comment' post.id comment.id %}">Delete</a>
             </div>
             {% endfor %}
             </div>
