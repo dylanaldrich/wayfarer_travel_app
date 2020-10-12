@@ -88,7 +88,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="card" method="POST" action="{% url 'post_create' %}">
+                                    <form class="card" method="POST" action="{% url 'post_create' %}" novalidate>
                                         {% csrf_token %}
                                         {{ form|crispy }}
                                         <div class="modal-footer">

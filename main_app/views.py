@@ -13,6 +13,7 @@ from django.db.models import Count, Q
 
 
 
+
 # Create your views here.
 # Base views
 def home(request):
