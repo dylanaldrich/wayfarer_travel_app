@@ -230,3 +230,27 @@ ul {
     letter-spacing: 0;
     font-size: 25px;
 }
+
+.sidebar-cities-name{
+    display: inline;
+}
+
+@media only screen and (max-width: 600px) {
+    .sidebar-cities-name{
+        display: none;
+    }
+
+    .sidebar-item, sidebar-cities-images{
+        display: inline;
+        float: left;
+        margin: 10px auto;
+    }
+    .sidebar-left{
+        margin-top: 10px;
+        max-width: 100%;
+        min-height: 10%;
+        max-height: 10%;
+    }
+
+
+  }

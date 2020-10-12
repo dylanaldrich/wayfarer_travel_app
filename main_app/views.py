@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Profile, Post, User, City, Comment
 from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form, Comment_Form
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -11,10 +12,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 
 
+
 # Create your views here.
 # Base views
 def home(request):
-    signup_form = SignUpForm(data=request.POST)
+    signup_form = SignUpForm(request.POST)
     if signup_form.is_valid():
         user = signup_form.save()
         user.refresh_from_db()
@@ -150,7 +152,7 @@ def profile_edit(request, user_id):
 def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
-        post_form = Post_Form(data=request.POST)
+        post_form = Post_Form(request.POST)
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
@@ -316,7 +318,7 @@ def logout_user(request):
     return redirect('home')
 
 
-# Delete User 
+# Delete User
 @login_required
 def profile_delete(request, user_id):
     user = User.objects.get(id=user_id)
