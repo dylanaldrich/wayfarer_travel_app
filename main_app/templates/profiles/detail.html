@@ -11,7 +11,8 @@
 
 <div class="parent-container d-flex">
     <!-- PROFILE INFO CARD -->
-    <div class="container col-3">
+    <div class="container col-sm" style="
+    margin-bottom: 2rem">
         <div class="card card-inverse card-info">
             <img class="card-img-top" src="{{ profile.image.url }}" alt="profile photo">
             <div class="card-block">
@@ -40,13 +41,34 @@
             {% if request.user.id == profile.user.id %}
                 <div class="card-footer" style="text-align:center;">
                     <a href="{% url 'profile_edit' profile.id %}">
-                        <button class="btn btn-info btn-sm">Edit</button>
+                        <button class="btn btn-info btn-sm">Edit Profile</button>
                     </a>
-                    <a href="#">
-                        <button class="btn btn-info btn-sm btn-danger">Close Account</button>
-                    </a>
+                    <form class="delete-prof-btn" action="{% url 'profile_delete' user.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button class="btn btn-info btn-sm btn-danger delete-profile-btn">Deactivate</button>
+                    </form>
                 </div>
             {% endif %}
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script>$('.delete-profile-btn').click(function(e){
+                e.preventDefault();
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deactivated, you will not be able to recover this profile and it's contributions!",
+                    icon: "warning",
+                    buttons: true,
+                    confirmButtonColor: '#8CD4F5',
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $('.delete-prof-btn').submit()
+                    }
+                });
+            })</script>
+
+
+
+
         </div>
     </div>
     <!-- END PROFILE INFO CARD -->
@@ -66,7 +88,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}">
+                                <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}" novalidate>
                                     {% csrf_token %}
                                     {{ form|crispy }}
                                     <div class="modal-footer">
@@ -77,62 +99,65 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <script>
-                    $('#createPostModal').on('show.bs.modal', function (event) {
-                        var button = $(event.relatedTarget) // Button that triggers the modal
-                        var modal = $(this)
-                        modal.find('.modal-title').text('Create a Post')
-                    })
-                </script>
-            {% endif %}
+                    <script>
+                        $('#createPostModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget) // Button that triggers the modal
+                            var modal = $(this)
+                            modal.find('.modal-title').text('Create a Post')
+                        })
+                    </script>
+                {% endif %}
                 <!-- End add post modal -->
 
 
 
         {% if profile.user.post_set.count == 0 %}
             {% if request.user.id == profile.user.id %}
-                <h3>My Posts:</h3>
+                <h3 class="posts-header">My Posts:</h3>
                     <h4>You haven't made any posts yet.</h4>
             {% else %}
-            <h3>{{ profile.name }}'s Posts:</h3>
+            <h3 class="posts-header">{{ profile.name }}'s Posts:</h3>
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
         {% if request.user.id == profile.user.id %}
-                <h3>My Posts:</h3>
+                <h3 class="posts-header">My Posts:</h3>
             {% else %}
                 <h3>{{ profile.name }}'s' Posts:</h3>
             {% endif %}
+            <ul>
             {% for post in profile.user.post_set.all %}
-                <div class="card mb-3" style="max-width: 700px;">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="https://picsum.photos/200/150/?random" class="card-img" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <a href="{% url 'post_detail' post.id %}">
-                                <h5 class="card-title post-title">{{ post.title }} - <small>{{ post.city }}</small></h5>
-                                </a>
-                                <p class="card-text">{{ post.body|truncatewords:30 }}</p>
-                                <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
+                <li>
+                    <div class="card mb-3" style="max-width: 700px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{ post.city.image }}" class="card-img" alt="...">
                             </div>
-                            {% if request.user.id == profile.user.id %}
-                                <div class="card-footer" style="text-align: right;">
-                                    <a href="{% url 'post_edit' post.id %}">
-                                        <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <a href="{% url 'post_detail' post.id %}">
+                                    <h5 class="card-title post-title">{{ post.title }} - <small>{{ post.city }}</small></h5>
                                     </a>
-                                    <form class="delet-me-now" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
-                                        {% csrf_token %}
-                                        <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
-                                    </form>
+                                    <p class="card-text">{{ post.body|truncatewords:30 }}</p>
+                                    <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
                                 </div>
-                            {% endif %}
+                                {% if request.user.id == profile.user.id %}
+                                    <div class="card-footer" style="text-align: right;">
+                                        <a href="{% url 'post_edit' post.id %}">
+                                            <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                        </a>
+                                        <form class="delet-me-now" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </li>
             {% endfor %}
+            </ul>
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
             <script>$('.delete-post-btn').click(function(e){
                 e.preventDefault();

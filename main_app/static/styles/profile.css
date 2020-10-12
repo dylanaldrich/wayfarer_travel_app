@@ -12,7 +12,6 @@ h5 {
 .card {
     font-size: 1em;
     overflow: hidden;
-    padding: 0;
     border: none;
     border-radius: .28571429rem;
     box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
@@ -96,6 +95,7 @@ h5 {
 
 .posts-list {
     flex-direction: column;
+    margin-top: 2rem;
 }
 
 .text-bold {
@@ -116,10 +116,6 @@ h5 {
     color: rgba(0, 0, 0, .87);
 }
 
-.jumbotron {
-    padding: 1rem 2rem;
-    margin-top: 21px;
-}
 
 .post-title:hover {
     color: #0071FF;

@@ -12,6 +12,16 @@
     font-family: 'Filson Soft', sans-serif;
 }
 
+#page-container {
+    padding-top: 2rem;
+}
+
+.jumbotron {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    margin-top: 21px
+}
+
 ul {
     list-style-type: none;
 }
@@ -99,6 +109,19 @@ rounded-circle:hover {
     color: #0071FF;
 }
 
+.col-3 {
+    max-width: fit-content;
+}
+
+.d-flex {
+    flex-wrap: wrap;
+}
+
+#profile_detail_card {
+    margin-bottom: 2rem;
+}
+
+
 /* SIGNUP FORM */
 .signup-container {
     margin: 100px auto;
@@ -149,13 +172,14 @@ rounded-circle:hover {
 }
 
 .btn-info {
-    background-color: #F72AEE;
-    border-color: orange;
+    background-color: #973DFC;
+    border-color: #973DFC;
 }
 
 .btn-info:hover {
-    background-color: orange;
-    border-color: #F72AEE;
+    background-color: #973DFC;
+    color: black;
+    border-color: #973DFC;
 }
 
 /* #delete-button {
@@ -186,3 +210,13 @@ rounded-circle:hover {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
 }
+
+
+/* @media (max-width: 560px)
+.d-flex{
+    flex-wrap: wrap;
+} */
+
+/* .col-3 {
+    max-width: 90%;
+} */

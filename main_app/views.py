@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import Profile, Post, User, City, Comment
 from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form, Comment_Form
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -11,10 +12,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 
 
+
+
 # Create your views here.
 # Base views
 def home(request):
-    signup_form = SignUpForm(data=request.POST)
+    signup_form = SignUpForm(request.POST)
     if signup_form.is_valid():
         user = signup_form.save()
         user.refresh_from_db()
@@ -84,7 +87,7 @@ def profile_detail(request, slug):
                     count += 1
 
             frequency.append({
-                'city': arr[i], 
+                'city': arr[i],
                 'count': count
                 })
 
@@ -102,7 +105,6 @@ def profile_edit(request, user_id):
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
-            # profile_form = Profile_Form(request.POST, request.FILES, instance=user.profile)
             if profile_form.is_valid():
                 new_profile = profile_form.save(commit=False)
                 new_profile.user = request.user
@@ -120,13 +122,14 @@ def profile_edit(request, user_id):
     else:
         try:
             profile_form = Profile_Form(instance=profile)
-            # profile_form = Profile_Form(instance=user.profile)
             context = {'profile_form': profile_form, 'profile': profile}
             return render(request, 'profiles/edit.html', context)
         except:
             profile_form = Profile_Form()
             context = {'profile_form': profile_form}
             return render(request, 'profiles/edit.html', context)
+
+
 
 
 # ------ Post views ------
@@ -268,7 +271,7 @@ def signup(request):
                 'user': user,})
         to_email = form.cleaned_data.get('email')
         email = EmailMessage(mail_subject, message, to=[to_email])
-        # email.send()
+        email.send()
         login(request, user)
         return redirect('profile_detail', slug=user.profile.slug)
     else:
@@ -303,21 +306,36 @@ def logout_user(request):
     return redirect('home')
 
 
+# Delete User
+@login_required
+def profile_delete(request, user_id):
+    user = User.objects.get(id=user_id)
+    if user.id == request.user.id:
+        user.delete()
+        print(request, "The user is deleted")
+        return redirect('profile_delete', user_id=user_id)
+
+
 # ------- COMMENTS -------#
 # Create Comments
 @login_required
 def add_comment(request, post_id):
-    comment_form = Comment_Form(request.POST)
+    comment_form = Comment_Form(data=request.POST)
     post = Post.objects.get(id=post_id)
     if comment_form.is_valid():
         new_comment = comment_form.save(commit=False)
-        new_comment.user_id = post.user_id
+        new_comment.user = request.user
         new_comment.post_id = post_id
         new_comment.post = post
         new_comment.save()
+        return redirect('post_detail', post_id=post_id)
     else:
-        comment_form = CommentForm()
-    return redirect('post_detail', post_id=post_id)
+        context={
+            'post_id': post_id,
+            'errors': comment_form.errors,
+            'comment_form': Comment_Form()
+        }
+        return render(request, 'error.html', context)
 
 # delete
 @login_required
@@ -332,16 +350,23 @@ def delete_comment(request, post_id, comment_id):
 # edit && update
 @login_required
 def edit_comment(request, post_id, comment_id):
-    comment_form = Comment_Form(request.POST)
     comment = Comment.objects.get(id=comment_id)
     if request.user == comment.user:
         if request.method == 'POST':
             comment_form = Comment_Form(request.POST, instance=comment)
-        if comment_form.is_valid():
-            comment_form.save()
-            return redirect('post_detail', post_id=post_id)
+            if comment_form.is_valid():
+                comment_form.save()
+                return redirect('post_detail', post_id=post_id)
         else:
             comment_form = Comment_Form(instance=comment)
         context = {'comment': comment, 'comment_form': comment_form}
         return render(request, 'posts/comment_edit.html', context)
     return redirect('post_detail', post_id=post_id)
+
+
+# ERROR
+@login_required
+def error_detail(request):
+    cities = City.objects.all()
+    context = {'errors': 'There was an error', 'cities': cities }
+    return render(request, 'error.html', context)
