@@ -1,13 +1,15 @@
 
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from django.conf import settings
+from django.conf.urls import include
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('api/', views.api, name='api'),
+    re_path(r'^captcha/', include('captcha.urls')),
 
     # ACCOUNTS (COMPLETE)
     path('accounts/signup/', views.signup, name='signup'),
