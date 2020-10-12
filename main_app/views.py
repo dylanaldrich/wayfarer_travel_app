@@ -333,7 +333,8 @@ def add_comment(request, post_id):
         context={
             'post_id': post_id,
             'errors': comment_form.errors,
-            'comment_form': Comment_Form()}
+            'comment_form': Comment_Form()
+        }
         return render(request, 'error.html', context)
 
 # delete

@@ -84,9 +84,8 @@
             <!-- ----------- SHARE BUTTONS ENDS ----------- -->
             <div class="comment-container">
             <div class="comment-form-container">
-            {{ comment_form.errors }}
-            {{ comment_form.non_field_errors }}
-                <form method="POST" action="{% url 'add_comment' post.id%}" class="post-show-container needs-validation" novalidate>
+            {{ errors }}
+                <form method="POST" action="{% url 'add_comment' post.id%}" class="post-show-container needs-validation" validate>
                     {% csrf_token %}
                     <input type="hidden" name="user" value="{{ request.user.id }}">
                     <textarea class="form-control" minlength="2" name="comment" rows="3" required></textarea>
