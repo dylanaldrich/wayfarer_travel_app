@@ -18,3 +18,7 @@ requests==2.24.0
 six==1.15.0
 sqlparse==0.4.0
 urllib3==1.25.10
+toml==0.10.1
+typed-ast==1.4.1
+wrapt==1.12.1
+

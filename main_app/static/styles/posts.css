@@ -10,7 +10,6 @@
 
 .flex {
     display: flex;
-    flex-wrap: wrap;
 }
 
  .flex > * {
@@ -125,6 +124,12 @@ ul {
     margin: auto 20px;
 }
 
+#profile-add-post-btn {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: -13px;
+}
 
 /* POST DETAIL / SHOW PAGE */
 
@@ -147,6 +152,7 @@ ul {
     text-align: center;
     opacity: 80%;
 }
+
 
 
 /* COMMENT SECTION */

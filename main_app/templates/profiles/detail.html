@@ -9,7 +9,7 @@
     </div>
 {% endif %}
 
-<div class="parent-container d-flex">
+<div class="parent-container d-flex" id="profile_parent_container">
     <!-- PROFILE INFO CARD -->
     <div class="container col-sm" style="
     margin-bottom: 2rem">
@@ -77,6 +77,7 @@
     <div class="container col-8 posts-list">
                 <!-- Add post modal -->
                 {% if request.user.id == profile.user.id %}
+
                 <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
                 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -96,6 +97,7 @@
                                         <input type="submit" class="btn wayfarer-btn" value="Share!">
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -123,11 +125,9 @@
         {% if request.user.id == profile.user.id %}
                 <h3 class="posts-header">My Posts:</h3>
             {% else %}
-                <h3>{{ profile.name }}'s' Posts:</h3>
+                <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
             {% endif %}
-            <ul>
             {% for post in profile.user.post_set.all %}
-                <li>
                     <div class="card mb-3" style="max-width: 700px;">
                         <div class="row no-gutters">
                             <div class="col-md-4">
@@ -136,11 +136,28 @@
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <a href="{% url 'post_detail' post.id %}">
-                                    <h5 class="card-title post-title">{{ post.title }} - <small>{{ post.city }}</small></h5>
+                                        <h5 class="card-title post-title">{{ post.title }} </h5>
+                                    </a>
+                                    <a href="{% url 'cities_show' post.city.slug %}">
+                                        <h7 class="post-city"><small>{{ post.city }}</small></h7>
                                     </a>
                                     <p class="card-text">{{ post.body|truncatewords:30 }}</p>
-                                    <p class="card-text"><small class="text-muted">Created {{ post.post_date|timesince }} ago</small></p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a> 
+                                        </small></p>
+                                    {% if request.user.id == profile.user.id %}
+                                        <div class="btn" id="profile-posts-buttons">
+                                            <a href="{% url 'post_edit' post.id %}">
+                                                <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                            </a>
+                                            <form class="delet-me-now" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                                                {% csrf_token %}
+                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
                                 </div>
+
                                 {% if request.user.id == profile.user.id %}
                                     <div class="card-footer" style="text-align: right;">
                                         <a href="{% url 'post_edit' post.id %}">
@@ -152,12 +169,11 @@
                                         </form>
                                     </div>
                                 {% endif %}
+
                             </div>
                         </div>
                     </div>
-                </li>
             {% endfor %}
-            </ul>
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
             <script>$('.delete-post-btn').click(function(e){
                 e.preventDefault();

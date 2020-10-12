@@ -113,14 +113,6 @@ rounded-circle:hover {
     max-width: fit-content;
 }
 
-.d-flex {
-    flex-wrap: wrap;
-}
-
-#profile_detail_card {
-    margin-bottom: 2rem;
-}
-
 
 /* SIGNUP FORM */
 .signup-container {

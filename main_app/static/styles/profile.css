@@ -120,3 +120,21 @@ h5 {
 .post-title:hover {
     color: #0071FF;
 }
+
+#profile_parent_container {
+    flex-wrap: wrap;
+}
+
+#profile_detail_card {
+    margin-bottom: 2rem;
+}
+
+h3.profile-header {
+    margin-bottom: 2px;
+}
+
+#profile-posts-buttons {
+    position: absolute;
+    right: 0px;
+    bottom: 0px
+}
