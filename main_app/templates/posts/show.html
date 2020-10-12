@@ -86,7 +86,8 @@
             <div class="comment-form-container">
                 <form class="post-show-container" method="POST" action="{% url 'add_comment' post.id%}">
                     {% csrf_token %}
-                    {{ comment_form }}
+                    <input type="hidden" name="user" value="{{ request.user.id }}">
+                    <textarea class="form-control" name="comment" rows="3"></textarea>
                     <button type="submit" class="btn wayfarer-btn">Add Comment</button>
                 </form>
             </div>
