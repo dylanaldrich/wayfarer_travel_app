@@ -12,10 +12,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 
 
-
-
 # Create your views here.
-# Base views
+
+# ----- Base views -----
+
+# Homepage
 def home(request):
     signup_form = SignUpForm(request.POST)
     if signup_form.is_valid():
@@ -45,32 +46,21 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+# About page
 def about(request):
     return render(request, 'about.html')
 
+
+# API
 def api(request):
     return JsonResponse({"status": 200})
+
 
 # ----- Profile views -----
 
 # Profiles index
 def profiles_index(request):
     return HttpResponse('Hello, these are profiles')
-
-
-# Profile detail
-# def profile_detail(request, slug):
-#     profile = Profile.objects.get(slug=slug)
-#     form = Post_Form(request.POST)
-#     posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
-#     cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
-#     sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-#     ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
-#     gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
-#     # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-#     context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
-#     return render(request, 'profiles/detail.html', context)
-
 
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
@@ -144,8 +134,6 @@ def profile_edit(request, user_id):
             return render(request, 'profiles/edit.html', context)
 
 
-
-
 # ------ Post views ------
 
 # Posts Create
@@ -155,13 +143,14 @@ def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
+        redirect_next = request.GET.get('next')
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
             new_post.save()
-            return redirect('cities_index')
+            return redirect(redirect_next)
         else:
-            return redirect('cities_index')
+            return redirect(redirect_next)
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form, 'cities': cities}
@@ -217,6 +206,7 @@ def post_edit(request, post_id):
         return render(request, 'posts/edit.html', context)
     return redirect('post_index')
 
+
 # Post Delete
 @login_required
 def post_delete(request, post_id):
@@ -246,7 +236,6 @@ def cities_index(request):
     return render(request, 'cities/index.html', context)
 
 
-
 # Cities Show
 def cities_show(request, slug):
     cities = City.objects.all()
@@ -264,6 +253,8 @@ def cities_show(request, slug):
     form = Post_Form(request.POST)
     context = {'cities': cities, 'city': city, 'form': form, 'posts': posts, 'next_url': f"/cities/{slug}"}
     return render(request, 'cities/show.html', context)
+
+
 
 # ------- User Auth -------#
 
@@ -294,6 +285,7 @@ def signup(request):
             'form': SignUpForm(),
         }
     return render(request, 'registration/signup.html', context)
+
 
 # Login
 def login_user(request):
@@ -331,6 +323,7 @@ def profile_delete(request, user_id):
 
 
 # ------- COMMENTS -------#
+
 # Create Comments
 @login_required
 def add_comment(request, post_id):
@@ -351,7 +344,8 @@ def add_comment(request, post_id):
         }
         return render(request, 'error.html', context)
 
-# delete
+
+# Delete Comment
 @login_required
 def delete_comment(request, post_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
@@ -361,7 +355,7 @@ def delete_comment(request, post_id, comment_id):
     return redirect('post_detail', post_id=post_id)
 
 
-# edit && update
+# Edit && Update Comment
 @login_required
 def edit_comment(request, post_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
