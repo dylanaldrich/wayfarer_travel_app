@@ -273,6 +273,10 @@ rounded-circle:hover {
 
 .overflow-auto {
     max-height: 200px;
-}
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    }
+
 
 }
