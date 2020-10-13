@@ -31,7 +31,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     current_city = models.CharField(max_length=25)
-    image = models.ImageField(upload_to='profile_image', default='profile_image/default_profile_photo.svg')
+    image = models.ImageField(upload_to='profile_image', default='traveler.png')
     join_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=25, null=True, blank=True)
 

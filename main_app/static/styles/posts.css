@@ -162,6 +162,16 @@ ul {
     opacity: 80%;
 }
 
+.posts-lists-profile-img{
+    height: 300px;
+    width: 300px;
+    padding: 50% auto;
+    object-fit: cover;
+    position: center;
+    justify-content: center;
+    /* border-radius: 50%; */
+}
+
 .post-detail-image{
     min-width: 100%;
     min-height: 300px;
