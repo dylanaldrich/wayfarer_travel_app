@@ -67,8 +67,8 @@
                                 <div class="modal-body">
                                     <img src="https://www.flaticon.com/svg/static/icons/svg/3125/3125914.svg" width='150px' style="float: right;">
                                     {% if error %}
-        <div class="alert alert-danger" role="alert">{{ error }}</div>
-      {% endif %}
+                                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                    {% endif %}
                                     <form method="POST" action="{% url 'login' %}">
                                         <div class="form-group login-form">
                                             {% csrf_token %}

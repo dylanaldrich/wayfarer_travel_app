@@ -58,10 +58,7 @@ def api(request):
 
 # ----- Profile views -----
 
-# Profiles index
-def profiles_index(request):
-    return HttpResponse('Hello, these are profiles')
-
+# Profile detail
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)

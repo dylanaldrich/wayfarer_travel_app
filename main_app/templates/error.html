@@ -1,27 +1,27 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+
 {% block content %}
 <a id="top"></a>
-    <!-- Start cities sidebar menu -->
-    <div class="jumbotron" id="edit-post-jumbotron">
-        <h3 class="display-4" id="edit-post-header">ERRORS</h3>
-    </div>
-    <!-- End cities sidebar menu -->
+<!-- Start cities sidebar menu -->
+<div class="jumbotron" id="edit-post-jumbotron">
+    <h3 class="display-4" id="edit-post-header">Error!</h3>
+</div>
+<!-- End cities sidebar menu -->
 
-    <div class='post-detail-right flex'>
+<div class='post-detail-right flex'>
     <div class="post-show-container">
         {% if errors %}
-        <div class="alert alert-danger" role="alert">{{ errors }}</div>
+            <div class="alert alert-danger" role="alert">{{ errors }}</div>
         {% endif %}
 
         <button class="wayfarer-btn" onclick="goBack()">Go Back</button>
 
         <script>
-        function goBack() {
-            window.history.back();
-        }
+            function goBack() {
+                window.history.back();
+            }
         </script>
     </div>
 </div>
-
 {% endblock %}
