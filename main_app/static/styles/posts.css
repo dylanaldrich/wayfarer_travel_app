@@ -89,6 +89,7 @@ ul {
     height: 50px;
     border-radius: 50%;
     margin: 20px 20px;
+    object-fit: cover;
 }
 
 .list-each-post-index{
