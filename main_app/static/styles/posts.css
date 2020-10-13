@@ -22,13 +22,13 @@
 /* SIDEBAR */
 
 .sidebar-left{
-    margin-top: 5%;
+    margin-top: 3%;
     max-width: 350px;
     flex: 3 auto;
     text-align: left;
     font-size: 20px;
     padding: 20px;
-    max-height: 50vh;
+    max-height: 700px;
     background-color:whitesmoke;
     border-radius: 15px;
 }
@@ -204,6 +204,12 @@ ul {
 
 .sidebar-cities-name{
     display: inline;
+}
+
+/* POST EDIT */
+
+.edit-post-container{
+    margin: 5% auto;
 }
 
 

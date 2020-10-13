@@ -150,3 +150,19 @@ h3.profile-header {
     right: 0px;
     bottom: 0px
 }
+
+
+
+
+@media only screen and (max-width: 600px) {
+    #profile-container{
+        max-width: 100%;
+        margin: 2rem auto;
+        border-radius: 30px;
+    }
+
+    .post-list {
+        max-width: 100%;
+        flex: 0;
+    }
+}
