@@ -151,6 +151,7 @@ def profile_edit(request, user_id):
 # Posts Create
 @login_required
 def post_create(request):
+    post_form = Post_Form()
     cities = City.objects.all()
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
