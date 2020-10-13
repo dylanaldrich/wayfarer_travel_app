@@ -8,8 +8,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import django_on_heroku
 import os
 import environ
+
 
 env = environ.Env(
     # set casting, default value
@@ -142,3 +144,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'wayfarergaga@gmail.com'
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
+
+django_on_heroku.settings(locals())

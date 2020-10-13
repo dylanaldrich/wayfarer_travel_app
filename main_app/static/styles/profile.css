@@ -13,11 +13,18 @@ h5 {
     max-width: 20%;
     margin: 2rem auto;
     border-radius: 30px;
+    min-width: 175px;
 }
 
 .profile-posts-list{
     max-width: 80%;
     border-radius: 15px;
+}
+
+add-post-btn {
+    position: absolute;
+    right: 0px;
+    z-index: 1;
 }
 
 .card {
@@ -151,7 +158,9 @@ h3.profile-header {
     bottom: 0px
 }
 
-
+#profile-info-btn{
+    margin-bottom: 5px;
+}
 
 
 @media only screen and (max-width: 600px) {
@@ -165,4 +174,5 @@ h3.profile-header {
         max-width: 100%;
         flex: 0;
     }
+
 }

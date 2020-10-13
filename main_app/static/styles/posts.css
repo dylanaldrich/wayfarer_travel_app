@@ -23,12 +23,13 @@
 
 .sidebar-left{
     margin-top: 3%;
-    max-width: 350px;
+    max-width: fit-content;
     flex: 3 auto;
     text-align: left;
     font-size: 20px;
     padding: 20px;
-    max-height: 700px;
+    height: fit-content;
+    max-height:625px;
     background-color:whitesmoke;
     border-radius: 15px;
 }
@@ -272,11 +273,33 @@ ul {
         float: left;
         margin: 10px auto;
     }
+
     .sidebar-left{
         text-align: center;
+        justify-content: center;
         margin-top: 5%;
         max-width: 100%;
         min-height: 10%;
         max-height: 10%;
     }
+
+    .posts-header{
+        font-size: 20px;
+    }
+
+    ul{
+        width: 100%;
+        padding-inline-start: 0;
+    }
+
+    .sidebar-left>ul{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-evenly;
+    }
+
+    .profile-posts-list{
+        width: 100%;
+    }
+
 }
