@@ -141,7 +141,9 @@ rounded-circle:hover {
 }
 
 .sidebar-btn {
-    border: 2px solid whitesmoke
+    border: 2px solid whitesmoke;
+    overflow: hidden;
+    display: -webkit-inline-box;
 }
 
 .cities-name-link {

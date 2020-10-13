@@ -11,10 +11,7 @@
         <ul class="list-unstyled components sidebar">
         {% for city in cities %}
             <li class="sidebar-item">
-                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
-                <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
-                <div class="sidebar-cities-name">{{ city.name }}</div>
-                </a>
+                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link"><div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>{{ city.name }}</a>
             </li>
         {% endfor %}
         </ul>
