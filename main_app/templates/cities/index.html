@@ -76,7 +76,7 @@
                                         <h7 class="post-city"><small>{{ post.city }}</small></h7>
                                     </a>
                                     <p class="card-text">{{ post.body|truncatewords:30 }}</p>
-                                    {%if post.body|length >= 100 %}
+                                    {% if post.body|length >= 50 %}
                                 <a href="{% url 'post_detail' post.id %}">Read more...</a>
                                 {%endif%}</p>
                                     <p class="card-text">

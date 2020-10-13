@@ -148,7 +148,7 @@
                                     <a href="{% url 'post_detail' post.id %}">Read more...</a>
                                     {%endif%}</p>
                                         <p class="card-text">
-                                            <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a>
+                                            <small class="text-muted">Submitted {{ post.post_date|timesince }} ago</a>
                                             </small></p>
                                         {% if request.user.id == profile.user.id %}
                                             <div class="btn" id="profile-posts-buttons">

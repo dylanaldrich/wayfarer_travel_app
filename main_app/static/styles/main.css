@@ -138,6 +138,30 @@ rounded-circle:hover {
     color: whitesmoke;
 }
 
+
+/* ABOUT */
+
+.about-me-div-1{
+    display: block;
+    min-height: 500px;
+    background-image: url("https://royaltyfreetube.com/wp-content/uploads/2020/02/synthwave-city-loop.jpg");
+    padding: 10%;
+    opacity: 80%;
+    background-size: cover;
+    background-position: top;
+    color: white;
+}
+
+.mb-1{
+    color: white;
+    margin-top: 10%;
+}
+
+.mb-5{
+    color: white;
+    margin: 5%;
+}
+
 /* POSTS */
 
 #edit-post-jumbotron {

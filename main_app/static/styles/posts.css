@@ -215,6 +215,10 @@ ul {
     display: inline;
 }
 
+.card-text{
+    font-family: 'Montserrat'
+}
+
 /* POST EDIT */
 
 .edit-post-container{
