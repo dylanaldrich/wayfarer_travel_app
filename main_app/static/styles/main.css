@@ -150,6 +150,10 @@ rounded-circle:hover {
     color: whitesmoke;
 }
 
+.overflow-auto {
+    max-height: 400px;
+}
+
 
 /* ABOUT */
 
@@ -230,14 +234,6 @@ rounded-circle:hover {
 }
 
 
-/* @media (max-width: 560px)
-.d-flex{
-    flex-wrap: wrap;
-} */
-
-/* .col-3 {
-    max-width: 90%;
-} */
 
 
 /* TOOLTIPS */
@@ -247,28 +243,36 @@ rounded-circle:hover {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-  }
+}
 
-  /* Tooltip text */
+/* Tooltip text */
 .tooltip .tooltiptext [data-tooltip]{
-visibility: hidden;
-width: 120px;
-background-color: red;
-color: #fff;
-text-align: center;
-padding: 5px 0;
-border-radius: 6px;
-
-/* Position the tooltip text - see examples below! */
-position: absolute;
-z-index: 1;
+    visibility: hidden;
+    width: 120px;
+    background-color: red;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
-visibility: visible;
+    visibility: visible;
 }
 
 .modal-body>input{
     width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+
+.overflow-auto {
+    max-height: 100px;
+}
+
 }
