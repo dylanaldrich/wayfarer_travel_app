@@ -9,6 +9,17 @@ h5 {
     margin: 0;
 }
 
+#profile-container{
+    max-width: 20%;
+    margin: 2rem auto;
+    border-radius: 30px;
+}
+
+.profile-posts-list{
+    max-width: 80%;
+    border-radius: 15px;
+}
+
 .card {
     font-size: 1em;
     overflow: hidden;
@@ -60,6 +71,7 @@ h5 {
 .card-inverse .btn {
     border: 1px solid rgba(0, 0, 0, .05);
 }
+
 
 .profile {
     position: absolute;
@@ -137,4 +149,20 @@ h3.profile-header {
     position: absolute;
     right: 0px;
     bottom: 0px
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+    #profile-container{
+        max-width: 100%;
+        margin: 2rem auto;
+        border-radius: 30px;
+    }
+
+    .post-list {
+        max-width: 100%;
+        flex: 0;
+    }
 }

@@ -11,8 +11,11 @@
         <ul class="list-unstyled components sidebar">
         {% for city in cities %}
             <li class="sidebar-item">
-                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
-                <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
+                <div class="sidebar-cities-images-container" style="position: relative;">
+                    <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
+                    <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
+                    <div id="sidebar-cities-images-text"><small>{{ city.name }}</small></div>
+                </div>
                 <div class="sidebar-cities-name">{{ city.name }}</div>
                 </a>
             </li>
@@ -21,8 +24,10 @@
     </div>
     <!-- End cities sidebar menu -->
 
+
     <div class='all-posts-right'>
         <!-- Add post modal -->
+        {% if request.user.is_authenticated %}
         <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
         <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -53,59 +58,66 @@
                 modal.find('.modal-title').text('Create a Post')
             })
         </script>
+        {% endif %}
         <!-- End add post modal -->
 
         <!-- List of recent posts -->
-        <h1 class="posts-header">Most Recent Posts</h1>
+        <h1 class="posts-header">Most Recent Posts...</h1>
             <ul>
                 {% for post in posts %}
-                    <li>
-                    <div class="list-each-post-index">
-                        <div class="list-each-post-profile d-flex flex-column justify-content-center align-items-center">
-                            <img  class="post-page-user" src="{{ post.user.profile.image.url }}">
-                        </div>
-                        <div class="all-post-show-container">
-                            <div class="posts-title">
-                                <a href="{% url 'post_detail' post.id %}"> <h5 class="posts-index-title">{{ post.title }}</h5> </a>
-                                <p>{{ post.body|truncatechars:100 }}
-                                {%if post.body|length >= 100 %}
+                    <div class="card mb-3 profile-posts-list">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{ post.city.image }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <a href="{% url 'post_detail' post.id %}">
+                                        <h5 class="card-title post-title">{{ post.title }} </h5>
+                                    </a>
+                                    <a href="{% url 'cities_show' post.city.slug %}">
+                                        <h7 class="post-city"><small>{{ post.city }}</small></h7>
+                                    </a>
+                                    <p class="card-text">{{ post.body|truncatewords:30 }}</p>
+                                    {%if post.body|length >= 100 %}
                                 <a href="{% url 'post_detail' post.id %}">Read more...</a>
                                 {%endif%}</p>
-                                <div class="posts-Info"><small>Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> in
-                                <a href="{% url "cities_show" post.city.slug %}">{{ post.city.name }}</a></small>
-                                {% if request.user.id == post.user.id %}
-                                    <div class='d-flex mt-2'>
-                                        <a href="{% url 'post_edit' post.id %}">
-                                            <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
-                                        </a>
-                                        <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
-                                        {% csrf_token %}
-                                            <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
-                                        </a>
-                                    </div>
-                                {% endif %}
+                                    <p class="card-text">
+                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{post.user.profile.name}}</a>
+                                        </small></p>
+                                        {% if request.user.id == post.user.id %}
+                                        <div class="btn" id="profile-posts-buttons">
+                                            <a href="{% url 'post_edit' post.id %}">
+                                                <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                            </a>
+                                            <form class="delete-me-now-{{post.id}} ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                                                {% csrf_token %}
+                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn-{{post.id}}" style="display:inline;">Delete</button>
+                                            </form>
+                                        </div>
+                                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                                        <script>$('.delete-post-btn-{{post.id}}').click(function(e){
+                                            e.preventDefault();
+                                            swal({
+                                                title: "Are you sure?",
+                                                text: "Once deleted, you will not be able to recover this post!",
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    $('.delete-me-now-{{post.id}}').submit()
+                                                }
+                                            });
+                                        })</script>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                {% endfor %}
-                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-                <script>$('.delete-post-btn').click(function(e){
-                    e.preventDefault();
-                    swal({
-                        title: "Are you sure?",
-                        text: "Once deleted, you will not be able to recover this post!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            $('.delet-me-now').submit()
-                        }
-                    });
-                })</script>
-            </ul>
+            {% endfor %}
+
             {% if posts.has_other_pages %}
                 <div class="pagination-container">
                     {% if posts.has_previous %}
@@ -127,4 +139,6 @@
         <!-- End list of recent posts -->
     </div>
 </div>
+
+
 {% endblock %}

@@ -59,6 +59,19 @@ def profiles_index(request):
 
 
 # Profile detail
+# def profile_detail(request, slug):
+#     profile = Profile.objects.get(slug=slug)
+#     form = Post_Form(request.POST)
+#     posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
+#     cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
+#     sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+#     ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
+#     gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
+#     # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
+#     context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
+#     return render(request, 'profiles/detail.html', context)
+
+
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
@@ -67,7 +80,6 @@ def profile_detail(request, slug):
     for post in posts:
         post_cities.append(post.city.name)
 
-    """ Source: https://www.geeksforgeeks.org/counting-frequencies-of-array-elements/ """
     def countFreq(arr, n):
         frequency = []
         # Mark all array elements as not visited
@@ -94,7 +106,8 @@ def profile_detail(request, slug):
         return frequency
 
     post_counter = countFreq(post_cities, len(post_cities))
-    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'next_url': f"/profile/{profile.slug}"}
+    print('post_counter', post_counter)
+    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'next_url': f"/profile/{profile.slug}", 'posts': posts}
     return render(request, 'profiles/detail.html', context)
 
 
@@ -102,6 +115,7 @@ def profile_detail(request, slug):
 @login_required
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
+    print("REQUEST.FILES", request.FILES)
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
@@ -140,14 +154,13 @@ def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
-        redirect_next = request.GET.get('next')
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
             new_post.save()
-            return redirect(redirect_next)
+            return redirect('cities_index')
         else:
-            return redirect(redirect_next)
+            return redirect('cities_index')
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form, 'cities': cities}
@@ -182,7 +195,7 @@ def post_detail(request, post_id):
     cities = City.objects.all()
     profile = Profile.objects.get(user_id=post.user_id)
     comment_form = Comment_Form()
-    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form, 'next_url': "/cities"}
+    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form}
     return render(request, 'posts/show.html', context)
 
 

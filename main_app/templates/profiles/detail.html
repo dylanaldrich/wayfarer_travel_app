@@ -7,12 +7,15 @@
     <div class="jumbotron">
         <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
     </div>
+{% else %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ profile.name.title }}'s Profile</h1>
+    </div>
 {% endif %}
 
 <div class="parent-container d-flex" id="profile_parent_container">
     <!-- PROFILE INFO CARD -->
-    <div class="container col-sm" style="
-    margin-bottom: 2rem">
+    <div class="container col-sm" id="profile-container">
         <div class="card card-inverse card-info">
             <img class="card-img-top" src="{{ profile.image.url }}" alt="profile photo">
             <div class="card-block">
@@ -21,7 +24,7 @@
                     <p>Current city: {{ profile.current_city.title }}</p>
                     <p>Joined: {{ profile.join_date|date:"F j, Y" }}</p>
                 </div>
-                <table class="table text-center">
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope='col'>Cities</th>
@@ -77,27 +80,26 @@
     <div class="container col-8 posts-list">
                 <!-- Add post modal -->
                 {% if request.user.id == profile.user.id %}
-
-                <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
-                <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="createPostModalLabel">Login</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}" novalidate>
-                                    {% csrf_token %}
-                                    {{ form|crispy }}
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <input type="submit" class="btn wayfarer-btn" value="Share!">
-                                    </div>
-                                </form>
-
+                    <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" id="profile-add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
+                    <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createPostModalLabel">Login</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="card" method="POST" action="{% url 'post_create' %}?next={{ next_url }}" novalidate>
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn wayfarer-btn" value="Share!">
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,78 +124,66 @@
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
-        {% if request.user.id == profile.user.id %}
-                <h3 class="posts-header">My Posts:</h3>
-            {% else %}
-                <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
-            {% endif %}
-            {% for post in profile.user.post_set.all %}
-                    <div class="card mb-3" style="max-width: 700px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="{{ post.city.image }}" class="card-img" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <a href="{% url 'post_detail' post.id %}">
-                                        <h5 class="card-title post-title">{{ post.title }} </h5>
-                                    </a>
-                                    <a href="{% url 'cities_show' post.city.slug %}">
-                                        <h7 class="post-city"><small>{{ post.city }}</small></h7>
-                                    </a>
-                                    <p class="card-text">{{ post.body|truncatewords:30 }}</p>
-                                    <p class="card-text">
-                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a> 
-                                        </small></p>
-                                    {% if request.user.id == profile.user.id %}
-                                        <div class="btn" id="profile-posts-buttons">
-                                            <a href="{% url 'post_edit' post.id %}">
-                                                <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
-                                            </a>
-                                            <form class="delet-me-now" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
-                                                {% csrf_token %}
-                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
-                                            </form>
-                                        </div>
-                                    {% endif %}
+            {% if request.user.id == profile.user.id %}
+                    <h3 class="posts-header">My Posts:</h3>
+                {% else %}
+                    <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
+                {% endif %}
+                {% for post in profile.user.post_set.all %}
+                        <div class="card mb-3 profile-posts-list">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="{{ post.city.image }}" class="card-img" alt="...">
                                 </div>
-
-                                {% if request.user.id == profile.user.id %}
-                                    <div class="card-footer" style="text-align: right;">
-                                        <a href="{% url 'post_edit' post.id %}">
-                                            <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <a href="{% url 'post_detail' post.id %}">
+                                            <h5 class="card-title post-title">{{ post.title }} </h5>
                                         </a>
-                                        <form class="delet-me-now" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
-                                            {% csrf_token %}
-                                            <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
-                                        </form>
+                                        <a href="{% url 'cities_show' post.city.slug %}">
+                                            <h7 class="post-city"><small>{{ post.city }}</small></h7>
+                                        </a>
+                                        <p class="card-text">{{ post.body|truncatewords:30 }}</p>
+                                        {%if post.body|length >= 100 %}
+                                    <a href="{% url 'post_detail' post.id %}">Read more...</a>
+                                    {%endif%}</p>
+                                        <p class="card-text">
+                                            <small class="text-muted">Submitted {{ post.post_date|timesince }} ago</a>
+                                            </small></p>
+                                        {% if request.user.id == profile.user.id %}
+                                            <div class="btn" id="profile-posts-buttons">
+                                                <a href="{% url 'post_edit' post.id %}">
+                                                    <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                                </a>
+                                                <form class="delete-me-now-{{post.id}} ml-2" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-info btn-sm btn-danger delete-post-btn-{{post.id}}" style="display:inline;">Delete</button>
+                                                </form>
+                                            </div>
+                                            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                                            <script>$('.delete-post-btn-{{post.id}}').click(function(e){
+                                                e.preventDefault();
+                                                swal({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, you will not be able to recover this post!",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        $('.delete-me-now-{{post.id}}').submit()
+                                                    }
+                                                });
+                                            })</script>
+                                        {% endif %}
                                     </div>
-                                {% endif %}
-
+                                </div>
                             </div>
                         </div>
-                    </div>
-            {% endfor %}
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-            <script>$('.delete-post-btn').click(function(e){
-                e.preventDefault();
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this post!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $('.delet-me-now').submit()
-                    }
-                });
-            })</script>
-        {% endif %}
+                {% endfor %}
+            {% endif %}
     </div>
     <!-- END POSTS LIST -->
 </div>
-
-
 {% endblock %}

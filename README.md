@@ -57,3 +57,5 @@ Registered users are:
 - HTML&CSS
 - BootStrap
 - jQuery
+- Sweet Alert
+- Simple-Captcha
