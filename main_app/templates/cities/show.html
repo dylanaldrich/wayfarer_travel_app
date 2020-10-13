@@ -8,20 +8,29 @@
         <div class="sidebar-header">
             <h1 class='sidebar-name'>Cities</h1>
         </div>
-        <ul class="list-unstyled components sidebar">
-        {% for city in cities %}
-            <li class="sidebar-item">
-                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
-                <div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>
-                <div class="sidebar-cities-name">{{ city.name }}</div></a>
-            </li>
-        {% endfor %}
-        </ul>
+        <div class="overflow-auto">
+            <ul class="list-unstyled components sidebar">
+            {% for city in cities %}
+                <li class="sidebar-item">
+                    <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
+                    <div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>
+                    <div class="sidebar-cities-name">{{ city.name }}</div></a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
     <!-- End cities sidebar menu -->
 
 
     <div class='all-posts-right'>
+
+        <div class="post-show-container">
+            <div class="post-detail-image"><h1>{{ city.name }}</h1></div>
+            <style>.post-detail-image{ background-image: url("{{city.image}}"); background-position: center top; background-size: cover;}</style>
+        </div>
+
+
         <!-- Add post modal -->
          {% if request.user.is_authenticated %}
         <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
