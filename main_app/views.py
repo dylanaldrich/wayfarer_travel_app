@@ -220,10 +220,10 @@ def post_edit(request, post_id):
 @login_required
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
-    print('request.user.id', request.user.id)
+    redirect_next = request.GET.get('next')
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect('profile_detail', slug=request.user.profile.slug)
+        return redirect(redirect_next)
 
 
 # ------ City views ------- #
