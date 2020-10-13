@@ -24,6 +24,7 @@
 
     <div class='all-posts-right'>
         <!-- Add post modal -->
+         {% if request.user.is_authenticated %}
         <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
         <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -35,9 +36,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form class="card" method="POST" action="{% url 'post_create' %}?next={{ next_url }}">
+                        <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}" validate>
                             {% csrf_token %}
                             {{ form|crispy }}
+                            <script>$('p').remove('.invalid-feedback');$('.is-invalid').removeClass('is-invalid')</script>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input type="submit" class="btn wayfarer-btn" value="Share!">
@@ -54,6 +56,7 @@
                 modal.find('.modal-title').text('Create a Post')
             })
         </script>
+        {% endif %}
         <!-- End add post modal -->
 
         <!-- List of recent posts -->

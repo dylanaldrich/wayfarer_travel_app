@@ -116,6 +116,11 @@
                                     <form method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
                                     {{ sign_up_form|crispy }}
+                                    <script>
+                                    $('#hint_id_password1').remove('#hint_id_password1');
+                                    $('#id_password1').attr({"data-toggle": "tooltip","data-placement": "left",
+                                    title: `Your password can’t be too similar to your other personal information.\nYour password must contain at least 8 characters.\nYour password can’t be a commonly used password.\nYour password can’t be entirely numeric.`});
+                                    </script>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

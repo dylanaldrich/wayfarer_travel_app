@@ -36,9 +36,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form class="card" method="POST" action="{% url 'post_create' %}?next={{ next_url }}">
+                        <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}" validate>
                             {% csrf_token %}
                             {{ form|crispy }}
+                            <script>$('p').remove('.invalid-feedback');$('.is-invalid').removeClass('is-invalid')</script>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input type="submit" class="btn wayfarer-btn" value="Share!">
