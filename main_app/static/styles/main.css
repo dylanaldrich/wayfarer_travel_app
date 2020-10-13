@@ -272,7 +272,7 @@ rounded-circle:hover {
 @media only screen and (max-width: 600px) {
 
 .overflow-auto {
-    max-height: 100px;
+    max-height: 200px;
 }
 
 }
