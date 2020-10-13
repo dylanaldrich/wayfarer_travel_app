@@ -64,6 +64,11 @@
                     }
                 });
             })</script>
+
+
+
+
+        </div>
     </div>
     <!-- END PROFILE INFO CARD -->
 
@@ -109,16 +114,16 @@
         {% if profile.user.post_set.count == 0 %}
             {% if request.user.id == profile.user.id %}
                 <h3 class="posts-header">My Posts:</h3>
-                <h4>You haven't made any posts yet.</h4>
+                    <h4>You haven't made any posts yet.</h4>
             {% else %}
-                <h3 class="posts-header">{{ profile.name }}'s Posts:</h3>
+            <h3 class="posts-header">{{ profile.name }}'s Posts:</h3>
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
-            {% if request.user.id == profile.user.id %}
+        {% if request.user.id == profile.user.id %}
                 <h3 class="posts-header">My Posts:</h3>
             {% else %}
-                <h3 class="posts-header">{{ profile.name }}'s Posts:</h3>
+                <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
             {% endif %}
             {% for post in profile.user.post_set.all %}
                     <div class="card mb-3 profile-posts-list">
@@ -135,12 +140,12 @@
                                         <h7 class="post-city"><small>{{ post.city }}</small></h7>
                                     </a>
                                     <p class="card-text">{{ post.body|truncatewords:30 }}</p>
-                                    {% if post.body|length >= 100 %}
-                                        <a href="{% url 'post_detail' post.id %}">Read more...</a>
-                                    {% endif %}
+                                    {%if post.body|length >= 100 %}
+                                <a href="{% url 'post_detail' post.id %}">Read more...</a>
+                                {%endif%}</p>
                                     <p class="card-text">
-                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a></small>
-                                    </p>
+                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a>
+                                        </small></p>
                                     {% if request.user.id == profile.user.id %}
                                         <div class="btn" id="profile-posts-buttons">
                                             <a href="{% url 'post_edit' post.id %}">
@@ -148,7 +153,7 @@
                                             </a>
                                             <form class="delet-me-now" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-info btn-sm delete-post-btn" style="display:inline;">Delete</button>
+                                                <input type="submit" class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;" value="Delete">
                                             </form>
                                         </div>
                                     {% endif %}
