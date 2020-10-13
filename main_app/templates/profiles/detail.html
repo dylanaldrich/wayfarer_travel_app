@@ -124,67 +124,68 @@
                 <h4>{{ profile.name.title }} hasn't made any posts yet.</h4>
             {% endif %}
         {% else %}
-        {% if request.user.id == profile.user.id %}
-                <h3 class="posts-header">My Posts:</h3>
-            {% else %}
-                <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
-            {% endif %}
-            {% for post in profile.user.post_set.all %}
-                    <div class="card mb-3 profile-posts-list">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="{{ post.city.image }}" class="card-img" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <a href="{% url 'post_detail' post.id %}">
-                                        <h5 class="card-title post-title">{{ post.title }} </h5>
-                                    </a>
-                                    <a href="{% url 'cities_show' post.city.slug %}">
-                                        <h7 class="post-city"><small>{{ post.city }}</small></h7>
-                                    </a>
-                                    <p class="card-text">{{ post.body|truncatewords:30 }}</p>
-                                    {%if post.body|length >= 100 %}
-                                <a href="{% url 'post_detail' post.id %}">Read more...</a>
-                                {%endif%}</p>
-                                    <p class="card-text">
-                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a>
-                                        </small></p>
-                                    {% if request.user.id == profile.user.id %}
-                                        <div class="btn" id="profile-posts-buttons">
-                                            <a href="{% url 'post_edit' post.id %}">
-                                                <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
-                                            </a>
-                                            <a href="{% url 'post_delete' post.id %}">
-                                                <button class="btn btn-info btn-sm" style="display: inline;">Delete</button>
-                                            </a>
-                                        </div>
-                                    {% endif %}
+            {% if request.user.id == profile.user.id %}
+                    <h3 class="posts-header">My Posts:</h3>
+                {% else %}
+                    <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
+                {% endif %}
+                {% for post in profile.user.post_set.all %}
+                        <div class="card mb-3 profile-posts-list">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="{{ post.city.image }}" class="card-img" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <a href="{% url 'post_detail' post.id %}">
+                                            <h5 class="card-title post-title">{{ post.title }} </h5>
+                                        </a>
+                                        <a href="{% url 'cities_show' post.city.slug %}">
+                                            <h7 class="post-city"><small>{{ post.city }}</small></h7>
+                                        </a>
+                                        <p class="card-text">{{ post.body|truncatewords:30 }}</p>
+                                        {%if post.body|length >= 100 %}
+                                    <a href="{% url 'post_detail' post.id %}">Read more...</a>
+                                    {%endif%}</p>
+                                        <p class="card-text">
+                                            <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a>
+                                            </small></p>
+                                        {% if request.user.id == profile.user.id %}
+                                            <div class="btn" id="profile-posts-buttons">
+                                                <a href="{% url 'post_edit' post.id %}">
+                                                    <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                                </a>
+                                                <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                                </form>
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-            {% endfor %}
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-            <script>$('.delete-post-btn').click(function(e){
-                e.preventDefault();
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this post!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $('.delet-me-now').submit()
-                    }
-                });
-            })</script>
-        {% endif %}
+                {% endfor %}
+            {% endif %}
     </div>
     <!-- END POSTS LIST -->
 </div>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>$('.delete-post-btn').click(function(e){
+    e.preventDefault();
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this post!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $('.delet-me-now').submit()
+        }
+    });
+})</script>
 
 {% endblock %}
