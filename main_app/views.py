@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import Profile, Post, User, City, Comment
 from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form, Comment_Form
 from django.contrib import messages
@@ -107,7 +107,7 @@ def profile_detail(request, slug):
 
     post_counter = countFreq(post_cities, len(post_cities))
     print('post_counter', post_counter)
-    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'posts': posts}
+    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'next_url': f"/profile/{profile.slug}", 'posts': posts}
     return render(request, 'profiles/detail.html', context)
 
 
@@ -241,7 +241,7 @@ def cities_index(request):
         posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
-    context = {'posts': posts, 'form': form, 'cities': cities}
+    context = {'posts': posts, 'form': form, 'cities': cities, 'next_url': "/cities"}
     return render(request, 'cities/index.html', context)
 
 
@@ -261,7 +261,7 @@ def cities_show(request, slug):
         posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
-    context = {'cities': cities, 'city': city, 'form': form, 'posts': posts}
+    context = {'cities': cities, 'city': city, 'form': form, 'posts': posts, 'next_url': f"/cities/{slug}"}
     return render(request, 'cities/show.html', context)
 
 # ------- User Auth -------#
