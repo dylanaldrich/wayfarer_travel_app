@@ -11,8 +11,7 @@
 
 <div class="parent-container d-flex" id="profile_parent_container">
     <!-- PROFILE INFO CARD -->
-    <div class="container col-sm" style="
-    margin-bottom: 2rem">
+    <div class="container col-sm" id="profile-container">
         <div class="card card-inverse card-info">
             <img class="card-img-top" src="{{ profile.image.url }}" alt="profile photo">
             <div class="card-block">
@@ -127,7 +126,7 @@
                 <h3 class="posts-header">{{ profile.name }}'s' Posts:</h3>
             {% endif %}
             {% for post in profile.user.post_set.all %}
-                    <div class="card mb-3" style="max-width: 700px;">
+                    <div class="card mb-3 profile-posts-list">
                         <div class="row no-gutters">
                             <div class="col-md-4">
                                 <img src="{{ post.city.image }}" class="card-img" alt="...">
@@ -141,8 +140,11 @@
                                         <h7 class="post-city"><small>{{ post.city }}</small></h7>
                                     </a>
                                     <p class="card-text">{{ post.body|truncatewords:30 }}</p>
+                                    {%if post.body|length >= 100 %}
+                                <a href="{% url 'post_detail' post.id %}">Read more...</a>
+                                {%endif%}</p>
                                     <p class="card-text">
-                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a> 
+                                        <small class="text-muted">Submitted {{ post.post_date|timesince }} ago to <a href="{% url 'cities_show' post.city.slug %}">{{ post.city }}</a>
                                         </small></p>
                                     {% if request.user.id == profile.user.id %}
                                         <div class="btn" id="profile-posts-buttons">
