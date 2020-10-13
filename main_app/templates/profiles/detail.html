@@ -21,7 +21,7 @@
                     <p>Current city: {{ profile.current_city.title }}</p>
                     <p>Joined: {{ profile.join_date|date:"F j, Y" }}</p>
                 </div>
-                <table class="table">
+                <table class="table text-center">
                     <thead>
                         <tr>
                             <th scope='col'>Cities</th>
@@ -77,26 +77,27 @@
     <div class="container col-8 posts-list">
                 <!-- Add post modal -->
                 {% if request.user.id == profile.user.id %}
-                    <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" id="profile-add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
-                    <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="createPostModalLabel">Login</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form class="card" method="POST" action="{% url 'post_create' %}" novalidate>
-                                        {% csrf_token %}
-                                        {{ form|crispy }}
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <input type="submit" class="btn wayfarer-btn" value="Share!">
-                                        </div>
-                                    </form>
-                                </div>
+
+                <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
+                <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createPostModalLabel">Login</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="{% url 'post_create' %}?next={{ next_url }}" novalidate>
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn wayfarer-btn" value="Share!">
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -156,6 +157,19 @@
                                         </div>
                                     {% endif %}
                                 </div>
+
+                                {% if request.user.id == profile.user.id %}
+                                    <div class="card-footer" style="text-align: right;">
+                                        <a href="{% url 'post_edit' post.id %}">
+                                            <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                                        </a>
+                                        <form class="delet-me-now" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+
                             </div>
                         </div>
                     </div>

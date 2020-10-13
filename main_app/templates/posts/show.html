@@ -36,7 +36,7 @@
                     <a href="{% url 'post_edit' post.id %}">
                         <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
                     </a>
-                    <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                    <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
                         {% csrf_token %}
                         <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
                     </form>

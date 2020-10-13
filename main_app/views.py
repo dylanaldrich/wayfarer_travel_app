@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import Profile, Post, User, City, Comment
 from .forms import Post_Form, Profile_Form, SignUpForm, LoginForm, Post_Form, Comment_Form
 from django.contrib import messages
@@ -59,19 +59,6 @@ def profiles_index(request):
 
 
 # Profile detail
-# def profile_detail(request, slug):
-#     profile = Profile.objects.get(slug=slug)
-#     form = Post_Form(request.POST)
-#     posts = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True)
-#     cities = Post.objects.filter(user_id=profile.id).values_list('city__name', flat=True).order_by('city__name').distinct('city__name')
-#     sf = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-#     ldn = Post.objects.filter(user_id=profile.id, city__name='London').values_list('city__name', flat=True)
-#     gid = Post.objects.filter(user_id=profile.id, city__name='Gibraltar').values_list('city__name', flat=True)
-#     # cities = Post.objects.filter(user_id=profile.id, city__name='San Francisco').values_list('city__name', flat=True)
-#     context = {'profile': profile, 'form': form, 'cities': cities, 'posts': posts, 'sf': sf,'ldn': ldn, 'gid': gid}
-#     return render(request, 'profiles/detail.html', context)
-
-
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
@@ -80,6 +67,7 @@ def profile_detail(request, slug):
     for post in posts:
         post_cities.append(post.city.name)
 
+    """ Source: https://www.geeksforgeeks.org/counting-frequencies-of-array-elements/ """
     def countFreq(arr, n):
         frequency = []
         # Mark all array elements as not visited
@@ -106,8 +94,7 @@ def profile_detail(request, slug):
         return frequency
 
     post_counter = countFreq(post_cities, len(post_cities))
-    print('post_counter', post_counter)
-    context = {'profile': profile, 'form': form, 'post_counter': post_counter}
+    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'next_url': f"/profile/{profile.slug}"}
     return render(request, 'profiles/detail.html', context)
 
 
@@ -115,7 +102,6 @@ def profile_detail(request, slug):
 @login_required
 def profile_edit(request, user_id):
     profile = Profile.objects.get(id=user_id)
-    print("REQUEST.FILES", request.FILES)
     if request.method == 'POST':
         try:
             profile_form = Profile_Form(request.POST, request.FILES, instance=profile)
@@ -154,13 +140,14 @@ def post_create(request):
     cities = City.objects.all()
     if request.method == 'POST':
         post_form = Post_Form(request.POST)
+        redirect_next = request.GET.get('next')
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
             new_post.user = request.user
             new_post.save()
-            return redirect('cities_index')
+            return redirect(redirect_next)
         else:
-            return redirect('cities_index')
+            return redirect(redirect_next)
     posts = Post.objects.filter(user=request.user)
     post_form = Post_Form()
     context = {'posts': posts, 'post_form': post_form, 'cities': cities}
@@ -195,7 +182,7 @@ def post_detail(request, post_id):
     cities = City.objects.all()
     profile = Profile.objects.get(user_id=post.user_id)
     comment_form = Comment_Form()
-    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form}
+    context = {'posts': posts, 'post': post, 'cities': cities, 'profile': profile, 'comments': comments, 'comment_form': comment_form, 'next_url': "/cities"}
     return render(request, 'posts/show.html', context)
 
 
@@ -220,10 +207,10 @@ def post_edit(request, post_id):
 @login_required
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
-    print('request.user.id', request.user.id)
+    redirect_next = request.GET.get('next')
     if post.user == request.user:
         Post.objects.get(id=post_id).delete()
-        return redirect('profile_detail', slug=request.user.profile.slug)
+        return redirect(redirect_next)
 
 
 # ------ City views ------- #
@@ -241,7 +228,7 @@ def cities_index(request):
         posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
-    context = {'posts': posts, 'form': form, 'cities': cities}
+    context = {'posts': posts, 'form': form, 'cities': cities, 'next_url': "/cities"}
     return render(request, 'cities/index.html', context)
 
 
@@ -261,7 +248,7 @@ def cities_show(request, slug):
         posts = paginator.page(paginator.num_pages)
     cities = City.objects.all()
     form = Post_Form(request.POST)
-    context = {'cities': cities, 'city': city, 'form': form, 'posts': posts}
+    context = {'cities': cities, 'city': city, 'form': form, 'posts': posts, 'next_url': f"/cities/{slug}"}
     return render(request, 'cities/show.html', context)
 
 # ------- User Auth -------#

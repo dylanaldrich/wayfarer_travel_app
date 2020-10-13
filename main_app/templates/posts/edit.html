@@ -8,35 +8,35 @@
             <h1 class='sidebar-name'>Cities</h1>
         </div>
         <ul class="list-unstyled components sidebar">
-        {% for city in cities %}
-            <li class="sidebar-item">
-                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
-                <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
-                <div class="sidebar-cities-name">{{ city.name }}</div>
-                </a>
-            </li>
-        {% endfor %}
+            {% for city in cities %}
+                <li class="sidebar-item">
+                    <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
+                        <div class="sidebar-btn justify-content-center">
+                            <img height="80" src="{{ city.image }}">
+                        </div>{{ city.name }}
+                    </a>
+                </li>
+            {% endfor %}
         </ul>
     </div>
     <!-- End cities sidebar menu -->
 
-        <div class='all-posts-right'>
-            <div class="jumbotron" id="edit-post-jumbotron">
-                <h3 class="display-4" id="edit-post-header">Freshen it up:</h3>
-            </div>
-                <div class="form-group container" >
-                    <div class="row justify-content-center" >
-                        <div class="col-sm-9">
-                        <form class="card" method="POST" style="padding:2%" action="{% url 'post_edit' post.id%}">
-                            {% csrf_token %}
-                            {{ post_form|crispy }}
-                            <button type="submit" class="btn wayfarer-btn">Submit Changes</button>
-                            <input type="hidden" name="next" value="{{ next }}">
-                        </form>
-                        </div>
-                    </div>
+    <div class='all-posts-right'>
+        <div class="jumbotron" id="edit-post-jumbotron">
+            <h3 class="display-4" id="edit-post-header">Freshen it up:</h3>
+        </div>
+        <div class="form-group container" >
+            <div class="row justify-content-center" >
+                <div class="col-sm-9">
+                <form class="card" method="POST" style="padding:2%" action="{% url 'post_edit' post.id%}">
+                    {% csrf_token %}
+                    {{ post_form|crispy }}
+                    <button type="submit" class="btn wayfarer-btn">Submit Changes</button>
+                    <input type="hidden" name="next" value="{{ next }}">
+                </form>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 {% endblock %}
-
