@@ -2,6 +2,7 @@
 /* 1 - #FF9C20 2 - #F72AEE 3 - #973DFC 4 - #01C9FF 5 - #14ADFF 6 - #0071FF */
 /* font-family: 'Filson Soft', sans-serif; font-family: 'Montserrat'*/
 /* Font Awesome CSS */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 @import url('https://unpkg.com/sweetalert/dist/sweetalert.min.js');
 @import url('https://pro.fontawesome.com/releases/v5.10.0/css/all.css');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap');
@@ -9,7 +10,8 @@
 @import url('https://db.onlinewebfonts.com/c/c5fc2b05949b051c07482453e8e0c1e6?family=Filson+Soft');
 
 * {
-    font-family: 'Filson Soft', sans-serif;
+    /* font-family: 'Filson Soft', sans-serif; */
+    font-family: 'Varela Round', sans-serif;
 }
 
 .overflow-auto::-webkit-scrollbar {
