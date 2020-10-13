@@ -2,14 +2,12 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
-<div class="parent-container d-flex" id="profile_parent_container">
-    <!-- PROFILE INFO CARD -->
-    <div class="container col-sm" id="profile-container">
-        <div class="card card-inverse card-info left-sidebar-purple">
-            <div class="sidebar-header">
+<div class='all-posts-container flex'>
+    <!-- Start cities sidebar menu -->
+    <div class='sidebar-left'>
+        <div class="sidebar-header">
             <h1 class='sidebar-name'>Cities</h1>
-            </div>
+        </div>
         <ul class="list-unstyled components sidebar">
         {% for city in cities %}
             <li class="sidebar-item">
@@ -20,12 +18,11 @@
             </li>
         {% endfor %}
         </ul>
-        </div>
     </div>
-    <!-- END PROFILE INFO CARD -->
+    <!-- End cities sidebar menu -->
 
 
-    <div class="container col-8 posts-list">
+    <div class='all-posts-right'>
         <!-- Add post modal -->
         <button type="button" class="btn btn-primary btn-circle btn-xl float-right add-post-btn" data-toggle="modal" data-target="#createPostModal" title="Add a post"><i class="fas fa-plus"></i></button>
         <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
@@ -60,7 +57,7 @@
         <!-- End add post modal -->
 
         <!-- List of recent posts -->
-        <h1 class="posts-header">Most Recent Posts</h1>
+        <h1 class="posts-header">Most Recent Posts...</h1>
             <ul>
                 {% for post in posts %}
                     <div class="card mb-3 profile-posts-list">
@@ -88,33 +85,33 @@
                                             <a href="{% url 'post_edit' post.id %}">
                                                 <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
                                             </a>
-                                            <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                                            <form class="delet-me-now-{{post.id}} ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
                                                 {% csrf_token %}
-                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn-{{post.id}}" style="display:inline;">Delete</button>
                                             </form>
                                         </div>
+                                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                                        <script>$('.delete-post-btn-{{post.id}}').click(function(e){
+                                            e.preventDefault();
+                                            swal({
+                                                title: "Are you sure?",
+                                                text: "Once deleted, you will not be able to recover this post!",
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    $('.delet-me-now-{{post.id}}').submit()
+                                                }
+                                            });
+                                        })</script>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
             {% endfor %}
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-            <script>$('.delete-post-btn').click(function(e){
-                e.preventDefault();
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this post!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $('.delet-me-now').submit()
-                    }
-                });
-            })</script>
 
             {% if posts.has_other_pages %}
                 <div class="pagination-container">

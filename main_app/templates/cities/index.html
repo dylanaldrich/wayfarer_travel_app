@@ -85,33 +85,33 @@
                                             <a href="{% url 'post_edit' post.id %}">
                                                 <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
                                             </a>
-                                            <form class="delet-me-now ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
+                                            <form class="delet-me-now-{{post.id}} ml-2" action="{% url 'post_delete' post.id %}" method="POST" style="display: inline;">
                                                 {% csrf_token %}
-                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                                                <button class="btn btn-info btn-sm btn-danger delete-post-btn-{{post.id}}" style="display:inline;">Delete</button>
                                             </form>
                                         </div>
+                                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                                        <script>$('.delete-post-btn-{{post.id}}').click(function(e){
+                                            e.preventDefault();
+                                            swal({
+                                                title: "Are you sure?",
+                                                text: "Once deleted, you will not be able to recover this post!",
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    $('.delet-me-now-{{post.id}}').submit()
+                                                }
+                                            });
+                                        })</script>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
             {% endfor %}
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-            <script>$('.delete-post-btn').click(function(e){
-                e.preventDefault();
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this post!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $('.delet-me-now').submit()
-                    }
-                });
-            })</script>
 
             {% if posts.has_other_pages %}
                 <div class="pagination-container">
