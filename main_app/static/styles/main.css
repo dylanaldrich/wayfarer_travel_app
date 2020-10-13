@@ -119,6 +119,14 @@ rounded-circle:hover {
     margin: 100px auto;
 }
 
+.form-inline .form-group {
+    margin-bottom: 10px;
+}
+
+.form-inline label {
+    margin-right: 5px;
+}
+
 /* CITIES SIDEBAR */
 
 .sidebar-name {
@@ -131,7 +139,9 @@ rounded-circle:hover {
 }
 
 .sidebar-btn {
-    border: 2px solid whitesmoke
+    border: 2px solid whitesmoke;
+    overflow: hidden;
+    display: -webkit-inline-box;
 }
 
 .cities-name-link {

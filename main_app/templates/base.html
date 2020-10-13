@@ -113,7 +113,7 @@
                                     {% if sign_up_form.errors %}
                                         <div class="alert alert-danger" role="alert">{{ sign_up_form.errors }}</div>
                                     {% endif %}
-                                    <form method="post" action="{% url 'signup' %}">
+                                    <form class="pb-2" method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
                                     {{ sign_up_form|crispy }}
                                 </div>
