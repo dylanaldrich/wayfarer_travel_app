@@ -7,6 +7,10 @@
     <div class="jumbotron">
         <h1 class="display-4">Welcome, {{ profile.name.title }}!</h1>
     </div>
+{% else %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ profile.name.title }}'s Profile</h1>
+    </div>
 {% endif %}
 
 <div class="parent-container d-flex" id="profile_parent_container">

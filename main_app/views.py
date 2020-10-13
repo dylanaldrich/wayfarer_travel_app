@@ -107,7 +107,7 @@ def profile_detail(request, slug):
 
     post_counter = countFreq(post_cities, len(post_cities))
     print('post_counter', post_counter)
-    context = {'profile': profile, 'form': form, 'post_counter': post_counter}
+    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'posts': posts}
     return render(request, 'profiles/detail.html', context)
 
 
