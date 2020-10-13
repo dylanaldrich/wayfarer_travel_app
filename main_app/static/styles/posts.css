@@ -45,6 +45,15 @@
     margin: auto 20px;
 }
 
+.left-sidebar-purple {
+    background-color: #973DFC;
+    border-radius: 30px;
+    margin-top: 50px;
+    font-size: 20px;
+    padding: 30px;
+    max-width: 400px;
+}
+
 /* ALL-POSTS INDEX */
 .all-posts-right{
     margin: 50px 20px;
