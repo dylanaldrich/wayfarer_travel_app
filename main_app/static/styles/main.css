@@ -1,3 +1,272 @@
+/* Color theme  */
+/* 1 - #FF9C20 2 - #F72AEE 3 - #973DFC 4 - #01C9FF 5 - #14ADFF 6 - #0071FF */
+/* font-family: 'Filson Soft', sans-serif; font-family: 'Montserrat'*/
+/* Font Awesome CSS */
+@import url('https://unpkg.com/sweetalert/dist/sweetalert.min.js');
+@import url('https://pro.fontawesome.com/releases/v5.10.0/css/all.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap');
+@import url('https://db.onlinewebfonts.com/c/c5fc2b05949b051c07482453e8e0c1e6?family=Filson+Soft');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+* {
+    font-family: 'Filson Soft', sans-serif;
+}
+
+#page-container {
+    /* padding-top: 2rem; */
+}
+
+.jumbotron {
+    background-color: #fff;
+    padding: 35px 2rem 20px 2rem;
+    margin-bottom: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.navbar-brand {
+    font-size: 27px;
+}
+
+.nav-link {
+    font-size: 17px;
+}
+
+.marketing{
+    margin-top: 80px;
+}
+
+.splash-headings>p{
+    font-family: 'Montserrat'
+}
+
+.login-form{
+    margin-top: 10px;
+}
+
+.wayfarer-btn {
+    background-color: #973DFC;
+    color: white;
+}
+
+.brighten img {
+    opacity: 0.9;
+    -webkit-filter: brightness(100%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.brighten img:hover {
+    -webkit-filter: brightness(80%);
+}
+
+.signup-btn{
+    color: white;
+}
+
+.slide{
+    opacity: 0.9;
+}
+
+.carousel-item > img {
+    bottom: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+#textslide {
+    font-style: italic;
+    font-family: 'Montserrat';
+}
+
+.splash-headings{
+    margin: 20px;
+}
+
 .modal-backdrop {
     z-index: -1;
+}
+
+footer {
+    bottom: 0;
+}
+
+.display-4 {
+    margin-bottom: 0;
+    font-size: 35px;
+}
+
+rounded-circle:hover {
+    background: #973DFC;
+}
+
+.post-title:hover {
+    color: #0071FF;
+}
+
+.col-3 {
+    max-width: fit-content;
+}
+
+
+/* SIGNUP FORM */
+.signup-container {
+    margin: 100px auto;
+}
+.form-inline .form-group {
+    margin-bottom: 10px;
+}
+
+.label{
+    margin: 5px;
+}
+.form-inline label {
+    margin-right: 5px;
+}
+
+/* CITIES SIDEBAR */
+
+.sidebar-name {
+    color: whitesmoke;
+}
+
+.sidebar-left {
+    background-color: #973DFC;
+    color: white;
+}
+
+.sidebar-btn {
+    border: 2px solid whitesmoke
+}
+
+.cities-name-link {
+    color: whitesmoke;
+}
+
+
+/* ABOUT */
+
+.about-me-div-1{
+    display: block;
+    min-height: 500px;
+    background-image: url("https://royaltyfreetube.com/wp-content/uploads/2020/02/synthwave-city-loop.jpg");
+    padding: 10%;
+    opacity: 80%;
+    background-size: cover;
+    background-position: top;
+    color: white;
+}
+
+.mb-1{
+    color: white;
+    margin-top: 10%;
+}
+
+.mb-5{
+    color: white;
+    margin: 5%;
+}
+
+/* POSTS */
+
+#edit-post-jumbotron {
+    background-color: #973DFC;
+    max-width: 286px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#edit-post-header {
+    color: whitesmoke;
+    font-size: 1.50rem;
+    text-align: center;
+}
+
+.btn-info {
+    background-color: #973DFC;
+    border-color: #973DFC;
+}
+
+.btn-info:hover {
+    background-color: #973DFC;
+    color: black;
+    border-color: #973DFC;
+}
+
+/* #delete-button {
+    background-color: orange;
+    border-color: #F72AEE;
+}
+
+#delete-button:hover {
+    background-color: #F72AEE;
+} */
+
+
+/* MAP */
+.marker {
+    background-image: url('https://www.flaticon.com/svg/static/icons/svg/3180/3180209.svg');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+/* @media (max-width: 560px)
+.d-flex{
+    flex-wrap: wrap;
+} */
+
+/* .col-3 {
+    max-width: 90%;
+} */
+
+
+/* TOOLTIPS */
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+
+  /* Tooltip text */
+.tooltip .tooltiptext [data-tooltip]{
+visibility: hidden;
+width: 120px;
+background-color: red;
+color: #fff;
+text-align: center;
+padding: 5px 0;
+border-radius: 6px;
+
+/* Position the tooltip text - see examples below! */
+position: absolute;
+z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+visibility: visible;
+}
+
+.modal-body>input{
+    width: 100%;
 }

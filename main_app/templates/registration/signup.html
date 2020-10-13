@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="signup-container container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <h1 class="mt-2">Create an Account</h1>
+      <hr class="mt-0 mb-4">
+        {% if errors %}
+          <div class="alert alert-danger" role="alert">{{ errors }}</div>
+        {% endif %}
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn wayfarer-btn">Sign Up</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

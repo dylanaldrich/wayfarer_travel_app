@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class='all-posts-container flex'>
+    <!-- Start cities sidebar menu -->
+    <div class='sidebar-left'>
+        <div class="sidebar-header">
+            <h1 class='sidebar-name'>Cities</h1>
+        </div>
+        <ul class="list-unstyled components sidebar">
+        {% for city in cities %}
+            <li class="sidebar-item">
+                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
+                <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
+                <div class="sidebar-cities-name">{{ city.name }}</div>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+        <div class='all-posts-right'>
+            <div class="jumbotron" id="edit-post-jumbotron">
+                <h3 class="display-4" id="edit-post-header">Freshen it up:</h3>
+            </div>
+                <div class="form-group container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-9">
+                        <form class="card" method="POST" action="{% url 'edit_comment' comment.post.id comment.id %}">
+                            {% csrf_token %}
+                            {{ comment_form|crispy }}
+                            <button type="submit" class="btn wayfarer-btn">Submit Changes</button>
+                            <input type="hidden" name="next" value="{{ next }}">
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+

@@ -7,105 +7,228 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
+    <link rel="icon" href="https://hpgpixer.jp/image_icons/vehicle/airplane/airliner_2.gif">
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap carousel CSS -->
     <link href="https://getbootstrap.com/docs/4.5/examples/carousel/carousel.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="{% static 'styles/profile.css' %}" >
+    <link rel="stylesheet" href="{% static 'styles/posts.css' %}" >
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}" >
     <link rel="stylesheet" href="{% static 'styles/main.css' %}" >
 
     <!-- ========================Bootstrap core JavaScript========================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
+    <!-- ========================MAPBOX========================== -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+
+{% load crispy_forms_tags %}
     <title>Wayfarer</title>
 </head>
 
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Carousel</a>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #973DFC">
+        <a class="navbar-brand" href="{% url 'home' %}">Wayfarer</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cities</a>
+                    <a class="nav-link" href="{% url 'cities_index' %}">Cities</a>
                 </li>
             </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <ul class="navbar-nav mr-auto">
+            <div class="form-inline mt-2 mt-md-0">
+                <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' user.profile.slug %}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
+                {% else %}
                 <li class="nav-item">
-                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">Sign Up</button>
-
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <button type="button" class="btn btn-link signup-btn" data-toggle="modal" data-target="#loginModal">Login</button>
+                    <!------ LOG IN MODAL -------->
+                    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Sign Up Here</h5>
+                                    <h5 class="modal-title" id="loginModalLabel">Login Here</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Message:</label>
-                                        <textarea class="form-control" id="message-text"></textarea>
-                                    </div>
+                                    <img src="https://www.flaticon.com/svg/static/icons/svg/3125/3125914.svg" width='150px' style="float: right;">
+                                    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+      {% endif %}
+                                    <form method="POST" action="{% url 'login' %}">
+                                        <div class="form-group login-form">
+                                            {% csrf_token %}
+                                            <p>
+                                                <label for="username">Username</label>
+                                                <input type="text" name="username" maxlength="25" minlength="2" required>
+                                            </p>
+                                            <p>
+                                                <label for="password">Password</label>
+                                                <input type="password" name="password" maxlength="25" minlength="4" required>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn wayfarer-btn" value="Login">
+                                            <input type="hidden" name="next" value="{{ next }}">
+                                        </div>
                                     </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Send message</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <script>
-                        $('#exampleModal').on('show.bs.modal', function (event) {
-                            console.log('We got here')
+                        $('#loginModal').on('show.bs.modal', function (event) {
                             var button = $(event.relatedTarget) // Button that triggered the modal
-                            var recipient = button.data('whatever') // Extract info from data-* attributes
-                            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                            var modal = $(this)
-                            modal.find('.modal-title').text('New message to ' + recipient)
-                            modal.find('.modal-body input').val(recipient)
                         })
                     </script>
                 </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-link signup-btn" data-toggle="modal" data-target="#exampleModal">Sign Up</button>
+                    <!------ SIGN UP MODAL-------->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Create an Account</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {% if sign_up_form.errors %}
+                                        <div class="alert alert-danger" role="alert">{{ sign_up_form.errors }}</div>
+                                    {% endif %}
+                                    <form method="post" action="{% url 'signup' %}">
+                                    {% csrf_token %}
+                                    {{ sign_up_form|crispy }}
+                                    <script>
+                                    $('#hint_id_password1').remove('#hint_id_password1');
+                                    $('#id_password1').attr({"data-toggle": "tooltip","data-placement": "left",
+                                    title: `Your password can’t be too similar to your other personal information.\nYour password must contain at least 8 characters.\nYour password can’t be a commonly used password.\nYour password can’t be entirely numeric.`});
+                                    </script>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn wayfarer-btn">Sign Up</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $('#exampleModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget) // Button that triggered the modal
+                        })
+                    </script>
+                </li>
+                {% endif %}
                 </ul>
-            </form>
+            </div>
         </div>
     </nav>
 </header>
 
+<div id="page-container">
 <main role="main">
     {% block content %}
 
     {% endblock %}
 </main>
+</div>
+
+<!-- stylish footer by George Thomas on Code Pen -->
+<!-- from https://codepen.io/tgeorgetom/pen/LYEOLNv-->
+
+<footer class="new_footer_area bg_color">
+            <div class="new_footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
+                                <h3 class="f-title f_600 t_color f_size_18">Stay in Touch</h3>
+                                <p>Don’t miss any updates on travel news and tips!</p>
+                                <form action="#" class="f_subscribe_two mailchimp" method="post" novalidate="true" _lpchecked="1">
+                                    <input type="text" name="EMAIL" class="form-control memail" placeholder="Email">
+                                    <button class="btn btn_get btn_get_two" type="submit">Subscribe</button>
+                                    <p class="mchimp-errmessage" style="display: none;"></p>
+                                    <p class="mchimp-sucmessage" style="display: none;"></p>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
+                                <h3 class="f-title f_600 t_color f_size_18">Team Members</h3>
+                                <ul class="list-unstyled f_list">
+                                    <li><a href="https://github.com/abeatrix">Beatrix Woo</a></li>
+                                    <li><a href="https://github.com/dylanaldrich">Dylan Aldrich</a></li>
+                                    <li><a href="https://github.com/LiaMaggiorotto">Lia Maggiorotto</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+                                <h3 class="f-title f_600 t_color f_size_18">Help</h3>
+                                <ul class="list-unstyled f_list">
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Term &amp; conditions</a></li>
+                                    <li><a href="#">Reporting</a></li>
+                                    <li><a href="#">Documentation</a></li>
+                                    <li><a href="#">Support Policy</a></li>
+                                    <li><a href="#">Privacy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
+                                <h3 class="f-title f_600 t_color f_size_18">Find Us On</h3>
+                                <div class="f_social_icon">
+                                    <a href="#" class="fab fa-facebook"></a>
+                                    <a href="#" class="fab fa-twitter"></a>
+                                    <a href="#" class="fab fa-pinterest"></a>
+                                    <a href="#" class="fab fa-github"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_bg">
+                    <div class="footer_bg_one"></div>
+                    <div class="footer_bg_two"></div>
+                </div>
+            </div>
+            <div class="footer_bottom">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-sm-7">
+                            <p class="mb-0 f_400">© Wayfarer Inc. {% now "Y" %} All rights reserved.</p>
+                        </div>
+                        <div class="col-lg-6 col-sm-5 text-right">
+                            <p>Made with <i class="icon_heart"></i>💜 by BLD</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">500x500</text></svg>
-</body>
-</html>

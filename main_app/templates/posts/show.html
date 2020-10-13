@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<a id="top"></a>
+<div class='all-posts-container flex'>
+    <!-- Start cities sidebar menu -->
+    <div class='sidebar-left'>
+        <div class="sidebar-header">
+            <h1 class='sidebar-name'>Cities</h1>
+        </div>
+        <ul class="list-unstyled components sidebar">
+        {% for city in cities %}
+            <li class="sidebar-item">
+                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
+                <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
+                <div class="sidebar-cities-name">{{ city.name }}</div>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <!-- End cities sidebar menu -->
+
+    <!-- Post -->
+    <div class='post-detail-right flex'>
+        <div class="post-show-container">
+            <div class="post-detail-image"><h1>{{ post.city.name }}</h1></div>
+            <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center top; background-size: cover;}</style>
+            <div><img class="post-page-user" src="{{post.user.profile.image.url}}"> </div>
+            <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
+            <div class="post-detail-info">
+                <p>Published by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago</p>
+            </div>
+            {% if request.user.id == post.user.id %}
+                <div class='d-flex mb-4 justify-content-center'>
+                    <a href="{% url 'post_edit' post.id %}">
+                        <button class="btn btn-info btn-sm" style="display: inline;">Edit</button>
+                    </a>
+                    <form class="delete-me-now ml-2" action="{% url 'post_delete' post.id %}?next={{ next_url }}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button class="btn btn-info btn-sm btn-danger delete-post-btn" style="display:inline;">Delete</button>
+                    </form>
+                </div>
+            {% endif %}
+            <div class="post-detail-body"><h5>{{ post.body }}</h5></div>
+
+            <!-- Delete Button Alert -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>$('.delete-post-btn').click(function(e){
+                    e.preventDefault();
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this post!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $('.delete-me-now').submit()
+                        }
+                    });
+                })</script>
+
+            <!-- ----------- SHARE BUTTONS ----------- -->
+            <div id="post-share-buttons">
+                <!-- Email -->
+                <a href="mailto:?Subject=A Post from assembIt&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20https://wayfarerGA.herokuapp.com/">
+                    <i class="fas fa-envelope"></i>
+                </a>
+
+                <!-- Facebook -->
+                <a href="http://www.facebook.com/sharer.php?u=https://wayfarerGA.herokuapp.com/post/{{post.id}}" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+
+                <!-- Reddit -->
+                <a href="http://reddit.com/submit?url=https://wayfarerGA.herokuapp.com/post/{{post.id}}&amp;title=I%20found%20this" target="_blank">
+                    <i class="fab fa-reddit"></i>
+                </a>
+
+                <!-- Twitter -->
+                <a href="https://twitter.com/share?url=https://wayfarerGA.herokuapp.com/post/{{post.id}}&amp;text=I%20found%20this&amp;hashtags=wayfarerGA" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <!-- ----------- SHARE BUTTONS ENDS ----------- -->
+            <div class="comment-container">
+            <div class="comment-form-container">
+            {{ errors }}
+                <form method="POST" action="{% url 'add_comment' post.id%}" class="post-show-container needs-validation" validate>
+                    {% csrf_token %}
+                    <input type="hidden" name="user" value="{{ request.user.id }}">
+                    <textarea class="form-control" minlength="2" name="comment" rows="3" required></textarea>
+                    <input type="submit" class="btn wayfarer-btn" value="Add Comment">
+                </form>
+            </div>
+            <h7>Total Comments: {{comments.count}}</h7>
+
+            {% for comment in post.comments.all %}
+            <div class="comment-detail-body">
+                <div id="comments-show">
+                    <p>{{ comment.comment }}</p><small>by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
+                        {% if request.user.id == comment.user.id %}
+                        <a href="{% url 'edit_comment' post.id comment.id %}"><small>Edit </small></a>|
+                        <a href="{% url 'delete_comment' post.id comment.id %}"><small>Delete</small></a>
+                        {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
