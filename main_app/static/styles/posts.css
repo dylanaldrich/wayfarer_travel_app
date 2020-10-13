@@ -272,6 +272,7 @@ ul {
         float: left;
         margin: 10px auto;
     }
+
     .sidebar-left{
         text-align: center;
         margin-top: 5%;
@@ -279,4 +280,17 @@ ul {
         min-height: 10%;
         max-height: 10%;
     }
+
+    .posts-header{
+        font-size: 20px;
+    }
+
+    ul{
+        width: 100%;
+        padding-inline-start: 0;
+    }
+    .profile-posts-list{
+        width: 100%;
+    }
+
 }

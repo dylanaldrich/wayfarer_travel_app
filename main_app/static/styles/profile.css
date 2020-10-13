@@ -20,6 +20,12 @@ h5 {
     border-radius: 15px;
 }
 
+add-post-btn {
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+}
+
 .card {
     font-size: 1em;
     overflow: hidden;
@@ -151,7 +157,9 @@ h3.profile-header {
     bottom: 0px
 }
 
-
+#profile-info-btn{
+    margin-bottom: 5px;
+}
 
 
 @media only screen and (max-width: 600px) {
@@ -165,4 +173,5 @@ h3.profile-header {
         max-width: 100%;
         flex: 0;
     }
+
 }
