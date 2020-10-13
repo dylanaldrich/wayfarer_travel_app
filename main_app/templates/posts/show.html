@@ -96,13 +96,16 @@
                 </form>
             </div>
             <h7>Total Comments: {{comments.count}}</h7>
+
             {% for comment in post.comments.all %}
-            <div id="comments-show">
-                <small>{{ comment.comment }} by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
-                    {% if request.user.id == comment.user.id %}
-                    <a href="{% url 'edit_comment' post.id comment.id %}"><small>Edit </small></a>|
-                    <a href="{% url 'delete_comment' post.id comment.id %}"><small>Delete</small></a>
-                    {% endif %}
+            <div class="comment-detail-body">
+                <div id="comments-show">
+                    <p>{{ comment.comment }}</p><small>by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
+                        {% if request.user.id == comment.user.id %}
+                        <a href="{% url 'edit_comment' post.id comment.id %}"><small>Edit </small></a>|
+                        <a href="{% url 'delete_comment' post.id comment.id %}"><small>Delete</small></a>
+                        {% endif %}
+                </div>
             </div>
             {% endfor %}
             </div>

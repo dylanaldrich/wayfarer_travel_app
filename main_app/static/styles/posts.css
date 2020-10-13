@@ -224,6 +224,14 @@ ul {
 
 /* COMMENT SECTION */
 
+.comment-detail-body{
+    background-color:white;
+    border-radius: 15px;
+    text-align: left;
+    margin: 10px auto;
+    padding: 10px 5%;
+}
+
 .comment-container{
     margin: 10px;
 }
