@@ -15,7 +15,11 @@
 
 .overflow-auto::-webkit-scrollbar {
     display: none;
-  }
+}
+
+.carousel-item {
+    height: 80vh;
+}
 
 
 #page-container {

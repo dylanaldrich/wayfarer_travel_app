@@ -51,7 +51,8 @@ Registered users are:
 - Prettier Urls ✔️
 
 ## 🖨 Technologies Used
-| Python | Django |
+|-------------------|-------------------|
+| Python               | Django |
 | JavaScript | HTML&CSS |
 | BootStrap | jQuery |
 | Sweet Alert | Simple-Captcha |
