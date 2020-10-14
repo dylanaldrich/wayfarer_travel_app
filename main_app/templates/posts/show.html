@@ -108,9 +108,10 @@
                         <a href="{% url 'delete_comment' post.id comment.id %}"><small>Delete</small></a>
                         {% endif %}
                         {% for reply in comment.replies.all %}
-                        <p>{{ reply.comment }}</p>
-                        <p> replied by {{ reply.user.profile.name }}</p>
+                        <div style="margin-top: 5px; padding: 3px;"><small>{{ reply.comment }}</small>
+                        <small> replied by {{ reply.user.profile.name }}</small></div>
                         {% endfor %}
+
                 </div>
             </div>
             {% endfor %}
