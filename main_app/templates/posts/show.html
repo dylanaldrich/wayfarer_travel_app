@@ -26,6 +26,14 @@
     <!-- Post -->
     <div class='post-detail-right flex'>
         <div class="post-show-container">
+        <div class="go-back-btn" style="text-align:left">
+            <button onclick="goBack()" class="btn btn-link float-left">Back to Posts</button>
+            <script>
+            function goBack() {
+                window.history.back();
+            }
+            </script>
+        </div>
             <div class="post-detail-image"><h1>{{ post.city.name }}</h1></div>
             <style>.post-detail-image{ background-image: url("{{post.city.image}}"); opacity: 80%; background-position: center top; background-size: cover;}</style>
             <div style="margin: 10px auto;">{% cloudinary post.user.profile.image  format="png" width=100 height=100 crop="fill" gravity="faces" radius="max"%}</div>
@@ -116,6 +124,7 @@
             </div>
             {% endfor %}
             </div>
+            <a href="#top">Back to top</a>
         </div>
     </div>
 </div>

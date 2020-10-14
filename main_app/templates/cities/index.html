@@ -71,7 +71,9 @@
                     <div class="card mb-3 profile-posts-list">
                         <div class="row no-gutters">
                             <div class="col-md-4">
+                            <a href="{% url 'post_detail' post.id %}">
                             <img src="{{ post.user.profile.image.url }}" height="230" class="card-img" style="object-fit: cover;" alt="{{ post.user.profile.name }}'s Profile Picture">
+                            </a>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
