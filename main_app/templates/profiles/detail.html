@@ -73,12 +73,33 @@
                     <tbody>
                         {% for index in post_counter %}
                             <tr>
+                                <td><a href="/cities/{{index.city.lower}}">{{index.city}}</a></td>
+                                <td>{{index.count}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% comment %} new table for comments per user {% endcomment %}
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope='col'>Friends</th>
+                            <th scope='col'># of Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for index in comment_counter %}
+                            <tr>
                                 <td>{{index.city}}</td>
                                 <td>{{index.count}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+
+
             </div>
             {% if request.user.id == profile.user.id %}
                 <div class="card-footer" style="text-align:center;">
