@@ -42,20 +42,22 @@ Registered users are:
 - Views Styling
 
 ## 📆 Stretch Goals
-- allow user to add profile picture
-- show profile picture next to posts
+- allow user to add profile picture ✔️
+- show profile picture next to posts ✔️
 - like buttons
-- share buttons
-- Welcome-Email after creating an account
-- Verifying their email after signing up
-- Prettier Urls
+- share buttons ✔️
+- Welcome-Email after creating an account ✔️
+- Verifying their email after signing up ✔
+- Prettier Urls ✔️
 
 ## 🖨 Technologies Used
-- Python
-- Django
-- JavaScript
-- HTML&CSS
-- BootStrap
-- jQuery
-- Sweet Alert
-- Simple-Captcha
+| Python | Django |
+| JavaScript | HTML&CSS |
+| BootStrap | jQuery |
+| Sweet Alert | Simple-Captcha |
+| FileSystemStorage | Cloudinary |
+| slugify | Gmail |
+| Stylish-Footer | MapBox |
+| GitHub | CORS Header |
+| Popper | Crispy Form |
+| Montserrat Light | Filson Soft |
