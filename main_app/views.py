@@ -258,6 +258,8 @@ def cities_show(request, slug):
 # Signup
 def signup(request):
     form = SignUpForm(request.POST)
+    if request.user.is_authenticated:
+        return redirect('cities_index')
     if form.is_valid():
         user = form.save()
         user.refresh_from_db()
@@ -286,6 +288,8 @@ def signup(request):
 
 # Login
 def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('cities_index')
     if request.method == 'POST':
         username_form = request.POST['username']
         password_form = request.POST['password']

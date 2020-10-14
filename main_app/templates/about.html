@@ -20,14 +20,14 @@
 </div>
 
 <!-- -------------- MAP ---------------- -->
-<div id='map' width="100%" style='height:400px'></div>
+<div id='map' width="100%" style='height:600px'></div>
    <script>
     mapboxgl.accessToken = "pk.eyJ1IjoiZ2F3YXlmYXJlciIsImEiOiJja2czZXhxenYwOTdhMnFsd2hqNGdteGpiIn0.7kaVmm00I3FI1CXdKzZ4pQ";
     var map = new mapboxgl.Map({
      container: 'map',
      style: 'mapbox://styles/mapbox/streets-v10',
-     center: [-40, 40],
-    zoom: 2.0
+     center: [-10, 40],
+    zoom: 1.0
     });
 
 var geojson = {
@@ -41,7 +41,7 @@ var geojson = {
     properties: {
       title: 'Mapbox',
       description: 'London, UK.',
-      html: '../cities/london'
+      html: 'cities/london'
     }
   },
   {
@@ -53,7 +53,19 @@ var geojson = {
     properties: {
       title: 'Mapbox',
       description: 'San Francisco, USA',
-      html: '../cities/san-francisco',
+      html: 'cities/san-francisco',
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [139.769, 35.680]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'Tokyo, Japan',
+      html: 'cities/tokyo',
     }
   },
   {
@@ -65,7 +77,7 @@ var geojson = {
     properties: {
       title: 'Mapbox',
       description: 'Gibraltar, BOT',
-      html: '../cities/gibraltar'
+      html: 'cities/Gibraltar'
     }
   }]
 };
