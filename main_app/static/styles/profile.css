@@ -21,12 +21,6 @@ h5 {
     border-radius: 15px;
 }
 
-add-post-btn {
-    position: absolute;
-    right: 0px;
-    z-index: 1;
-}
-
 .card {
     font-size: 1em;
     overflow: hidden;
@@ -173,6 +167,14 @@ h3.profile-header {
     .post-list {
         max-width: 100%;
         flex: 0;
+    }
+    .col-8 {
+        max-width: 100%;
+        flex: none;
+    }
+
+    .profile-posts-list{
+        max-width: 100%;
     }
 
 }
