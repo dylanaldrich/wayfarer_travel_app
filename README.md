@@ -51,13 +51,15 @@ Registered users are:
 - Prettier Urls ✔️
 
 ## 🖨 Technologies Used
-| Python | Django |
-| JavaScript | HTML&CSS |
-| BootStrap | jQuery |
-| Sweet Alert | Simple-Captcha |
-| FileSystemStorage | Cloudinary |
-| slugify | Gmail |
-| Stylish-Footer | MapBox |
-| GitHub | CORS Header |
-| Popper | Crispy Form |
-| Montserrat Light | Filson Soft |
+| Technologies      | 🖨🖨🖨🖨           |
+|-------------------|-------------------|
+| Python            | Django            |
+| JavaScript        | HTML&CSS          |
+| BootStrap         | jQuery            |
+| Sweet Alert       | Simple-Captcha    |
+| FileSystemStorage | Cloudinary        |
+| slugify           | Gmail             |
+| Stylish-Footer    | MapBox            |
+| GitHub            | CORS Header       |
+| Popper            | Crispy Form       |
+| Montserrat Light  | Filson Soft       |
