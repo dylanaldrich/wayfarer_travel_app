@@ -5,19 +5,21 @@
 <a id="top"></a>
 <div class='all-posts-container flex'>
     <!-- Start cities sidebar menu -->
-    <div class='sidebar-left'>
+    <div class='sidebar-left container col-sm'>
         <div class="sidebar-header">
             <h1 class='sidebar-name'>Cities</h1>
         </div>
-        <ul class="list-unstyled components sidebar">
-        {% for city in cities %}
-            <li class="sidebar-item">
-                <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
-                <div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>
-                <div class="sidebar-cities-name">{{ city.name }}</div></a>
-            </li>
-        {% endfor %}
-        </ul>
+        <div class="overflow-auto">
+            <ul class="list-unstyled components sidebar">
+            {% for city in cities %}
+                <li class="sidebar-item">
+                    <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
+                    <div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>
+                    <div class="sidebar-cities-name">{{ city.name }}</div></a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
     <!-- End cities sidebar menu -->
 
@@ -97,13 +99,16 @@
             </div>
             <h7>Total Comments: {{comments.count}}</h7>
 
-            {% for comment in post.comments.all %}
+            {% for comment in comments %}
             <div class="comment-detail-body">
                 <div id="comments-show">
                     <p>{{ comment.comment }}</p><small>by {{ comment.user.profile.name }} {{ comment.comment_date|timesince }} ago </small>
                         {% if request.user.id == comment.user.id %}
                         <a href="{% url 'edit_comment' post.id comment.id %}"><small>Edit </small></a>|
                         <a href="{% url 'delete_comment' post.id comment.id %}"><small>Delete</small></a>
+                        {% endif %}
+                        {% for reply in comment.replies.all %}
+                        {{ reply }}
                         {% endif %}
                 </div>
             </div>

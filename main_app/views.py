@@ -176,7 +176,7 @@ def post_detail(request, post_id):
     posts = Post.objects.all()
     post = Post.objects.get(id=post_id)
     try:
-        comments = Comment.objects.filter(post_id=post_id)
+        comments = Comment.objects.filter(post_id=post_id, reply=None)
     except Comment.DoesNotExist:
         comments = None
     cities = City.objects.all()
