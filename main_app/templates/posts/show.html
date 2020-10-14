@@ -108,7 +108,8 @@
                         <a href="{% url 'delete_comment' post.id comment.id %}"><small>Delete</small></a>
                         {% endif %}
                         {% for reply in comment.replies.all %}
-                        {{ reply }}
+                        <p>{{ reply.user.comment }}</p>
+                        <p>{{ reply.user.profile.name }}</p>
                         {% endfor %}
                 </div>
             </div>
