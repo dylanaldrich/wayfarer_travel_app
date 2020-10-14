@@ -2,7 +2,9 @@
 {% load cloudinary %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+<div class="jumbotron">
+        <h1 class="display-4">Most Recent Posts...</h1>
+    </div>
 <div class="sidenav">
         <!-- Add post modal -->
          {% if request.user.is_authenticated %}
@@ -65,12 +67,11 @@
 
     <div class="container col-8 posts-list" style="padding-top: 30px; padding-left: 30px">
         <!-- List of recent posts -->
-        <h1 class="posts-header">Most Recent Posts...</h1>
                 {% for post in posts %}
                     <div class="card mb-3 profile-posts-list">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                {% cloudinary post.user.profile.image  format="jpg" width=300 height=230 crop="fill" gravity="faces" class="card-img-profile" %}
+                            <img src="{{ post.user.profile.image.url }}" height="230" class="card-img" style="object-fit: cover;" alt="{{ post.user.profile.name }}'s Profile Picture">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">

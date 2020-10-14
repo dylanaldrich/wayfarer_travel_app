@@ -359,4 +359,8 @@ ul {
         height: 250px;
     }
 
+    .jumbotron {
+        display: none;
+    }
+
 }
