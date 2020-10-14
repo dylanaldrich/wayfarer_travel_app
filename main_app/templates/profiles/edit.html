@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load cloudinary %}
 {% block content %}
 
 <div class="jumbotron">
@@ -7,17 +8,17 @@
 </div>
 
 <!-- Edit profile form -->
-<div class="parent-container d-flex">
+<div class="parent-container d-flex" style="margin-top:20px;">
     <div class="form-group container">
         <div class="row justify-content-center">
-            <div class="col-sm" style="min-width: fit-content;max-width: fit-content;">
+            <div class="col-sm" style="min-width: 25%; max-width: 50%;">
                 {% if error %}
                     <p style="background-color:firebrick;">{{error}}</p>
                 {% endif %}
                 <form class="card align-items-center p-4" enctype="multipart/form-data" method="POST" action="{% url 'profile_edit' profile.id %}">
                     {% csrf_token %}
-                    {{ profile_form|crispy }}
-                    <button type="submit" class="btn wayfarer-btn">Update Profile</button>
+                    {{ profile_form.as_table}}
+                    <button type="submit" class="btn wayfarer-btn" style="margin-top:20px;">Update Profile</button>
                 </form>
             </div>
         </div>

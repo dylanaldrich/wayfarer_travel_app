@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load cloudinary %}
 {% block content %}
 <a id="top"></a>
 <div class='all-posts-container flex'>
@@ -24,11 +25,11 @@
     <div class='post-detail-right flex'>
         <div class="post-show-container">
             <div class="post-detail-image"><h1>{{ post.city.name }}</h1></div>
-            <style>.post-detail-image{ background-image: url("{{post.city.image}}"); background-position: center top; background-size: cover;}</style>
-            <div><img class="post-page-user" src="{{post.user.profile.image.url}}"> </div>
+            <style>.post-detail-image{ background-image: url("{{post.city.image}}"); opacity: 80%; background-position: center top; background-size: cover;}</style>
+            <div style="margin: 10px auto;">{% cloudinary post.user.profile.image  format="png" width=100 height=100 crop="fill" gravity="faces" radius="max"%}</div>
             <div class="post-detail-title"><h1>{{ post.title }} </h1></div>
             <div class="post-detail-info">
-                <p>Published by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user }}</a> {{ post.post_date|timesince }} ago</p>
+                <p>Published by <a href="{% url 'profile_detail' post.user.profile.slug %}">{{ post.user.profile.name }}</a> {{ post.post_date|timesince }} ago</p>
             </div>
             {% if request.user.id == post.user.id %}
                 <div class='d-flex mb-4 justify-content-center'>
