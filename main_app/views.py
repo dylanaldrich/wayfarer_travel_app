@@ -62,6 +62,16 @@ def api(request):
 def profile_detail(request, slug):
     profile = Profile.objects.get(slug=slug)
     form = Post_Form(request.POST)
+
+
+
+
+
+
+
+
+    # code for creating post frequency list
+
     posts = Post.objects.filter(user_id=profile.id)
     post_cities = []
     for post in posts:
@@ -94,7 +104,65 @@ def profile_detail(request, slug):
 
     post_counter = countFreq(post_cities, len(post_cities))
     print('post_counter', post_counter)
-    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'next_url': f"/profile/{profile.slug}", 'posts': posts}
+
+
+
+
+
+
+
+
+
+    # prospective code for creating user comment frequency list
+    # posts => comments
+    # city => profiles
+
+    comments = Comment.objects.filter(user_id=profile.id)
+    comment_profiles = []
+    for comment in comments:
+        comment_profiles.append(comment.post.user.username)
+
+    # def countFreq(arr, n):
+    #     frequency = []
+    #     # Mark all array elements as not visited
+    #     visited = [False for i in range(n)]
+
+    #     # Traverse through array elements and count frequencies
+    #     for i in range(n):
+    #         # Skip this element if already processed
+    #         if (visited[i] == True):
+    #             continue
+
+    #         # Count frequency
+    #         count = 1
+    #         for j in range(i + 1, n, 1):
+    #             if (arr[i] == arr[j]):
+    #                 visited[j] = True
+    #                 count += 1
+
+    #         frequency.append({
+    #             'city': arr[i],
+    #             'count': count
+    #             })
+
+    #     return frequency
+
+    comment_counter = countFreq(comment_profiles, len(comment_profiles))
+    print('COMMENT_COUNTER:', comment_counter)
+
+
+
+
+
+
+
+
+
+
+
+
+
+    context = {'profile': profile, 'form': form, 'post_counter': post_counter, 'next_url': f"/profile/{profile.slug}", 'posts': posts, 'comment_counter': comment_counter}
     return render(request, 'profiles/detail.html', context)
 
 
