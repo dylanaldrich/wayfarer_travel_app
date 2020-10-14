@@ -46,13 +46,13 @@
 <!-- Travel Quotes -->
 <script>
     const quotes = [
-        `"And I think to myself, what a wonderful world"`,
-        `"The world is a book and those who do not travel read only one page."`,
-        `"Once a year, go someplace you've never been before."`,
-        `"It is better to travel well than to arrive."`,
-        `"Collect moments. Not things."`,
-        `"Wherever you go, go with all your heart."`,
-        `"Why, I'd like nothing better than to achieve some bold adventure, worthy of our trip."`,
+        '"And I think to myself, what a wonderful world"',
+        '“The world is a book and those who do not travel read only one page.”',
+        '"Once a year, go someplace you’ve never been before."',
+        '"It is better to travel well than to arrive."',
+        '“Collect moments. Not things.”',
+        '"Wherever you go, go with all your heart."',
+        '"Why, I’d like nothing better than to achieve some bold adventure, worthy of our trip."',
     ];
 
     let i = 0;
@@ -114,8 +114,8 @@
     var map = new mapboxgl.Map({
      container: 'map',
      style: 'mapbox://styles/mapbox/streets-v10',
-     center: [-40, 40],
-    zoom: 2.0
+     center: [-10, 40],
+    zoom: 1.0
     });
 
 var geojson = {
@@ -142,6 +142,18 @@ var geojson = {
       title: 'Mapbox',
       description: 'San Francisco, USA',
       html: 'cities/san-francisco',
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [139.769, 35.680]
+    },
+    properties: {
+      title: 'Mapbox',
+      description: 'Tokyo, Japan',
+      html: 'cities/tokyo',
     }
   },
   {

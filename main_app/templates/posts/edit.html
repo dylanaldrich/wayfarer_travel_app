@@ -11,9 +11,8 @@
         {% for city in cities %}
             <li class="sidebar-item">
                 <a href="{% url 'cities_show' city.slug %}" class="cities-name-link">
-                <img class="sidebar-btn sidebar-cities-images" src="{{ city.image }}">
-                <div class="sidebar-cities-name">{{ city.name }}</div>
-                </a>
+                <div class="sidebar-btn justify-content-center"><img height="80" src="{{ city.image }}"></div>
+                <div class="sidebar-cities-name">{{ city.name }}</div></a>
             </li>
         {% endfor %}
         </ul>

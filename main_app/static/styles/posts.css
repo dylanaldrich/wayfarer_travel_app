@@ -23,14 +23,30 @@
 
 .sidebar-left{
     margin-top: 3%;
-    max-width: 350px;
+    max-width: fit-content;
     flex: 3 auto;
     text-align: left;
     font-size: 20px;
     padding: 20px;
-    max-height: 700px;
+    height: fit-content;
+    max-height:625px;
     background-color:whitesmoke;
     border-radius: 15px;
+}
+
+.posts-sidebar-left{
+    margin-top: 3%;
+    max-width: fit-content;
+    flex: 3 auto;
+    text-align: left;
+    font-size: 20px;
+    padding: 20px;
+    height: fit-content;
+    max-height:625px;
+    background-color:#973DFC;;
+    border-radius: 15px;
+    position: fixed;
+    z-index: 1;
 }
 
 .sidebar-item{
@@ -64,8 +80,29 @@
     min-height: 70vh;
 }
 
+.posts-all-posts-right{
+    margin: 50px 20px;
+    align-items: center;
+    text-align: left;
+    justify-content: center;
+    padding: 20px;
+    min-height: 70vh;
+    margin-left: 400px;
+}
+
 ul {
     list-style-type: none;
+}
+
+/* CREATE POST BUTTON */
+.sidenav {
+    width: 130px;
+    position: fixed;
+    z-index: 1;
+    top: 100px;
+    right: 10px;
+    overflow-x: hidden;
+    padding: 8px 0;
 }
 
 .add-post-btn {
@@ -88,6 +125,7 @@ ul {
     height: 50px;
     border-radius: 50%;
     margin: 20px 20px;
+    object-fit: cover;
 }
 
 .list-each-post-index{
@@ -110,9 +148,9 @@ ul {
     flex-direction: column;
     width: 100%;
     text-align: left;
-    opacity: 80%;
     padding: 20px;
 }
+
 
 .posts-title {
     min-width: 100%;
@@ -158,7 +196,16 @@ ul {
     flex-direction: column;
     width: 100%;
     text-align: center;
-    opacity: 80%;
+}
+
+.posts-lists-profile-img{
+    height: 300px;
+    width: 300px;
+    padding: 50% auto;
+    object-fit: cover;
+    position: center;
+    justify-content: center;
+    /* border-radius: 50%; */
 }
 
 .post-detail-image{
@@ -252,7 +299,6 @@ ul {
     display: flex;
     flex-direction: column;
     width: 100%;
-    opacity: 80%;
     margin: 50px;
 }
 
@@ -272,11 +318,49 @@ ul {
         float: left;
         margin: 10px auto;
     }
+
     .sidebar-left{
         text-align: center;
-        margin-top: 5%;
+        justify-content: center;
+        margin-top: 35px;
         max-width: 100%;
         min-height: 10%;
         max-height: 10%;
     }
+
+    .posts-header{
+        font-size: 20px;
+    }
+
+    ul{
+        width: 100%;
+        padding-inline-start: 0;
+    }
+
+    .sidebar-left>ul{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-evenly;
+    }
+
+    .profile-posts-list{
+        width: 100%;
+    }
+
+    .sidenav {
+        width: auto;
+        top: 50px;
+        right: 0px;
+        overflow-x: hidden;
+    }
+
+    .card-img-profile{
+        width: 100%;
+        height: 250px;
+    }
+
+    .jumbotron {
+        display: none;
+    }
+
 }

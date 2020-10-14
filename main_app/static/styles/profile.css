@@ -13,6 +13,7 @@ h5 {
     max-width: 20%;
     margin: 2rem auto;
     border-radius: 30px;
+    min-width: 175px;
 }
 
 .profile-posts-list{
@@ -151,7 +152,9 @@ h3.profile-header {
     bottom: 0px
 }
 
-
+#profile-info-btn{
+    margin-bottom: 5px;
+}
 
 
 @media only screen and (max-width: 600px) {
@@ -165,4 +168,13 @@ h3.profile-header {
         max-width: 100%;
         flex: 0;
     }
+    .col-8 {
+        max-width: 100%;
+        flex: none;
+    }
+
+    .profile-posts-list{
+        max-width: 100%;
+    }
+
 }

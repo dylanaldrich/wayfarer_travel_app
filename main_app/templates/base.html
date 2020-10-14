@@ -8,6 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="https://hpgpixer.jp/image_icons/vehicle/airplane/airliner_2.gif">
+    <!-- Filson Soft W03 Regular Fonts -->
+    <link href="//db.onlinewebfonts.com/c/c5fc2b05949b051c07482453e8e0c1e6?family=Filson+Soft" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -67,8 +69,8 @@
                                 <div class="modal-body">
                                     <img src="https://www.flaticon.com/svg/static/icons/svg/3125/3125914.svg" width='150px' style="float: right;">
                                     {% if error %}
-        <div class="alert alert-danger" role="alert">{{ error }}</div>
-      {% endif %}
+                                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                    {% endif %}
                                     <form method="POST" action="{% url 'login' %}">
                                         <div class="form-group login-form">
                                             {% csrf_token %}
