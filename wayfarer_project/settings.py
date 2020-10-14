@@ -53,11 +53,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'captcha',
     'cloudinary',
+    'corsheaders',
 ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -152,6 +154,7 @@ EMAIL_PORT = 587
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 cloudinary.config(
   cloud_name = env('CLOUD_NAME'),
