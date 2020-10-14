@@ -11,6 +11,9 @@ from pathlib import Path
 import django_on_heroku
 import os
 import environ
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 env = environ.Env(
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'bootstrap_modal_forms',
     'crispy_forms',
     'captcha',
+    'cloudinary',
 ]
 
 
@@ -147,5 +151,14 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+cloudinary.config(
+  cloud_name = env('CLOUD_NAME'),
+  api_key = env('API_KEY'),
+  api_secret = env('API_SECRET'),
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 django_on_heroku.settings(locals())

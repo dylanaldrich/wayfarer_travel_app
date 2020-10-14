@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="jumbotron">
@@ -14,9 +14,9 @@
                 {% if error %}
                     <p style="background-color:firebrick;">{{error}}</p>
                 {% endif %}
-                <form class="card align-items-center p-4" enctype='multipart/form-data' method="POST" action="{% url 'profile_edit' profile.id %}">
+                <form class="card align-items-center p-4" enctype="multipart/form-data" method="POST" action="{% url 'profile_edit' profile.id %}">
                     {% csrf_token %}
-                    {{ profile_form.as_p }}
+                    {{ profile_form|crispy }}
                     <button type="submit" class="btn wayfarer-btn">Update Profile</button>
                 </form>
             </div>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cloudinary %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -67,7 +68,7 @@
                     <div class="card mb-3 profile-posts-list">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <img src="{{ post.user.profile.image.url }}" class="card-img posts-lists-profile-img" height="300" alt="...">
+                                {% cloudinary post.user.profile.image  format="jpg" width=300 height=230 crop="fill" gravity="faces"%}
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">

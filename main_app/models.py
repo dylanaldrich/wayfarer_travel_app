@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 fs=FileSystemStorage(location='media/profile_image')
+from cloudinary.models import CloudinaryField
 
 # Create your models here
 
@@ -31,7 +32,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     current_city = models.CharField(max_length=25)
-    image = models.ImageField(upload_to='profile_image', default='profile_image/default_profile_photo.svg')
+    image = CloudinaryField('image', overwrite=True, resource_type="image", default="user.png")
     join_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=25, null=True, blank=True)
 
