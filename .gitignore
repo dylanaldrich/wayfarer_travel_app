@@ -213,3 +213,8 @@ dmypy.json
 # End of https://www.toptal.com/developers/gitignore/api/python,django
 wayfarer_project/settings.py
 main_app/.env
+wayfarer_project/heroku.py
+Procfile
+runtime.txt
+wayfarer_project/runtime.txt
+.vscode

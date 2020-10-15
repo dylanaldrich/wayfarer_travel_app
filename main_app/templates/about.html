@@ -22,7 +22,7 @@
 <!-- -------------- MAP ---------------- -->
 <div id='map' width="100%" style='height:600px'></div>
    <script>
-    mapboxgl.accessToken = "pk.eyJ1IjoiZ2F3YXlmYXJlciIsImEiOiJja2czZXhxenYwOTdhMnFsd2hqNGdteGpiIn0.7kaVmm00I3FI1CXdKzZ4pQ";
+    mapboxgl.accessToken = "{{ mapbox_access_token }}";
     var map = new mapboxgl.Map({
      container: 'map',
      style: 'mapbox://styles/mapbox/streets-v10',

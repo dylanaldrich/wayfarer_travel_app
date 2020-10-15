@@ -148,13 +148,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'wayfarer_project/media')
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'wayfarergaga@gmail.com'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+MAPBOX_ACCESSTOKEN = env('MAPBOX_ACCESSTOKEN')
 
 cloudinary.config(
   cloud_name = env('CLOUD_NAME'),

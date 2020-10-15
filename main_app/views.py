@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 
@@ -41,14 +42,15 @@ def home(request):
         context={
             'errors': signup_form.errors,
             'signup_form': SignUpForm(),
-            'mapbox_access_token': 'pk.my_mapbox_access_token'
+            'mapbox_access_token': settings.MAPBOX_ACCESSTOKEN,
         }
     return render(request, 'home.html', context)
 
 
 # About page
 def about(request):
-    return render(request, 'about.html')
+    context={'mapbox_access_token': settings.MAPBOX_ACCESSTOKEN}
+    return render(request, 'about.html', context)
 
 
 # API
