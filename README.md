@@ -1,7 +1,7 @@
 <h1 align="center">Wayfarer</h1>
 <p align="center">
 <p>A travel community for users to share tips about their favorite locations around the world.</p>
-<a href="#">Link to Wayfarer</a>
+<a href="https://wayfarer-bld.herokuapp.com/">Link to Wayfarer</a>
 </p>
 
 ## 🖼 Wireframes
