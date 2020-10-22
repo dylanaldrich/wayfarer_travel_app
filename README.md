@@ -1,8 +1,9 @@
 <h1 align="center">Wayfarer</h1>
 <p align="center">
-<p>A travel community for users to share tips about their favorite locations around the world.</p>
-<a href="#">Link to Wayfarer</a>
+A travel community for users to share tips about their favorite locations around the world.</p>
+<p align="center"><a href="https://wayfarer-bld.herokuapp.com/">Link to Wayfarer</a>
 </p>
+<img src="https://i.ibb.co/tXSQLyn/image.png" alt="image" border="0" width=100%>
 
 ## 🖼 Wireframes
 <img src="https://i.ibb.co/G7jm28m/000.png" alt="000" border="0" width=100%>
