@@ -1,7 +1,8 @@
 <h1 align="center">Wayfarer</h1>
 <p align="center">
 A travel community for users to share tips about their favorite locations around the world.</p>
-<p align="center"><a href="https://wayfarer-bld.herokuapp.com/">Link to Wayfarer</a>
+<p align="center"><a href="https://wayfarer-bld.herokuapp.com/">Link to Wayfarer</a></p>
+<p align="center">Username: demouser | Password: Demo2020
 </p>
 <img src="https://i.ibb.co/tXSQLyn/image.png" alt="image" border="0" width=100%>
 
